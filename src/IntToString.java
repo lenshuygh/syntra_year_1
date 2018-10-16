@@ -36,7 +36,7 @@ public class IntToString {
         }
         System.out.println("array -> " + Arrays.toString(digitArray));
 
-        // use array of strings to match values using the index of the array
+        // use array of strings to match values using the index of the array, can be done using ASCII table too
         String[] stringArray = {"0","1","2","3","4","5","6","7","8","9"};
         String result = "";
         for(int i = 0;i<digits;i++){
