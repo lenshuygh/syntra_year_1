@@ -1,14 +1,18 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class IntToString {
     public static void main(String[] args) {
-        int number = 4725;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number: ");
+        int number = scanner.nextInt();
 
+        //absolute value of number
+        number *= (number > 0) ? 1 : -1;
 
         // 1 how many digits has the number?
 
         int digits = 1;
-
         while(true){
             int compareTo = (int) Math.pow(10,digits);
             if (number + 1 > compareTo) {
@@ -35,6 +39,21 @@ public class IntToString {
             arrayPosition++;
         }
         System.out.println("array -> " + Arrays.toString(digitArray));
+
+        System.out.println("----------------");
+        //better digits to array
+        int[] intArray = new int[digits];
+        int arrayPos = 0;
+        for(int i = digits -1;i>=0;i--){
+            int pow = (int) Math.pow(10, i);
+            intArray[arrayPos] = number / pow;
+            number = number - (intArray[arrayPos] * pow);
+            arrayPos++;
+        }
+        System.out.println("array of ints: "+ Arrays.toString(intArray));
+
+
+        System.out.println("-----------------");
 
         // use array of strings to match values using the index of the array, can be done using ASCII table too
         String[] stringArray = {"0","1","2","3","4","5","6","7","8","9"};
