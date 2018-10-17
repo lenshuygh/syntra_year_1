@@ -9,7 +9,7 @@ public class E_enterNumberBetween0and10 {
         do{
             System.out.print("Enter a number: ");
             num = scanner.nextInt();
-        }while((num > 9) || (num < 1));
+        }while((num >= 10) || (num <= 0));
         scanner.close();
     }
 }
