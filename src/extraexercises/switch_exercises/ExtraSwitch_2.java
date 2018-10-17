@@ -8,7 +8,7 @@ public class ExtraSwitch_2 {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a number: ");
         float num1 = scanner.nextFloat();
-        System.out.print("enter an operator: ");
+        System.out.println("enter an operator (+, - , * or /): ");
         char operator = (char) System.in.read();
         System.out.print("Enter a number: ");
         float num2 = scanner.nextFloat();
