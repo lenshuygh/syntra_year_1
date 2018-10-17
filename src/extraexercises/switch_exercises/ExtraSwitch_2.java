@@ -7,12 +7,12 @@ public class ExtraSwitch_2 {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a number: ");
-        int num1 = scanner.nextInt();
+        float num1 = scanner.nextFloat();
         System.out.print("enter an operator: ");
         char operator = (char) System.in.read();
         System.out.print("Enter a number: ");
-        int num2 = scanner.nextInt();
-        int result = 0;
+        float num2 = scanner.nextFloat();
+        float result = 0F;
         switch (operator) {
             case '+':
                 result = num1 + num2;
@@ -27,7 +27,7 @@ public class ExtraSwitch_2 {
                 result = num1 / num2;
                 break;
         }
-        System.out.println("result: " + result);
+        System.out.println(num1 + " " + operator + " " + num2 + " = " + result);
         scanner.close();
 
     }
