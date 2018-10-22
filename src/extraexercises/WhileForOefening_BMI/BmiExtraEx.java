@@ -45,17 +45,14 @@ public class BmiExtraEx {
 
             switch (i) {
                 case 0:
-                    System.out.println("case 0");
                     name1 = name;
                     bmi1 = bmi;
                     break;
                 case 1:
-                    System.out.println("case 1");
                     name2 = name;
                     bmi2 = bmi;
                     break;
                 case 2:
-                    System.out.println("case 2");
                     name3 = name;
                     bmi3 = bmi;
                     break;
