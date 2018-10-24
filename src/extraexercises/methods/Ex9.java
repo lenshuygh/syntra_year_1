@@ -9,7 +9,6 @@ public class Ex9 {
         int value5 = 0;
         int value6 = 0;
 
-
         for (int i = 0; i < 1_000_000; i++) {
             switch (UtilityClass.rollDice()) {
                 case 1:
@@ -38,6 +37,7 @@ public class Ex9 {
         System.out.println("percentage 4's -> " + getPercentageOnMillion(value4) + " %");
         System.out.println("percentage 5's -> " + getPercentageOnMillion(value5) + " %");
         System.out.println("percentage 6's -> " + getPercentageOnMillion(value6) + " %");
+
 
     }
 
