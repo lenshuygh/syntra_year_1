@@ -57,6 +57,7 @@ public class IntToString {
                 powAlternative = j;
                 System.out.println("powAlternative (i="+i+")(j="+j+"): "+powAlternative);
             }
+            System.out.println(numberAlternative + " / " + powAlternative);
             digitArrayAlternative[arrayIndex] = numberAlternative / powAlternative;
             numberAlternative = numberAlternative - (digitArrayAlternative[arrayIndex] * powAlternative);
             arrayIndex++;
