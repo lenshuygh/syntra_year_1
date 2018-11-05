@@ -29,7 +29,8 @@ public class UtilityClass {
     public static float max(float number1, float number2,float number3){
         if((number1 > number2) && (number1 > number3)){
             return number1;
-        }else if((number2 > number1) && (number2 > number3)){
+        //}else if((number2 > number1) && (number2 > number3)){
+        }else if(number2 > number3){
             return number2;
         }else{
             return number3;
@@ -47,10 +48,15 @@ public class UtilityClass {
     }
 
     public static float quadraticEquation(float a, float b, float c){
-        return ((b*b) - (4 * a * c));
+        //return ((b*b) - (4 * a * c));
+        return b * b - 4 * a * c;
     }
 
     public static int rollDice(){
         return new Random().nextInt(6) + 1;
+    }
+
+    public static int diceRoll(Random random){
+        return random.nextInt(6) + 1;
     }
 }
