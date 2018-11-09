@@ -7,8 +7,8 @@ public class ColoredCat extends Cat {
         this.color = color;
     }
 
-    public ColoredCat(int age, String color) {
-        super(age);
+    public ColoredCat(String name,int age, String color) {
+        super(name,age);
         this.color = color;
     }
 

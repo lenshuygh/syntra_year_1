@@ -3,11 +3,14 @@ package oo;
 public class Cat {
     int age;
 
+    String name;
+
     public Cat() {
     }
 
-    public Cat(int age) {
+    public Cat(String name,int age) {
         this.age = age;
+        this.name = name;
     }
 
     public int getAge() {
@@ -16,5 +19,13 @@ public class Cat {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
