@@ -30,9 +30,9 @@ public class Tarzan {
         float misLeft = 10F;
         int cannibalsLeft = 30;
         int tarzanDist = 80;
-        int missBeingEaten = 10;
+        float missBeingEaten = 10;
         float eatingSpeed = 0;
-        while((tarzanDist >= 0) && (misLeft >= 0)){
+        while(tarzanDist > 0){
             System.out.print("end of hour: " + hours);
             System.out.print("\t\t");
             //miss that are eaten per hour depends on number of cannbials / 30
@@ -48,13 +48,13 @@ public class Tarzan {
             System.out.print(tarzanDist);
 
             System.out.print("\t\t\t\t\t\t\t");
-            System.out.print("curr miss being eaten: " + missBeingEaten--);
+            System.out.print("curr miss being eaten: " + missBeingEaten);
 
             hours++;
 
             eatingSpeed =  cannibalsLeft / 30F;
             misLeft = (misLeft - eatingSpeed);
-
+            missBeingEaten = missBeingEaten - eatingSpeed;
             cannibalsLeft--;
 
             // 9 hours of darkness
