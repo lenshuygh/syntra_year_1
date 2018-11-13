@@ -32,7 +32,7 @@ public class Tarzan {
         int tarzanDist = 80;
         float missBeingEaten = 10;
         float eatingSpeed = 0;
-        while(tarzanDist > 0){
+        while(true){
             System.out.print("end of hour: " + hours);
             System.out.print("\t\t");
             //miss that are eaten per hour depends on number of cannbials / 30
@@ -49,6 +49,12 @@ public class Tarzan {
 
             System.out.print("\t\t\t\t\t\t\t");
             System.out.print("curr miss being eaten: " + missBeingEaten);
+
+            //put end of loop here to get that last line when tarzanDistance is below 0
+            if (tarzanDist < 0) {
+                break;
+            }
+
 
             hours++;
 
