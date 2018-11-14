@@ -16,8 +16,6 @@ public class ex_14_11_18_while_loops {
             if (operator.equals("=")) {
                 break;
             }
-
-
             System.out.println("Please enter a number");
             int numberX = getNumber(scanner);
             switch (operator) {
@@ -50,6 +48,7 @@ public class ex_14_11_18_while_loops {
             notAnOperator = !checkIfOperator(in);
             if (notAnOperator) {
                 System.out.println("I asked for an operator not something else!");
+                System.out.println("Please enter an operator + - / * % = ");
             }
         }
         return in;
