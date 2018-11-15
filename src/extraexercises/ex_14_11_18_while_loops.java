@@ -6,17 +6,17 @@ public class ex_14_11_18_while_loops {
     public static void main(String[] args) {
         int number1;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the first number");
-        number1 = getNumber(scanner);
+
         float result = (float) number1;
         String operator = "";
 
         while (!operator.equals("=")) {
+            number1 = getNumber(scanner);
             operator = getOperator(scanner);
             if (operator.equals("=")) {
                 break;
             }
-            System.out.println("Please enter a number");
+
             int numberX = getNumber(scanner);
             switch (operator) {
                 case "+":
@@ -58,6 +58,10 @@ public class ex_14_11_18_while_loops {
         boolean notANumber = true;
         String in = "";
         while (notANumber) {
+            //ask inout, check if first number is allready assigned
+            if number1 == 0
+            System.out.println("Please enter the first number");
+            System.out.println("Please enter a number");
             in = scanner.nextLine();
             notANumber = checkIfOperator(in);
             if (notANumber) {
