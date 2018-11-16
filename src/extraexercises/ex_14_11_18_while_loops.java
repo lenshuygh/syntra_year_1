@@ -4,20 +4,25 @@ import java.util.Scanner;
 
 public class ex_14_11_18_while_loops {
     public static void main(String[] args) {
-        int number1;
+        int number1 = 0;
+        boolean firstNumberAsked = false;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the first number");
-        number1 = getNumber(scanner);
-        float result = (float) number1;
+        float result = 0F;
         String operator = "";
 
         while (!operator.equals("=")) {
+            //only the first time the first number needs to be asked to put in
+            if (!firstNumberAsked) {
+                number1 = getNumber(scanner, firstNumberAsked);
+                result = (float) number1;
+                firstNumberAsked = true;
+            }
             operator = getOperator(scanner);
             if (operator.equals("=")) {
                 break;
             }
-            System.out.println("Please enter a number");
-            int numberX = getNumber(scanner);
+
+            int numberX = getNumber(scanner, firstNumberAsked);
             switch (operator) {
                 case "+":
                     result += numberX;
@@ -40,24 +45,25 @@ public class ex_14_11_18_while_loops {
     }
 
     private static String getOperator(Scanner scanner) {
-        System.out.println("Please enter an operator + - / * % = ");
         String in = "";
         boolean notAnOperator = true;
         while (notAnOperator) {
+            System.out.println("Please enter an operator + - / * % = ");
             in = scanner.nextLine();
             notAnOperator = !checkIfOperator(in);
             if (notAnOperator) {
                 System.out.println("I asked for an operator not something else!");
-                System.out.println("Please enter an operator + - / * % = ");
+
             }
         }
         return in;
     }
 
-    private static int getNumber(Scanner scanner) {
+    private static int getNumber(Scanner scanner, boolean firstNumberAsked) {
         boolean notANumber = true;
         String in = "";
         while (notANumber) {
+            System.out.println(firstNumberAsked ? "Please enter a number" : "Please enter the first number");
             in = scanner.nextLine();
             notANumber = checkIfOperator(in);
             if (notANumber) {
