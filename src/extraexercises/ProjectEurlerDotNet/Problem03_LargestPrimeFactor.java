@@ -8,33 +8,44 @@ public class Problem03_LargestPrimeFactor {
 
     public static void main(String[] args) {
         long inputNumber = 600851475143L;
-        //int primeFactor = 1;
+        //long inputNumber = 13195L;
+        //long inputNumber = 161L;
+
         long biggestPrimeFactor = 1;
-        for (long i = 3L; i < inputNumber; i++) {
-            System.out.print(i);
-            // check if inputNumber is divisible by i
-            if(inputNumber % i == 0){
-                // check if it's a prime
-                // if so check if previously found number is smaller or greater
-                if(isPrime(i)){
-                    if(i > biggestPrimeFactor){
-                        biggestPrimeFactor = i;
-                    }
-                }
-            }
-            System.out.println();
+
+        long result = 1L;
+
+        //System.out.println("found: "+findPrimeDivider(inputNumber));
+
+        long i = inputNumber;
+
+        while(result < inputNumber){
+            long t = findPrimeDivider(i);
+            System.out.println("t -> " + t);
+            i = i / t;
+            result *= t;
+            biggestPrimeFactor = (biggestPrimeFactor > t) ? biggestPrimeFactor : t;
         }
-        System.out.println(biggestPrimeFactor);
+        System.out.println("biggest = " + biggestPrimeFactor);
+    }
+
+
+    private static long findPrimeDivider(long number){
+        for (long i = 3; i < number; i++) {
+            if(isPrime(i)&&(number % i == 0)){
+                return i;
+            }
+        }
+        return number;
     }
 
     private static boolean isPrime(long i) {
-
-        for (long j = 2L; j < i-1; j++) {
+        for (long j = 2L; j < i; j++) {
             if(i % j == 0){
-                System.out.print(j+',');
                 return false;
             }
         }
+        //System.out.println(i+" is a prime");
         return true;
     }
 }
