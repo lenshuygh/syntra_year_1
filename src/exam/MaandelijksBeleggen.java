@@ -34,7 +34,7 @@ public class MaandelijksBeleggen {
         for (int i = 1; i <= totalMonths; i++) {
             //add amount minus startup fee
             capitalSaved += amount * STARTUP_MULTIPLIER;
-            //deduct the maintenace fee from accumulated capital
+            //deduct the maintenance fee from accumulated capital
             capitalSaved *= MAINTENANCE_FEE_MULTIPLIER;
             // yearly interest payment if months add up to one year
             if (i % 12 == 0) {
