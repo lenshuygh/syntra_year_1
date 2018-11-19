@@ -17,7 +17,7 @@ public class MaandelijksBeleggen {
 
         int years = scanner.nextInt();
         System.out.println("If we save " + amount + " each month for " + years + " years, at the end of all those years we'll have:");
-        System.out.println("€"+computeTotalAmount(amount,years));
+        System.out.println("€" + computeTotalAmount(amount, years));
 
         scanner.close();
     }
@@ -35,9 +35,9 @@ public class MaandelijksBeleggen {
             //add amount minus startup fee
             capitalSaved += amount * STARTUP_MULTIPLIER;
             //deduct the maintenace fee from accumulated capital
-            capitalSaved *=  MAINTENANCE_FEE_MULTIPLIER;
+            capitalSaved *= MAINTENANCE_FEE_MULTIPLIER;
             // yearly interest payment if months add up to one year
-            if(i % 12 == 0){
+            if (i % 12 == 0) {
                 capitalSaved *= YEARLY_INTEREST_MULTIPLIER;
             }
         }
