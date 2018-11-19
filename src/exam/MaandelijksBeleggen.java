@@ -34,11 +34,11 @@ public class MaandelijksBeleggen {
 
         // calculate for each month until totalMoths
         for (int i = 1; i <= totalMonths; i++) {
-            //add amount minus instapkost
+            //add amount minus startup fee
             capitalSaved += amount * STARTUP_MULTIPLIER;
-            //deduct the onderhoudskost from whole capital
+            //deduct the maintenace fee from accumulated capital
             capitalSaved *=  MAINTENANCE_FEE_MULTIPLIER;
-            // yearly interst payment if months add up to one year
+            // yearly interest payment if months add up to one year
             if(i % 12 == 0){
                 capitalSaved *= YEARLY_INTEREST_MULTIPLIER;
             }
