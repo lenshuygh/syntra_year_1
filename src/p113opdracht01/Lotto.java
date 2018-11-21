@@ -7,7 +7,7 @@ public class Lotto {
         Random random = new Random();
 
         for (int i = 0; i < 6; i++) {
-            System.out.println(random.nextInt(45)+1);
+            System.out.println(random.nextInt(44)+1);
         }
     }
 }
