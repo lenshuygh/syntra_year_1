@@ -19,5 +19,18 @@ public class p114Strings {
         System.out.println();
         System.out.println(w6 == w3);
         System.out.println();
+
+        //methods
+        String word3 = new String("Hello worldeee");
+        String word2 = "Hello World";
+        word3.concat(word2);
+        String word4 = word3.concat(word2);
+        System.out.println(word3);
+        System.out.println(word2);
+        System.out.println(word4);
+
+        String word = "Word";
+        System.out.println(word.indexOf('o'));
+        System.out.println(word.indexOf("rd"));
     }
 }
