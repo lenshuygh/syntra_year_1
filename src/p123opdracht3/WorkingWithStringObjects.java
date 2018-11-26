@@ -58,6 +58,16 @@ public class WorkingWithStringObjects {
         System.out.println("The string without whitespace: |"+s.trim()+"|");
 
 
+        // alternative for counting 'e' characters with for each loop
+        String str = "voorbeeld om de letters te tellen";
+        int eCounter = 0;
+        for(char c : str.toCharArray()){
+            if(c == 'e'){
+                eCounter++;
+            }
+        }
+        System.out.println(eCounter);
+
         scanner.close();
     }
 }
