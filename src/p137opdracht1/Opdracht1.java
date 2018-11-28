@@ -50,13 +50,12 @@ public class Opdracht1 {
         }
 
         int[] primeArray2 = new int[168];
-        primeArray2[0] = 2;
         count = 0;
         fail = false;
         for (int i = 2; i < 1000; i++) {
             fail = false;
             for (int j : primeArray2) {
-                if ((j != 0) && (i % j == 0)) {
+                if ((j != 0) && (i % j == 0) && (i != j)) {
                     fail = true;
                     break;
                 }
@@ -68,7 +67,8 @@ public class Opdracht1 {
 
             }
         }
-        System.out.println("# primes = " + count);
+        System.out.println();
+        System.out.println("# primes BIS = " + count);
         for (int i : primeArray2) {
             System.out.print(i + ",");
         }
