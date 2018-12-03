@@ -15,7 +15,7 @@ public class LookupTables {
         word = word.toUpperCase();
         char[] letters = word.toCharArray();
 
-        int fistLetterValue = (int) 'A';
+        int fistLetterValue = 'A';
 
         for (char letter : letters) {
             score += points[letter - fistLetterValue];
