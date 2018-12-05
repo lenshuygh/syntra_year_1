@@ -1,4 +1,4 @@
-package extraexercises.ProjectEurlerDotNet;
+package extraexercises.project_eurler;
 
 public class Problem11_LargestProductInAGrid {
     /*

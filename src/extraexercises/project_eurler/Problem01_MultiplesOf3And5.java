@@ -1,4 +1,4 @@
-package extraexercises.ProjectEurlerDotNet;
+package extraexercises.project_eurler;
 
 public class Problem01_MultiplesOf3And5 {
     public static void main(String[] args) {

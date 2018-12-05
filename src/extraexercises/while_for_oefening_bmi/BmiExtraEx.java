@@ -1,4 +1,4 @@
-package extraexercises.WhileForOefening_BMI;
+package extraexercises.while_for_oefening_bmi;
 
 import java.util.Scanner;
 

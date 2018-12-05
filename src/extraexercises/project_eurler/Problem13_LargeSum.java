@@ -1,4 +1,4 @@
-package extraexercises.ProjectEurlerDotNet;
+package extraexercises.project_eurler;
 
 import java.math.BigInteger;
 

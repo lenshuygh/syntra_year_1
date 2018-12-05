@@ -1,4 +1,4 @@
-package extraexercises.AlgoritmeOefening;
+package extraexercises.algoritme_oefening;
 
 public class AlgoritmeOefening {
     public static void main(String[] args) {
