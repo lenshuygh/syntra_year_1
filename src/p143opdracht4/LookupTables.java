@@ -12,13 +12,10 @@ public class LookupTables {
         System.out.print("word: ");
         String word = scanner.nextLine();
 
-        word = word.toUpperCase();
-        char[] letters = word.toCharArray();
-
-        int fistLetterValue = 'A';
+        char[] letters = word.toUpperCase().toCharArray();
 
         for (char letter : letters) {
-            score += points[letter - fistLetterValue];
+            score += points[letter - 'A'];
         }
 
         System.out.print("points: " + score);
