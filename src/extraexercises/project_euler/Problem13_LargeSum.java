@@ -1,4 +1,4 @@
-package extraexercises.project_eurler;
+package extraexercises.project_euler;
 
 import java.math.BigInteger;
 

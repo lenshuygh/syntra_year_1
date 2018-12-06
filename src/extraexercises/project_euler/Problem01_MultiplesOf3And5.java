@@ -1,4 +1,4 @@
-package extraexercises.project_eurler;
+package extraexercises.project_euler;
 
 public class Problem01_MultiplesOf3And5 {
     public static void main(String[] args) {

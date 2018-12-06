@@ -1,4 +1,4 @@
-package extraexercises.project_eurler;
+package extraexercises.project_euler;
 
 public class Problem09_SpecialPythagoreanTriplet {
     /*
