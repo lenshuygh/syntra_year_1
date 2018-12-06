@@ -17,32 +17,32 @@ public class Oefening5 {
         String[] sentence = scanner.nextLine().split(" ");
 
 
+        String[] newSentence = removeNulls(sentence);
+
+        System.out.println();
+        for (String word : newSentence) {
+            System.out.print(word + ' ');
+        }
+
+        scanner.close();
+    }
+
+    public static String[] removeNulls(String[] sentence) {
         int newArrayLength = 0;
         for (String word : sentence) {
-            System.out.print(word);
-            if(!word.equals("")){
-                System.out.println(" -> OK");
+            if (!word.equals("") && !word.equals("null")) {
                 newArrayLength++;
             }
         }
-
-        System.out.println("new length : " + newArrayLength);
-
         String[] newSentence = new String[newArrayLength];
-/*
+
         int newCounter = 0;
         for (String word : sentence) {
-            if(word != ""){
+            if (!word.equals("") && !word.equals("null")) {
                 newSentence[newCounter++] = word;
             }
         }
-
-
-        for (String word : newSentence) {
-            System.out.print(word + ',');
-        }
-        */
-        scanner.close();
+        return newSentence;
     }
 
 }

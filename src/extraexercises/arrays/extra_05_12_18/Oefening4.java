@@ -22,11 +22,11 @@ public class Oefening4 {
         scanner.close();
     }
 
-    private static String[] removeDupes(String[] words) {
+    public static String[] removeDupes(String[] words) {
         for (int i = 0; i < words.length; i++) {
-            for (int j = i+1; (j < words.length-1); j++) {
-                if(words[j].equals(words[i])){
-                    words[i] = null;
+            for (int j = i; j < words.length; j++) {
+                if ((words[i] != null) && words[i].equals(words[j]) && (i != j)) {
+                    words[j] = "null";
                 }
             }
         }
