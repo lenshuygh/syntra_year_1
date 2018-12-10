@@ -12,11 +12,8 @@ Gebruik volgende zin om dit te testen:
  */
 public class Oefening6 {
     public static void main(String[] args) {
-        String[] str = "This sentence sentence has a few sentence few has words words to much to".split(" ");
-        String[] s = removeDupes(str);
-        String[] s2 = removeNulls(s);
-        for (String s1 : s2) {
-            System.out.print(s1+' ');
+        for (String s : removeNulls(removeDupes("This sentence sentence has a few sentence few has words words to much to".split(" ")))) {
+            System.out.print(s+' ');
         }
 
     }
