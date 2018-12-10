@@ -28,10 +28,9 @@ public class Oefening3 {
 
     private static boolean checkForTest(String str) {
         /*
-        str = str.toUpperCase();
         String[] words = str.split(" ");
         for (String word : words) {
-            if (word.equals("TEST")) {
+            if (word.equalsIgnoreCase("TEST")) {
                 return true;
             }
         }
