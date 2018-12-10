@@ -29,6 +29,7 @@ public class Oefening1 {
         System.out.println("som oneven getallen: " + unevenSum);
 
         System.out.println("gemiddelde even getallen: " + (evenSum / (double) evenCount));
-        System.out.println("gemiddelde oneven getallen: " +(unevenSum / (double) unevenCount));
+        System.out.println("gemiddelde oneven getallen: " +(unevenSum / (double) unevenCount
+        ));
     }
 }

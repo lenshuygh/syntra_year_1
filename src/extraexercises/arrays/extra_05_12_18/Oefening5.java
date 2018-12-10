@@ -30,7 +30,7 @@ public class Oefening5 {
     public static String[] removeNulls(String[] sentence) {
         int newArrayLength = 0;
         for (String word : sentence) {
-            if (!word.equals("") && !word.equals("null")) {
+            if (word != null) {
                 newArrayLength++;
             }
         }
@@ -38,7 +38,7 @@ public class Oefening5 {
 
         int newCounter = 0;
         for (String word : sentence) {
-            if (!word.equals("") && !word.equals("null")) {
+            if (word != null) {
                 newSentence[newCounter++] = word;
             }
         }

@@ -26,7 +26,7 @@ public class Oefening4 {
         for (int i = 0; i < words.length; i++) {
             for (int j = i; j < words.length; j++) {
                 if ((words[i] != null) && words[i].equals(words[j]) && (i != j)) {
-                    words[j] = "null";
+                    words[j] = null;
                 }
             }
         }
