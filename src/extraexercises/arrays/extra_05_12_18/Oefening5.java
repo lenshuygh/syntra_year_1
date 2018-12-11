@@ -1,7 +1,5 @@
 package extraexercises.arrays.extra_05_12_18;
 
-import java.util.Scanner;
-
 /*
 Maak een methode welke de null waarden uit een array haalt.
 
@@ -11,10 +9,8 @@ hint: steek alle niet null waarden in de nieuwe array en geef deze nieuwe array 
  */
 public class Oefening5 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter a sentence: ");
-        String[] sentence = scanner.nextLine().split(" ");
+        String[] sentence = {"this","is",null,null,"a",null,"sentence"};
 
 
         String[] newSentence = removeNulls(sentence);
@@ -23,8 +19,6 @@ public class Oefening5 {
         for (String word : newSentence) {
             System.out.print(word + ' ');
         }
-
-        scanner.close();
     }
 
     public static String[] removeNulls(String[] sentence) {
