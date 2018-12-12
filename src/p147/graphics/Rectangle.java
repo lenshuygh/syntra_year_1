@@ -6,6 +6,28 @@ public class Rectangle {
     private int x;
     private int y;
 
+    public Rectangle() {
+    }
+
+    public Rectangle(int heigth, int width) {
+        this.heigth = heigth;
+        this.width = width;
+    }
+
+    public Rectangle(int heigth, int width, int x, int y) {
+        this.heigth = heigth;
+        this.width = width;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Rectangle(Rectangle rectangle){
+        this.setX(rectangle.getX());
+        this.setY(rectangle.getY());
+        this.setWidth(rectangle.getWidth());
+        this.setHeigth(rectangle.getHeigth());
+    }
+
     public int getHeigth() {
         return heigth;
     }

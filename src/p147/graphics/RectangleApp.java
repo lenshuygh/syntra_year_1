@@ -44,11 +44,25 @@ public class RectangleApp {
         r3.setY(-2);
         r3.setWidth(-15);
         r3.setHeigth(-20);
+
+        System.out.println();
         System.out.println("h: "+  r3.getHeigth());
         System.out.println("w: " + r3.getWidth());
         System.out.println("x: " + r3.getX());
         System.out.println("y: "+  r3.getY());
 
+        Rectangle r4 = new Rectangle(10,20);
+
+    }
+
+
+    public void printRectangleData(Rectangle r3){
+
+        System.out.println();
+        System.out.println("h: "+  r3.getHeigth());
+        System.out.println("w: " + r3.getWidth());
+        System.out.println("x: " + r3.getX());
+        System.out.println("y: "+  r3.getY());
 
     }
 }
