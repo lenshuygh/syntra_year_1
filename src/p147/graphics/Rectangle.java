@@ -1,21 +1,33 @@
 package p147.graphics;
 
 public class Rectangle {
+    public static int angles = 4;
+    public static int angles2;
+    public static int objectCount = 0;
     private int heigth;
     private int width;
     private int x;
     private int y;
 
+
+    {
+        objectCount++;
+    }
+
+    static {
+        angles2 = 4;
+    }
+
     public Rectangle() {
-        this(0,0);
+        this(0, 0);
     }
 
     public Rectangle(int heigth, int width) {
-        this(heigth,width,0,0);
+        this(heigth, width, 0, 0);
     }
 
-    public Rectangle(Rectangle rectangle){
-        this(rectangle.getHeigth(),rectangle.getWidth(),rectangle.getX(),rectangle.getY());
+    public Rectangle(Rectangle rectangle) {
+        this(rectangle.getHeigth(), rectangle.getWidth(), rectangle.getX(), rectangle.getY());
     }
 
     public Rectangle(int heigth, int width, int x, int y) {
@@ -24,7 +36,6 @@ public class Rectangle {
         this.setX(x);
         this.setY(y);
     }
-
 
 
     public int getHeigth() {
@@ -49,7 +60,7 @@ public class Rectangle {
     }
 
     public void setX(int x) {
-        this.x = (x < 0)? 0 : x;
+        this.x = (x < 0) ? 0 : x;
     }
 
     public int getY() {
@@ -60,22 +71,22 @@ public class Rectangle {
         this.y = (y < 0) ? 0 : y;
     }
 
-    public void grow(int d){
-        this.setWidth( (this.width+d < 0) ? 0 : this.width+d);
-        this.setHeigth( (this.heigth+d < 0 ) ? 0 : this.heigth+d);
+    public void grow(int d) {
+        this.setWidth((this.width + d < 0) ? 0 : this.width + d);
+        this.setHeigth((this.heigth + d < 0) ? 0 : this.heigth + d);
     }
 
-    public void setPosition(int x,int y){
+    public void setPosition(int x, int y) {
         this.setX(x);
         this.setY(y);
     }
 
-    public double getArea(){
-        return width*heigth;
+    public double getArea() {
+        return width * heigth;
     }
 
-    public int getPerimeter(){
-        return 2*(width+heigth);
+    public int getPerimeter() {
+        return 2 * (width + heigth);
     }
 
 

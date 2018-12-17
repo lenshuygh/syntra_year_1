@@ -54,11 +54,19 @@ public class RectangleApp {
         Rectangle r5 = new Rectangle(r4);
 
         printRectangleData(r5);
+
+        System.out.println();
+        System.out.println("angles: " + Rectangle.angles);
+
+        System.out.println();
+        System.out.println("angles2: " + Rectangle.angles2);
     }
 
 
     public static void printRectangleData(Rectangle r3){
 
+        System.out.println();
+        System.out.println("ObjectCount =  " + Rectangle.objectCount);
         System.out.println();
         System.out.println("h: "+  r3.getHeigth());
         System.out.println("w: " + r3.getWidth());
