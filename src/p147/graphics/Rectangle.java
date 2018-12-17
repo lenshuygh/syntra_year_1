@@ -3,7 +3,7 @@ package p147.graphics;
 public class Rectangle {
     public static int angles = 4;
     public static int angles2;
-    public static int objectCount = 0;
+    private static int objectCount = 0;
     private int heigth;
     private int width;
     private int x;
@@ -89,5 +89,7 @@ public class Rectangle {
         return 2 * (width + heigth);
     }
 
-
+    public static int getCount(){
+        return objectCount;
+    }
 }

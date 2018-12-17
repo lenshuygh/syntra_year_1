@@ -1,5 +1,7 @@
 package p147.graphics;
 
+import static p147.graphics.Rectangle.getCount;
+
 public class RectangleApp {
     public static void main(String[] args) {
         System.out.println("This program uses a rectangle");
@@ -66,7 +68,7 @@ public class RectangleApp {
     public static void printRectangleData(Rectangle r3){
 
         System.out.println();
-        System.out.println("ObjectCount =  " + Rectangle.objectCount);
+        System.out.println("ObjectCount =  " + getCount());
         System.out.println();
         System.out.println("h: "+  r3.getHeigth());
         System.out.println("w: " + r3.getWidth());
