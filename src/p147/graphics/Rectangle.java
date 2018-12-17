@@ -7,26 +7,25 @@ public class Rectangle {
     private int y;
 
     public Rectangle() {
+        this(0,0);
     }
 
     public Rectangle(int heigth, int width) {
-        this.heigth = heigth;
-        this.width = width;
-    }
-
-    public Rectangle(int heigth, int width, int x, int y) {
-        this.heigth = heigth;
-        this.width = width;
-        this.x = x;
-        this.y = y;
+        this(heigth,width,0,0);
     }
 
     public Rectangle(Rectangle rectangle){
-        this.setX(rectangle.getX());
-        this.setY(rectangle.getY());
-        this.setWidth(rectangle.getWidth());
-        this.setHeigth(rectangle.getHeigth());
+        this(rectangle.getX(),rectangle.getY(),rectangle.getHeigth(),rectangle.getWidth());
     }
+
+    public Rectangle(int heigth, int width, int x, int y) {
+        this.setHeigth(heigth);
+        this.setWidth(width);
+        this.setX(x);
+        this.setY(y);
+    }
+
+
 
     public int getHeigth() {
         return heigth;

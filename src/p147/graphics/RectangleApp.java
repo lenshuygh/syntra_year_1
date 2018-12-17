@@ -45,18 +45,19 @@ public class RectangleApp {
         r3.setWidth(-15);
         r3.setHeigth(-20);
 
-        System.out.println();
-        System.out.println("h: "+  r3.getHeigth());
-        System.out.println("w: " + r3.getWidth());
-        System.out.println("x: " + r3.getX());
-        System.out.println("y: "+  r3.getY());
+        printRectangleData(r3);
 
         Rectangle r4 = new Rectangle(10,20);
 
+        printRectangleData(r4);
+
+        Rectangle r5 = new Rectangle(r4);
+
+        printRectangleData(r5);
     }
 
 
-    public void printRectangleData(Rectangle r3){
+    public static void printRectangleData(Rectangle r3){
 
         System.out.println();
         System.out.println("h: "+  r3.getHeigth());
