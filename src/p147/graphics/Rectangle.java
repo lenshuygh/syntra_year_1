@@ -15,7 +15,7 @@ public class Rectangle {
     }
 
     public Rectangle(Rectangle rectangle){
-        this(rectangle.getX(),rectangle.getY(),rectangle.getHeigth(),rectangle.getWidth());
+        this(rectangle.getHeigth(),rectangle.getWidth(),rectangle.getX(),rectangle.getY());
     }
 
     public Rectangle(int heigth, int width, int x, int y) {
