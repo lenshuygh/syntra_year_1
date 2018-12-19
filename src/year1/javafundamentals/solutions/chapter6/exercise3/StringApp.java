@@ -19,6 +19,14 @@ public class StringApp {
         }
         System.out.println("Amount of letter 'e': " + amountOfE);
 
+        amountOfE = 0;
+        for(int i = 0; i < textLine.length(); i++){
+            if(textLine.charAt(i) == 'e'){
+                amountOfE++;
+            }
+        }
+        System.out.println("Amount of letter 'e': " + amountOfE);
+
         String firstString = "This is the first String";
         String secondString = "This is the second String";
         System.out.println("Are the Strings equal? " + firstString.equals(secondString));
