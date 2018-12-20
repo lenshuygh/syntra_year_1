@@ -16,4 +16,12 @@ public class CadeauArray {
     public Cadeau[] getCadeauArray(){
         return cadeauArray;
     }
+
+    public int getSize() {
+        return cadeauArray.length;
+    }
+
+    public void setReceiver(String receiver,int index) {
+        cadeauArray[index].setReceiver(receiver);
+    }
 }
