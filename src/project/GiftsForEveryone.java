@@ -9,7 +9,7 @@ public class GiftsForEveryone {
 
         addGift(cadeauArray);
 
-        shuffleGifts(cadeauArray);
+        assignRandomReceivers(cadeauArray);
 
         printGifts(cadeauArray);
     }
@@ -37,40 +37,18 @@ public class GiftsForEveryone {
         } while (filledIn);
     }
 
-    private static void shuffleGifts(CadeauArray cadeauArray) {
+    private static void assignRandomReceivers(CadeauArray cadeauArray) {
         int max = cadeauArray.getSize();
         Random random = new Random();
-        Cadeau[] giftsWithReceiver = new Cadeau[max];
-        for (int i = 0; i < cadeauArray.getCadeauArray().length; i++) {
-            Cadeau cadeauInNeedOfReceiver = cadeauArray.getCadeauArray()[i];
-            boolean giftOK = false;
-            int c = 0;
-            do{
-                Cadeau randomGift = cadeauArray.getCadeauArray()[random.nextInt(max)];
-                System.out.println();
-                System.out.println(cadeauInNeedOfReceiver.getGift());
-                System.out.println("---------------------");
-                System.out.println("trying for -> " + randomGift.getGift());
-                if(randomGift.getReceiver() != null){
-                    System.out.println(randomGift.getGift() +" already given");
-                    continue;
-                }
-                if(cadeauInNeedOfReceiver.getGiver().equalsIgnoreCase(randomGift.getGiver())){
-                    System.out.println("giver = giver");
-                    continue;
-                }
-                giftOK = true;
-                if(giftOK){
-                    cadeauArray.setReceiver(randomGift.getGiver(),i);
-                }
-                System.out.println('#'+(c++));
-            } while(!giftOK);
+        for (Cadeau cadeau : cadeauArray.getCadeauArray()) {
+            System.out.println(cadeau);
+
         }
     }
 
     private static void printGifts(CadeauArray cadeauArray) {
         for (Cadeau cadeau : cadeauArray.getCadeauArray()) {
-            System.out.print(cadeau.getGiver());
+            System.out.print(cadeau.getPerson());
             System.out.print(" gifts ");
             System.out.print(cadeau.getGift());
             System.out.println(" to " + cadeau.getReceiver());

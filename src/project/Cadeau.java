@@ -1,34 +1,37 @@
 package project;
 
 public class Cadeau {
-    private static int count = 0 ;
-    private String giver ;
-    private String receiver ;
+    private static int count;
+    private int id;
+    private String person;
+    private String receiver = "";
     private String gift ;
 
     {
-      count++;
+        count++;
     }
 
-    public Cadeau (String giver, String gift){
-        this.setGiver(giver);
+    public Cadeau (String person, String gift){
+        this.id = count;
+        this.setPerson(person);
         this.setGift(gift);
+        System.out.println("count from constructor -> " + count);
     }
 
     private void setGift(String gift) {
         this.gift=gift;
     }
 
-    private void setGiver(String giver) {
-        this.giver=giver;
+    private void setPerson(String person) {
+        this.person = person;
     }
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
-    public String getGiver () {
-        return this.giver;
+    public String getPerson() {
+        return this.person;
     }
     public String getReceiver() {
         return this.receiver;
@@ -39,6 +42,16 @@ public class Cadeau {
     }
     public int getCount(){
         return count;
+    }
+
+    @Override
+    public String toString() {
+        return "Cadeau{" +
+                "#" + id +
+                ": person='" + person + '\'' +
+                ", gift='" + gift + '\'' +
+                ", receiver='" + receiver + '\'' +
+                '}';
     }
 
 }
