@@ -15,7 +15,6 @@ public class Cadeau {
         this.id = count;
         this.setPerson(person);
         this.setGift(gift);
-        System.out.println("count from constructor -> " + count);
     }
 
     private void setGift(String gift) {

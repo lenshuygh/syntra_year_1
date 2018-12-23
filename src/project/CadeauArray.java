@@ -33,4 +33,17 @@ public class CadeauArray {
         }
         return false;
     }
+
+    public Cadeau getCadeauAtIndex(int randomIndex) {
+        return cadeauArray[randomIndex];
+    }
+
+    public boolean checkIfReceiverWasUsed(Cadeau randomCadeauToUseItsPerson) {
+        for (Cadeau cadeau : cadeauArray) {
+            if(cadeau.getReceiver().equals(randomCadeauToUseItsPerson.getPerson())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
