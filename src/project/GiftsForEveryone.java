@@ -64,6 +64,11 @@ public class GiftsForEveryone {
                         for (int j = 0; j < assignedReceivers.length; j++) {
                             assignedReceivers[j] = -1;
                         }
+                        // assign -1 to i to get the big for i loop to start again from 0
+                        // after the 'break' below we exit the do-while
+                        // the for-i will be continued, first thing it does is the 'i++' statement
+                        // so the first value that i refers to will be 0 now (i++ after i = -1)
+                        // assignedReceiverCounter is set to 0 because we start the whole process again
                         i = -1;
                         assignedReceiverCounter = 0;
                         break;
@@ -72,6 +77,12 @@ public class GiftsForEveryone {
                 }
                 if (receiverOk) {
                     assignedReceivers[assignedReceiverCounter++] = randomReceiverNumber;
+                    // all checks were ok so we can assign a receiver to the current gift
+                    // we get the random gift (to use this gift's receiver) by getting the cadeauArray at the random element then
+                    // we get the person (to assign to the current gift as receiver) by using the method getPerson on the random gift
+                    // the 'person' from the randomly found gift is then set as the receiver in the current gift by the method
+                    // 'setReceiver' this method sends the 'person' and index to the cadeauArray-class to set
+                    // the random person as a receiver for the gist at the specified index
                     cadeauArray.setReceiver(cadeauArray.getCadeauArray()[randomReceiverNumber].getPerson(), i);
                 }
             } while (!receiverOk);
