@@ -46,58 +46,33 @@ public class GiftsForEveryone {
         }
         int assignedReceiverCounter = 0;
         for (int i = 0; i < cadeauArray.getCadeauArray().length; i++) {
-            System.out.println("i -> " + i);
             boolean receiverOk;
             do {
                 receiverOk = true;
                 int randomReceiverNumber = random.nextInt(max);
-                System.out.println("new random #" + randomReceiverNumber);
                 //check if the number was already assigned
                 for (int assignedReceiver : assignedReceivers) {
                     if (assignedReceiver == randomReceiverNumber) {
                         receiverOk = false;
-                        System.out.println();
-                        System.out.println("** ERROR: i: " + i + " number was used **");
-                        System.out.println();
                     }
                 }
-                //check if the number is tha same
+                //check if the number is the same
                 if (i == randomReceiverNumber) {
-                    System.out.println();
-                    System.out.println("** ERROR: random = i (= " + i + " =) **");
-                    System.out.println();
-
-
                     //if the last cadeau is left and the last number is the same there's an endless loop of trying to assign it
                     //restart the while if and reassign -1 to the array of found randoms
-                    System.out.print("i= " + i);
-                    System.out.print(" ,max = " + max);
-                    System.out.println(" ,foundArrayLength: " + assignedReceivers.length);
                     if (i == (max - 1) && (assignedReceivers.length == max) && (receiverOk)) {
-                        System.out.println(" **** LOOOOOOOOOOOOOOOOOOOOOOOOOOOOP **** ");
                         for (int j = 0; j < assignedReceivers.length; j++) {
                             assignedReceivers[j] = -1;
                         }
                         i = -1;
                         assignedReceiverCounter = 0;
                         break;
-
-
                     }
-
                     receiverOk = false;
                 }
-
-
                 if (receiverOk) {
-                    System.out.println(" MATCH MADE ");
                     assignedReceivers[assignedReceiverCounter++] = randomReceiverNumber;
                     cadeauArray.setReceiver(cadeauArray.getCadeauArray()[randomReceiverNumber].getPerson(), i);
-                }
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             } while (!receiverOk);
 
