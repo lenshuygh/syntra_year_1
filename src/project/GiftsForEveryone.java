@@ -60,7 +60,7 @@ public class GiftsForEveryone {
                 if (i == randomReceiverNumber) {
                     //if the last cadeau is left and the last number is the same there's an endless loop of trying to assign it
                     //restart the while if and reassign -1 to the array of found randoms
-                    if (i == (max - 1) && (assignedReceivers.length == max) && (receiverOk)) {
+                    if (i == (max - 1) && (receiverOk)) {
                         for (int j = 0; j < assignedReceivers.length; j++) {
                             assignedReceivers[j] = -1;
                         }
