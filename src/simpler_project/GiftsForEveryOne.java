@@ -19,7 +19,7 @@ public class GiftsForEveryOne {
         Scanner scanner = new Scanner(System.in);
         int counter = 0;
         while (counter < cadeauArray.length) {
-            System.out.print("Give your name; ");
+            System.out.print("Give your name: ");
             String buyer = scanner.nextLine();
             System.out.print("What did you buy: ");
             String gift = scanner.nextLine();
@@ -129,52 +129,60 @@ public class GiftsForEveryOne {
     }
 
     public static void shuffleCadeaus_WithAllControls() {
-        int maxRandom = cadeauArray.length;
-        Random random = new Random();
-        int[] usedRandomArray = new int[cadeauArray.length];
-        //set all values to -1 otherwise they are 0 and we need to be able to check if a value here is not 0
-        // don't use a for-each to assign values to an array, this doesn't work
-        for (int i = 0; i < usedRandomArray.length; i++) {
-            usedRandomArray[i] = -1;
-        }
-        int usedRandomArrayCounter = 0;
-        for (int i = 0; i < cadeauArray.length; i++) {
-
-            boolean randomNumberIsAlreadyUsed = true;
-            boolean randomNumberIsSameAsIndex = true;
-            int myRandom = -1;
-
-            //find a good randomNumber
-            while (randomNumberIsAlreadyUsed || randomNumberIsSameAsIndex) {
-                randomNumberIsAlreadyUsed = false;
-                myRandom = random.nextInt(maxRandom);
-
-                // check if the random is not the same as the current index
-                // can not give the gift to yourself
-                // of it is different we go to the next check
-
-                // EXTRA: if it is the last element and it is the same there would be an infinite loop
-                if (myRandom != i) {
-                    randomNumberIsSameAsIndex = false;
-                    //check if it is already used
-                    for (int usedRandomNumber : usedRandomArray) {
-                        if (myRandom == usedRandomNumber) {
-                            randomNumberIsAlreadyUsed = true;
-                            break;
-                        }
-                    }
-                }else{
-                    if(usedRandomArrayCounter == maxRandom - 1) {
-                        System.out.println("*****************loop***************");
-                    }
-                    randomNumberIsSameAsIndex = true;
-                }
+        boolean restartShuffle = false;
+        do {
+            int maxRandom = cadeauArray.length;
+            Random random = new Random();
+            int[] usedRandomArray = new int[cadeauArray.length];
+            //set all values to -1 otherwise they are 0 and we need to be able to check if a value here is not 0
+            // don't use a for-each to assign values to an array, this doesn't work
+            for (int i = 0; i < usedRandomArray.length; i++) {
+                usedRandomArray[i] = -1;
             }
-            // found a good randomNumber that was not used already, so we put it in the array of used numbers
-            // and we use its buyer and assign that as a receiver
-            usedRandomArray[usedRandomArrayCounter++] = myRandom;
-            String foundReceiver = cadeauArray[myRandom].getBuyer();
-            cadeauArray[i].setReceiver(foundReceiver);
-        }
+            int usedRandomArrayCounter = 0;
+            for (int i = 0; i < cadeauArray.length; i++) {
+
+                boolean randomNumberIsAlreadyUsed = true;
+                boolean randomNumberIsSameAsIndex = true;
+                int myRandom = -1;
+
+                //find a good randomNumber
+                while (randomNumberIsAlreadyUsed || randomNumberIsSameAsIndex) {
+                    randomNumberIsAlreadyUsed = false;
+                    myRandom = random.nextInt(maxRandom);
+
+                    // check if the random is not the same as the current index
+                    // can not give the gift to yourself
+                    // of it is different we go to the next check
+
+
+                    if (myRandom != i) {
+                        randomNumberIsSameAsIndex = false;
+                        //check if it is already used
+                        for (int usedRandomNumber : usedRandomArray) {
+                            if (myRandom == usedRandomNumber) {
+                                randomNumberIsAlreadyUsed = true;
+                                break;
+                            }
+                        }
+                    } else {
+
+                        randomNumberIsSameAsIndex = true;
+                    }
+
+                    // EXTRA: if it is the last element and it is the same (i == random) AND the random is not in the array of used randoms -> there would be an infinite loop
+                    if ((usedRandomArrayCounter == maxRandom - 1) && (!randomNumberIsAlreadyUsed) && (randomNumberIsSameAsIndex)) {
+                        System.out.println("*****************loop***************");
+                        //restartShuffle = true;
+                        //break;
+                    }
+                }
+                // found a good randomNumber that was not used already, so we put it in the array of used numbers
+                // and we use its buyer and assign that as a receiver
+                usedRandomArray[usedRandomArrayCounter++] = myRandom;
+                String foundReceiver = cadeauArray[myRandom].getBuyer();
+                cadeauArray[i].setReceiver(foundReceiver);
+            }
+        }while (restartShuffle);
     }
 }
