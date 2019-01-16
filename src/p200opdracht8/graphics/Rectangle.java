@@ -1,5 +1,7 @@
 package p200opdracht8.graphics;
 
+import java.util.Objects;
+
 /**
  * Created by JonathanSyntra on 4/12/2016.
  */
@@ -77,5 +79,20 @@ public class Rectangle extends Shape {
                 ", width=" + width +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rectangle rectangle = (Rectangle) o;
+        return height == rectangle.height &&
+                width == rectangle.width &&
+                Objects.equals(description, rectangle.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(height, width, description);
     }
 }

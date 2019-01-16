@@ -1,5 +1,7 @@
 package p200opdracht8.graphics;
 
+import java.util.Objects;
+
 /**
  * Created by JonathanSyntra on 26/12/2016.
  */
@@ -84,5 +86,20 @@ public class Triangle extends Shape {
                 ", width=" + width +
                 ", perpendicular=" + perpendicular +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return height == triangle.height &&
+                width == triangle.width &&
+                perpendicular == triangle.perpendicular;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(height, width, perpendicular);
     }
 }

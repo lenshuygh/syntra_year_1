@@ -1,5 +1,7 @@
 package p200opdracht8.graphics;
 
+import java.util.Objects;
+
 /**
  * Created by JonathanSyntra on 5/12/2016.
  */
@@ -64,5 +66,18 @@ public class Circle extends Shape {
         return "Circle{" +
                 "radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Circle circle = (Circle) o;
+        return radius == circle.radius;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(radius);
     }
 }

@@ -1,5 +1,7 @@
 package p200opdracht8.graphics;
 
+import java.util.Objects;
+
 /**
  * Created by JonathanSyntra on 5/12/2016.
  */
@@ -55,5 +57,19 @@ public class Square extends Rectangle {
         return "Square{" +
                 "description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Square square = (Square) o;
+        return Objects.equals(description, square.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), description);
     }
 }
