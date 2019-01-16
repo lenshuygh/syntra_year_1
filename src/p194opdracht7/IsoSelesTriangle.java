@@ -21,19 +21,21 @@ public class IsoSelesTriangle extends Triangle{
     }
 
     public IsoSelesTriangle(IsoSelesTriangle isoSelesTiangle){
-        setWidth(isoSelesTiangle.getWidth());
-        setHeight(isoSelesTiangle.getHeight());
-        setX(isoSelesTiangle.getX());
-        setY(isoSelesTiangle.getY());
+        this(isoSelesTiangle.getWidth(),isoSelesTiangle.getHeight(),isoSelesTiangle.getX(),isoSelesTiangle.getY());
     }
 
     @Override
     public void setWidth(int width) {
+        this.setPerpendicular(width/2);
+        /*
+        super.setPerpendicular(width/2);
         super.setWidth(width);
+        */
     }
 
     public void setPerpendicular(int perpendicular){
         super.setPerpendicular(perpendicular);
+        super.setWidth(this.getPerpendicular()*2);
     }
 
     public static int getCount() {

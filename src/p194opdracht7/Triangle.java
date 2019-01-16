@@ -23,16 +23,11 @@ public class Triangle extends Shape {
         this.setWidth(width);
         this.setHeight(height);
         this.setPerpendicular(perpendicular);
-        setX(x);
-        setY(y);
+        this.setPosition(x,y);
     }
 
     public Triangle(Triangle triangle){
-        this.setWidth(triangle.getWidth());
-        this.setHeight(triangle.getHeight());
-        this.setPerpendicular(triangle.getPerpendicular());
-        this.setX(triangle.getX());
-        this.setY(triangle.getY());
+        this(triangle.getWidth(),triangle.getHeight(),triangle.getPerpendicular(),triangle.getX(),triangle.getY());
     }
 
     public int getHeight() {
