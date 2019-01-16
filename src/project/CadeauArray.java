@@ -16,4 +16,34 @@ public class CadeauArray {
     public Cadeau[] getCadeauArray(){
         return cadeauArray;
     }
+
+    public int getSize() {
+        return cadeauArray.length;
+    }
+
+    public void setReceiver(String receiver,int index) {
+        cadeauArray[index].setReceiver(receiver);
+    }
+
+    public boolean isAlreadyGiven(Cadeau randomGift) {
+        for (Cadeau cadeau : cadeauArray) {
+            if(cadeau.getReceiver().equals(randomGift.getPerson())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Cadeau getCadeauAtIndex(int randomIndex) {
+        return cadeauArray[randomIndex];
+    }
+
+    public boolean checkIfReceiverWasUsed(Cadeau randomCadeauToUseItsPerson) {
+        for (Cadeau cadeau : cadeauArray) {
+            if(cadeau.getReceiver().equals(randomCadeauToUseItsPerson.getPerson())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
