@@ -5,28 +5,25 @@ import java.util.Scanner;
 public class ex_14_11_18_while_loops {
     public static void main(String[] args) {
         int number1 = 0;
-        boolean firstNumberIsAllreadyEntered = false;
+        boolean firstNumberAsked = false;
         Scanner scanner = new Scanner(System.in);
         float result = 0F;
         String operator = "";
 
         while (!operator.equals("=")) {
             //only the first time the first number needs to be asked to put in
-            if (!firstNumberIsAllreadyEntered) {
-                //firstNumberIsAllreadyEntered <- this boolean is true if the first number was entered, this is sent to the method to
-                // be used to display the correct message ('enter first number' or 'enter number')
-                number1 = getNumber(scanner, firstNumberIsAllreadyEntered);
-                result = (float) number1;
-                firstNumberIsAllreadyEntered = true;
+            if(!firstNumberAsked) {
+                number1 = getNumber(scanner, firstNumberAsked);
+                result =(float) number1;
+                firstNumberAsked = true;
+
             }
             operator = getOperator(scanner);
-            // if '=' is entered we exit this loop, and the first thing we do after the loop is print the result
-            // the result was calculated the previous time the loop was performed
             if (operator.equals("=")) {
                 break;
             }
 
-            int numberX = getNumber(scanner, firstNumberIsAllreadyEntered);
+            int numberX = getNumber(scanner,firstNumberAsked);
             switch (operator) {
                 case "+":
                     result += numberX;
@@ -63,7 +60,7 @@ public class ex_14_11_18_while_loops {
         return in;
     }
 
-    private static int getNumber(Scanner scanner, boolean firstNumberAsked) {
+    private static int getNumber(Scanner scanner,boolean firstNumberAsked) {
         boolean notANumber = true;
         String in = "";
         while (notANumber) {
