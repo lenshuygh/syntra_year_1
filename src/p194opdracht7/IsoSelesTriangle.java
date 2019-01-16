@@ -1,26 +1,26 @@
 package p194opdracht7;
 
-public class IsoSelesTiangle extends Triangle{
+public class IsoSelesTriangle extends Triangle{
     private static int count;
 
     {
         count++;
     }
 
-    public IsoSelesTiangle(){
+    public IsoSelesTriangle(){
         this(0,0);
     }
-    public IsoSelesTiangle(int width,int height){
+    public IsoSelesTriangle(int width,int height){
        this(width,height,0,0);
     }
-    public IsoSelesTiangle(int width,int height,int x,int y){
+    public IsoSelesTriangle(int width,int height,int x,int y){
         setWidth(width);
         setHeight(height);
         setX(x);
         setY(y);
     }
 
-    public IsoSelesTiangle(IsoSelesTiangle isoSelesTiangle){
+    public IsoSelesTriangle(IsoSelesTriangle isoSelesTiangle){
         setWidth(isoSelesTiangle.getWidth());
         setHeight(isoSelesTiangle.getHeight());
         setX(isoSelesTiangle.getX());
