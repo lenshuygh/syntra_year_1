@@ -44,4 +44,6 @@ public class IsoScelesTriangle extends Triangle {
     public static int getCount() {
         return count;
     }
+
+
 }

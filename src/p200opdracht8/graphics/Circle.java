@@ -59,5 +59,10 @@ public class Circle extends Shape {
         return count;
     }
 
-
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "radius=" + radius +
+                '}';
+    }
 }

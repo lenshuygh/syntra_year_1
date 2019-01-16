@@ -76,4 +76,13 @@ public class Triangle extends Shape {
     public static int getCount() {
         return count;
     }
+
+    @Override
+    public String toString() {
+        return "Triangle{" +
+                "height=" + height +
+                ", width=" + width +
+                ", perpendicular=" + perpendicular +
+                '}';
+    }
 }

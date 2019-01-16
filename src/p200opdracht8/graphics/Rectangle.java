@@ -69,4 +69,13 @@ public class Rectangle extends Shape {
     public static int getCount(){
         return count;
     }
+
+    @Override
+    public String toString() {
+        return "Rectangle{" +
+                "height=" + height +
+                ", width=" + width +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
