@@ -9,6 +9,8 @@ public class DrawingApp {
     public static void main(String[] args) {
         Drawing drawing = new Drawing();
 
+
+
         Shape square1 = new Square(8);
         drawing.add(square1);
         System.out.println("size of array in drawing: " + drawing.getSize());

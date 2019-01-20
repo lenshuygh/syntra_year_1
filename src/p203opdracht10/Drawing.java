@@ -7,17 +7,26 @@ public class Drawing {
     private int size = 0;
 
     public void add(Shape shape){
-        for (int i = 0; i < shapes.length; i++) {
-            if(shape.equals(shapes[i])){
-                break;
-            }
-            if(shapes[i] == null){
-                shapes[i] = shape;
-                size++;
-                break;
+        if(shape != null) {
+            if(!shapeAlreadyPresent(shape)) {
+                for (int i = 0; i < shapes.length; i++) {
+                    if (shapes[i] == null) {
+                        shapes[i] = shape;
+                        size++;
+                        break;
+                    }
+                }
             }
         }
+    }
 
+    private boolean shapeAlreadyPresent(Shape shape) {
+        for (int i = 0; i < shapes.length; i++) {
+            if (shape.equals(shapes[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void remove (Shape shape){
