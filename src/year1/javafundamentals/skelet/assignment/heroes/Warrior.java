@@ -16,6 +16,7 @@ public class Warrior extends Human{
     public int calculateReceiveDamage(int damage, Character enemy) {
         int damageToReceive = super.calculateDamage();
         int diceRoll = getRandom().nextInt(100);
+        // todo: use percentage
         if(getCurrentHealthPool() < 25){
             if(diceRoll <= getAgility() / 20){
                 System.out.printf("!!!!!!!!%s Has dodged an attack!%n",this.getName());

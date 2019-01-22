@@ -30,6 +30,7 @@ public class Barbarian extends Human{
     @Override
     public int calculateDamage() {
         int damage = super.calculateDamage();
+        // todo: use percentage
         if(getCurrentHealthPool() < (getHealthPoolMax() / 2)){
             System.out.printf("!!!!!!!!%s Has triggered 10%% more damage!%n",this.getName());
             damage *= 1.1;
