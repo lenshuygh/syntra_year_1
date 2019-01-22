@@ -28,7 +28,7 @@ public class Wizard extends Elf {
         int diceRoll = getRandom().nextInt(100);
         if(diceRoll <= getIntelligence() / 30){
             System.out.printf("!!!!!!!%s Has triggered 50%% block of incoming damage!%n",this.getName());
-            damage *= 0.5;
+            damageToReceive *= 0.5;
         }
         return damageToReceive;
     }

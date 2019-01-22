@@ -30,8 +30,8 @@ public class Barbarian extends Human{
     @Override
     public int calculateDamage() {
         int damage = super.calculateDamage();
-        int diceRoll = getRandom().nextInt(100);
         if(getCurrentHealthPool() < (getHealthPoolMax() / 2)){
+            System.out.printf("!!!!!!!!%s Has triggered 10%% more damage!%n",this.getName());
             damage *= 1.1;
         }
         return damage;

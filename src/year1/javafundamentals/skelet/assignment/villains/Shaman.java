@@ -24,6 +24,11 @@ public class Shaman extends Orc {
         }else if(enemy instanceof Barbarian){
             damageToReceive *= 0.9;
         }
+        int diceRoll = getRandom().nextInt(100);
+        if(diceRoll <= getIntelligence() / 10) {
+            damageToReceive *= 0.8;
+            System.out.printf("!!!!!!!!%s Has triggered a block of 20%% of incoming damage",this.getName());
+        }
         return damageToReceive;
     }
 }
