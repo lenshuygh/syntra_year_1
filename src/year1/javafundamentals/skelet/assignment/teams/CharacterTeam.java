@@ -6,7 +6,6 @@ import java.util.Random;
 
 public abstract class CharacterTeam {
     Character[] characters;
-    Random random;
 
     public CharacterTeam(int size) {
         characters = new Character[size];

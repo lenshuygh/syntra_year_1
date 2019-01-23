@@ -14,6 +14,7 @@ public class Vampire extends Undead {
     @Override
     public int calculateDamage() {
         int damage = super.calculateDamage();
+        // todo: check if this is the right method to add health
         updateHealthPool(damage / 10);
         return damage;
     }
