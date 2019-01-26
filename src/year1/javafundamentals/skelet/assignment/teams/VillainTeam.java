@@ -12,9 +12,8 @@ public class VillainTeam extends CharacterTeam{
 
     @Override
     Character generateRandomCharacter() {
-        int rando = getRandom().nextInt(4);
         Villain villain;
-        switch (rando) {
+        switch (getRandom().nextInt(4)) {
             case 0:
                 villain = new Archer(50, 150, 100);
                 break;
@@ -24,10 +23,6 @@ public class VillainTeam extends CharacterTeam{
             case 2:
                 villain = new Berserker(150, 100, 50);
                 break;
-            case 3:
-                villain = new Shaman(50, 100, 150);
-                break;
-                // todo: check if case 3 can be replaced by the default
             default:
                 villain = new Shaman(50, 100, 150);
         }
