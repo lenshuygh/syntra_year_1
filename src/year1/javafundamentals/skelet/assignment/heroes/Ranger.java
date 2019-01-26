@@ -13,7 +13,6 @@ import year1.javafundamentals.skelet.assignment.villains.Shaman;
  */
 public class Ranger extends Elf {
 
-
     public Ranger(int strength, int agility, int intelligence) {
         super(strength, agility, intelligence);
     }

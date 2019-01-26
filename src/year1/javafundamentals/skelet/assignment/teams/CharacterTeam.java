@@ -5,7 +5,9 @@ import year1.javafundamentals.skelet.assignment.Character;
 import java.util.Random;
 
 public abstract class CharacterTeam {
-    Character[] characters;
+    private Character[] characters;
+    private Random random;
+
 
     public CharacterTeam(int size) {
         characters = new Character[size];
@@ -17,7 +19,8 @@ public abstract class CharacterTeam {
     }
 
     public Random getRandom() {
-        return new Random();
+        random = new Random();
+        return random;
     }
 
     private void generateCharacterTeam(){
@@ -26,5 +29,5 @@ public abstract class CharacterTeam {
         }
     }
 
-    abstract Character generateRandomCharacter();
+    abstract protected Character generateRandomCharacter();
 }

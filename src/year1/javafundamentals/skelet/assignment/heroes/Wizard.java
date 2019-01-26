@@ -13,6 +13,7 @@ import year1.javafundamentals.skelet.assignment.villains.Shaman;
  *
  */
 public class Wizard extends Elf {
+
     public Wizard(int strength, int agility, int intelligence) {
         super(strength, agility, intelligence);
     }

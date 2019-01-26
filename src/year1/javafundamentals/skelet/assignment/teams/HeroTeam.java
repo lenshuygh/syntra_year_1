@@ -10,7 +10,7 @@ public class HeroTeam extends CharacterTeam {
     }
 
     @Override
-    Character generateRandomCharacter() {
+    protected Character generateRandomCharacter() {
         Hero hero;
         switch (getRandom().nextInt(4)) {
             case 0:

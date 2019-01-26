@@ -10,6 +10,7 @@ import year1.javafundamentals.skelet.assignment.villains.Undead;
  *
  */
 public abstract class Elf extends Hero{
+
     public Elf(int strength, int agility, int intelligence) {
         super(strength, agility, intelligence);
     }

@@ -11,7 +11,7 @@ public class VillainTeam extends CharacterTeam{
     }
 
     @Override
-    Character generateRandomCharacter() {
+    protected Character generateRandomCharacter() {
         Villain villain;
         switch (getRandom().nextInt(4)) {
             case 0:

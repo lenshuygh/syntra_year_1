@@ -19,10 +19,9 @@ public class Warrior extends Human{
         if(getCurrentHealthPool() < (getHealthPoolMax() /4)){
             if(diceRoll <= getAgility() / 20){
                 System.out.printf("!!!!!!!!%s Has dodged an attack!%n",this.getName());
-                damage = 0;
+                damageToReceive = 0;
             }
         }
-        return damage;
-
+        return damageToReceive;
     }
 }

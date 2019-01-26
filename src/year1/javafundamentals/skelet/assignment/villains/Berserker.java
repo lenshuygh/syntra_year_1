@@ -18,8 +18,7 @@ public class Berserker extends Orc{
     @Override
     public int calculateDamage() {
         int damage = super.calculateDamage();
-        // todo: check if this returns a percentage, if not need to calculate it here or in a static method up the chain
-        if(getCurrentHealthPool() < 25){
+        if(getCurrentHealthPool() < (getHealthPoolMax() /4)){
             System.out.printf("!!!!!!!%s Has triggered 20%% more damage!%n",this.getName());
             damage *= 1.2;
         }

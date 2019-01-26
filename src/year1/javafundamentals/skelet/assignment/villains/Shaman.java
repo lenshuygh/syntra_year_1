@@ -27,7 +27,7 @@ public class Shaman extends Orc {
         int diceRoll = getRandom().nextInt(100);
         if(diceRoll <= getIntelligence() / 10) {
             damageToReceive *= 0.8;
-            System.out.printf("!!!!!!!!%s Has triggered a block of 20%% of incoming damage",this.getName());
+            System.out.printf("!!!!!!!!%s Has triggered a block of 20%% of incoming damage!%n",this.getName());
         }
         return damageToReceive;
     }
