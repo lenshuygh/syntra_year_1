@@ -23,5 +23,7 @@ public class TimeDuration {
 
         long daysTotal = ChronoUnit.DAYS.between(myBdate,now);
         System.out.println("age in days: " +daysTotal);
+        System.out.println("age in weeks: " + ChronoUnit.WEEKS.between(myBdate,now));
+        System.out.println("age in moths: " + ChronoUnit.MONTHS.between(myBdate,now));
     }
 }
