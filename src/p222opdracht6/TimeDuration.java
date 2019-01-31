@@ -11,6 +11,14 @@ public class TimeDuration {
 
         Period period = Period.between(myBdate,now);
 
+
+        //teacherSolution
+        Period birthUntillNowPeriod = myBdate.until(now);
+        System.out.println("days: " + birthUntillNowPeriod.getDays());
+        System.out.println("months: " + birthUntillNowPeriod.getMonths());
+        System.out.println("years: " + birthUntillNowPeriod.getYears());
+        //
+
         long years = period.getYears();
         period = period.minusYears(years);
         long months = period.getMonths();
