@@ -1,5 +1,7 @@
 package p233opdracht2.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Created by JonathanSyntra on 5/12/2016.
  */
@@ -84,4 +86,19 @@ public class Circle extends Shape {
     public int hashCode() {
         return getRadius() + getX()*11 + getY()*3;
     }
+
+    @Override
+    public void draw(GraphicsContext g) {
+
+    }
+
+    @Override
+    public void scale(int s) {
+        float factor = (float)s/100;
+        int newRadius = (int) (getRadius() * factor);
+
+        setRadius(newRadius);
+    }
+
+
 }

@@ -1,32 +1,34 @@
 package p233opdracht2.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Created by JonathanSyntra on 22/01/2017.
  */
-public class Drawing {
-    private Shape[] shapes;
+public class Drawing implements Drawable{
+    private Drawable[] drawables;
     private int size;
 
     public Drawing(){
-        shapes = new Shape[100];
+        drawables = new Drawable[100];
         size = 0;
     }
 
-    public void addShape(Shape shape){
+    public void addShape(Drawable shape){
         boolean present = isPresent(shape);
         if(!present){
             int freeLocation = getFreeLocation();
             //if (freeLocation >= 0){
-                shapes[freeLocation] = shape;
+                drawables[freeLocation] = shape;
                 size++;
             //}
         }
     }
 
-    public void removeShape(Shape shape){
-        for (int i = 0; i < shapes.length; i++) {
-            if(shapes[i] != null && shapes[i].equals(shape)){
-                shapes[i] = null;
+    public void removeShape(Drawable shape){
+        for (int i = 0; i < drawables.length; i++) {
+            if(drawables[i] != null && drawables[i].equals(shape)){
+                drawables[i] = null;
                 size--;
                 return;
             }
@@ -34,7 +36,7 @@ public class Drawing {
     }
 
     public void clear(){
-        shapes = new Shape[100];
+        drawables = new Drawable[100];
         size = 0;
     }
 
@@ -42,8 +44,8 @@ public class Drawing {
         return size;
     }
 
-    private boolean isPresent(Shape shape){
-        for (Shape shapeInArray : shapes) {
+    private boolean isPresent(Drawable shape){
+        for (Drawable shapeInArray : drawables) {
             if(shapeInArray != null && shapeInArray.equals(shape)){
                 return true;
             }
@@ -52,24 +54,52 @@ public class Drawing {
     }
 
     private int getFreeLocation(){
-        int maxIndex = shapes.length;
-        for (int i = 0; i < shapes.length; i++) {
-            if(shapes[i] == null){
+        int maxIndex = drawables.length;
+        for (int i = 0; i < drawables.length; i++) {
+            if(drawables[i] == null){
                 return i;
             }
         }
         //return -1;
-        expandShapesArray();
+        expanddrawablesArray();
         return maxIndex;
     }
 
-    private void expandShapesArray(){
-        Shape[] shapesNew = new Shape[shapes.length + 100];
-        for (int i = 0; i < shapes.length; i++) {
-            shapesNew[i] = shapes[i];
+    private void expanddrawablesArray(){
+        Drawable[] drawablesNew = new Drawable[drawables.length + 100];
+        for (int i = 0; i < drawables.length; i++) {
+            drawablesNew[i] = drawables[i];
         }
-        shapes = shapesNew;
+        drawables = drawablesNew;
     }
 
 
+    @Override
+    public void draw(GraphicsContext g) {
+        for (Drawable drawable : drawables) {
+            if(drawable != null) {
+                drawable.draw(g);
+            }
+        }
+    }
+
+    @Override
+    public void scale(int s) {
+        for (Drawable drawable : drawables) {
+            if(drawable != null) {
+                drawable.scale(s);
+            }
+        }
+    }
+    // todo: this !!!
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Drawable drawable: drawables){
+            if(drawable != null){
+                //sb.append()
+            }
+        }
+        return sb.toString();
+    }
 }

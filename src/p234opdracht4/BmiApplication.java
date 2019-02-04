@@ -1,7 +1,7 @@
-package p235opdracht4.exercise18;
+package p234opdracht4;
 
 public interface BmiApplication {
-    default void main(String[] args) {
+    static void main(String[] args) {
         System.out.println("Enter your length (cm):");
         int length = KeyboardUtility.readInt();
         System.out.println("Enter your weight (kg):");

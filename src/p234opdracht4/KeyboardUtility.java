@@ -1,9 +1,9 @@
-package p235opdracht4.exercise18;
+package p234opdracht4;
 
 import java.util.Scanner;
 
 public interface KeyboardUtility {
-    default int readInt(){
+    static int readInt(){
         Scanner keyboard = new Scanner(System.in);
         return keyboard.nextInt();
     }

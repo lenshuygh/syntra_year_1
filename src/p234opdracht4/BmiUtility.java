@@ -1,12 +1,12 @@
-package p235opdracht4.exercise18;
+package p234opdracht4;
 
 public interface BmiUtility {
-    default float calculateBmi(int length, int weight){
+    static float calculateBmi(int length, int weight){
         float lengthToMeter = (float)length / 100;
         return weight/(lengthToMeter * lengthToMeter);
     }
 
-    default void printDiagnose(float bmi){
+    static void printDiagnose(float bmi){
         if(bmi > 40){
             System.out.println("Extreem overgewicht");
         } else if (bmi >= 30) {
