@@ -8,14 +8,13 @@ public class Division {
         try {
             int num = Integer.parseInt(scanner.next());
             int den = Integer.parseInt(scanner.next());
-            try {
-                int div = num / den;
-                System.out.printf("%d/%d=%d", num, den, div);
-            } catch (ArithmeticException ae) {
-                System.out.println("Dondo es la division zero");
-            }
-        }catch (NumberFormatException nfe){
+            int div = num / den;
+            System.out.printf("%d/%d=%d", num, den, div);
+        } catch (NumberFormatException nfe) {
             System.out.println("Error while parsing into Integer");
+            nfe.printStackTrace();
+        } catch (ArithmeticException ae) {
+            System.out.println("Dondo es la division zero");
         }
         scanner.close();
     }
