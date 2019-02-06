@@ -2,6 +2,7 @@ package p190opdracht5;
 
 import year1.javafundamentals.solutions.chapter8.exercise10.graphics.Rectangle;
 
+
 public class SquareCountApp {
     public static void main(String[] args) {
         Square square = new Square();
