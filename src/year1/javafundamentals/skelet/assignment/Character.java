@@ -89,7 +89,7 @@ public abstract class Character {
 
     public int dealDamage(Character character){
         int damage = this.calculateDamage();
-        int receiveDamage = character.calculateRecieveDamage(damage, this);
+        int receiveDamage = character.calculateReceiveDamage(damage, this);
         character.updateHealthPool(-receiveDamage);
         return receiveDamage;
     }
@@ -99,5 +99,5 @@ public abstract class Character {
         return getIntelligence()/10 + this.getRandom().nextInt(totalAttributes);
     }
 
-    public abstract int calculateRecieveDamage(int damage, Character enemy);
+    public abstract int calculateReceiveDamage(int damage, Character enemy);
 }
