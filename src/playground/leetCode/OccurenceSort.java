@@ -13,7 +13,6 @@ public class OccurenceSort {
     public static String frequencySort(String s) {
         char[] chars = s.toCharArray();
         Map<Character,Integer> map = new HashMap<>();
-        Map<Integer,Character> mapSorted = new TreeMap<>();
         for (char aChar : chars) {
             if(map.containsKey(aChar)){
                 Integer c = map.get(aChar);
@@ -26,21 +25,26 @@ public class OccurenceSort {
         System.out.println("----------------");
         map.forEach((K,V) -> System.out.println("k: " + K + " -> v: " + V));
         System.out.println("----------------");
-/*
-        for(char c : map.keySet()){
-            Integer i = map.get(c);
-            Character character = c;
-            mapSorted.put(i,character);
 
+        int max = 0;
+        for(Character c: map.keySet()){
+            int v = map.get(c);
+            System.out.println("v: " + v);
+            if(max < v){
+                max = v;
+            }
         }
-*/
 
-        map.forEach((K,V) -> mapSorted.put(V,K));
+        System.out.println("highest occurence: " + max);
+        int countDown = max;
+        String out = "";
+        for(Character c : map.keySet()){
+            if(map.get(c) == max){
+                out += c;
+            }
+            max--;
+        }
 
-        System.out.println("----------------");
-        mapSorted.forEach((K,V) -> System.out.println("k: " + K + " -> v: " + V));
-        System.out.println("----------------");
-
-        return "";
+        return out;
     }
 }
