@@ -2,11 +2,12 @@ package playground.leetCode;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class OccurenceSort {
     public static void main(String[] args) {
-        System.out.println(frequencySort("caaabb"));
+        System.out.println(frequencySort("caaabbdeeeeeff"));
     }
 
     public static String frequencySort(String s) {
@@ -22,18 +23,24 @@ public class OccurenceSort {
                 map.put(aChar,1);
             }
         }
+        System.out.println("----------------");
+        map.forEach((K,V) -> System.out.println("k: " + K + " -> v: " + V));
+        System.out.println("----------------");
+/*
         for(char c : map.keySet()){
-            System.out.println("char: " + c + " -> " + map.get(c));
             Integer i = map.get(c);
             Character character = c;
-            System.out.println("i -> " + i);
-            System.out.println("character -> " + character);
             mapSorted.put(i,character);
 
         }
-        for(Integer i : mapSorted.keySet()){
-            System.out.println(i + " <- " + map.get(i));
-        }
+*/
+
+        map.forEach((K,V) -> mapSorted.put(V,K));
+
+        System.out.println("----------------");
+        mapSorted.forEach((K,V) -> System.out.println("k: " + K + " -> v: " + V));
+        System.out.println("----------------");
+
         return "";
     }
 }
