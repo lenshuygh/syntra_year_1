@@ -11,11 +11,11 @@ public class Fish extends Animal {
 
     @Override
     public void move() {
-
+        System.out.println("Fish: " + getName() + " moves.");
     }
 
     @Override
     public void makeNoise() {
-
+        System.out.println("Fish: " + getName() + " makes noise");
     }
 }
