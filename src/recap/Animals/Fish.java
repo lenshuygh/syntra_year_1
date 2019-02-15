@@ -6,7 +6,7 @@ public class Fish extends Animal {
     }
 
     public Fish(String name){
-        setName(name);
+        super(name);
     }
 
     @Override
