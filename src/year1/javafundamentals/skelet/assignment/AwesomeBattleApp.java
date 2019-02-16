@@ -5,7 +5,7 @@ import year1.javafundamentals.skelet.assignment.teams.HeroTeam;
 import year1.javafundamentals.skelet.assignment.teams.VillainTeam;
 
 public class AwesomeBattleApp {
-    private static final String BATTLE_INTRODUCTION = "Hero: (%s) %s VS Villain: (%s) %s%n";
+/*    private static final String BATTLE_INTRODUCTION = "Hero: (%s) %s VS Villain: (%s) %s%n";
     private static final String DAMAGE_DEALT = "(%s) %s [%d hp] has dealt %d damage to %s [%d hp]%n";
     private static final String DEFEATED = "%s defeated! (%s) %s has been defeated by %s%n";
 
@@ -54,6 +54,6 @@ public class AwesomeBattleApp {
         } else {
             System.out.println("It's a tie!");
         }
-    }
+    }*/
 
 }

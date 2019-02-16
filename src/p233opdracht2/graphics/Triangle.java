@@ -1,5 +1,7 @@
 package p233opdracht2.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Created by JonathanSyntra on 26/12/2016.
  */
@@ -110,5 +112,16 @@ public class Triangle extends Shape {
         result = 31 * result + getX();
         result = 31 * result + getY();
         return result;
+    }
+
+    @Override
+    public void draw(GraphicsContext g) {
+
+    }
+
+    @Override
+    public void scale(int s) {
+        setHeight(getHeight() * s);
+        setWidth(getWidth() * s);
     }
 }

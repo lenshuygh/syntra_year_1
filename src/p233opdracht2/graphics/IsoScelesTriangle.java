@@ -1,5 +1,7 @@
 package p233opdracht2.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Created by JonathanSyntra on 26/12/2016.
  */

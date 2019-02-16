@@ -3,7 +3,7 @@ package p233opdracht2.graphics;
 /**
  * Created by JonathanSyntra on 26/12/2016.
  */
-public abstract class Shape {
+public abstract class Shape implements Drawable{
     private int x;
     private int y;
     private static int count = 0;
