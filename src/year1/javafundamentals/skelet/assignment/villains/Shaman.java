@@ -18,7 +18,7 @@ public class Shaman extends Orc {
 
     @Override
     public int calculateReceiveDamage(int damage, Character enemy) {
-        int damageToReceive = super.calculateReceiveDamage(damage,enemy);
+        int damageToReceive = calculateReceiveDamage(damage,enemy);
         if(enemy instanceof Ranger){
             damageToReceive *= 1.1;
         }else if(enemy instanceof Barbarian){

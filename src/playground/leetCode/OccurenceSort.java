@@ -22,29 +22,24 @@ public class OccurenceSort {
                 map.put(aChar,1);
             }
         }
-        System.out.println("----------------");
-        map.forEach((K,V) -> System.out.println("k: " + K + " -> v: " + V));
-        System.out.println("----------------");
-
         int max = 0;
         for(Character c: map.keySet()){
             int v = map.get(c);
-            System.out.println("v: " + v);
             if(max < v){
                 max = v;
             }
         }
-
-        System.out.println("highest occurence: " + max);
-        int countDown = max;
         String out = "";
-        for(Character c : map.keySet()){
-            if(map.get(c) == max){
-                out += c;
+        while(max > 0){
+            for(Character c : map.keySet()){
+                if(map.get(c) == max){
+                    for (int i = 0; i < map.get(c); i++) {
+                        out += c;
+                    }
+                }
             }
             max--;
         }
-
         return out;
     }
 }

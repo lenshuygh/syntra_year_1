@@ -1,15 +1,14 @@
-package p241opdracht4;
-
-
+package year1.javafoundations.solutions.chapter14.exercise4.graphicsbis;
 
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by JonathanSyntra on 22/01/2017.
  */
-public class Drawing implements Drawable,Iterable {
+public class Drawing implements Drawable, Iterable {
     private Drawable[] drawables;
     private int size;
 
@@ -78,7 +77,14 @@ public class Drawing implements Drawable,Iterable {
     }
 
 
-
+    @Override
+    public void draw(GraphicsContext g) {
+        for (Drawable drawable : drawables) {
+            if(drawable != null){
+                drawable.draw(g);
+            }
+        }
+    }
 
     @Override
     public void scale(int s) {
@@ -102,38 +108,39 @@ public class Drawing implements Drawable,Iterable {
     }
 
     @Override
-    public void draw(GraphicsContext g) {
-        for (Drawable drawable : drawables) {
-            if(drawable != null){
-                drawable.draw(g);
-            }
-        }
-    }
-
-    @Override
     public Iterator iterator() {
         return new DrawableIterator();
     }
 
     class DrawableIterator implements Iterator{
-        private int index = 0;
+        private int indexCurrent;
+        private boolean nextCalled = false;
+
+        public DrawableIterator() {
+            indexCurrent = 0;
+        }
+
         @Override
         public boolean hasNext() {
-            return (index < drawables.length);
+            return indexCurrent < drawables.length;
         }
+
         @Override
         public Object next() {
-            if(hasNext()) {
-                return drawables[index++];
-            }else{
-                return null;
+            if(hasNext()){
+                nextCalled = true;
+                return drawables[indexCurrent++];
             }
+            throw new NoSuchElementException();
         }
 
         @Override
         public void remove() {
-            if(index - 1 >= 0) {
-                drawables[index] = null;
+            if(nextCalled){
+                nextCalled = false;
+                drawables[indexCurrent-1] = null;
+            } else {
+                throw new IllegalStateException();
             }
         }
     }
