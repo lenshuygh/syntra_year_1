@@ -1,9 +1,6 @@
 package playground.codewars;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class DirectionsReduction {
+public class DirectionsReduction2 {
     public static void main(String[] args) {
         String[] strings = {"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"};
         for (String s : dirReduc(strings)) {
@@ -12,8 +9,20 @@ public class DirectionsReduction {
     }
 
     public static String[] dirReduc(String[] arr) {
+        int originalLength = arr.length;
+        int newLength = 0;
+        String[] strArray = arr;
+        while(originalLength != newLength){
+            originalLength = strArray.length;
+            strArray = redStrings(strArray);
+            newLength = strArray.length;
+        }
+        return strArray;
+    }
+
+    private static String[] redStrings(String[] arr) {
         int outCount = arr.length;
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length-1; i++) {
             switch (arr[i]){
                 case "NORTH":
                     outCount = findDirectionToNull(arr, i, "SOUTH",outCount);
@@ -37,17 +46,13 @@ public class DirectionsReduction {
             }
         }
         return out;
-
     }
 
     private static int findDirectionToNull(String[] arr, int i, String direction,int outCount) {
-        for (int j = i + 1; j < arr.length; j++) {
-            if (arr[j].equals(direction)) {
-                arr[i] = "null";
-                arr[j] = "null";
-                j = arr.length;
-                outCount -= 2;
-            }
+        if(arr[i+1].equals(direction)){
+            arr[i] = "null";
+            arr[i+1] = "null";
+            outCount -= 2;
         }
         return outCount;
     }
