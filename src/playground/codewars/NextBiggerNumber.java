@@ -60,12 +60,34 @@ public class NextBiggerNumber {
         String number = ""+n;
         ArrayList<String> stringList = new ArrayList<>();
 
-
+        for (String performPermutation : performPermutations(number)) {
+            System.out.println(performPermutation);
+        }
 
         return -1;
     }
 
     public static char[] permuteAndReturnRemaining(List<String> stringList,char[] digitArray){
         return new char[0];
+    }
+
+    public static ArrayList<String> performPermutations(String s){
+        ArrayList<String> arrayList = new ArrayList<String>();
+
+
+        if (s.length() == 0) {
+            arrayList.add("");
+            return arrayList;
+        }
+
+        else {
+            for (int i = 0; i < s.length(); i++) {
+                ArrayList<String> remaining = performPermutations(s.substring(0, i) + s.substring(i + 1));
+                for (int j = 0; j < remaining.size(); j++) {
+                    arrayList.add(s.charAt(i) + remaining.get(j));
+                }
+            }
+            return arrayList;
+        }
     }
 }
