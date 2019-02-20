@@ -49,6 +49,23 @@ public class WordFilterApp {
         });
         System.out.println("==============================");
         sentence.printValidWord(word -> word.contains("i"));
+
+
+        //this all works because the method signature always matches String as param and returns a String as described in WordTransformer
+
+        //method ref on static method
+        System.out.println("==============================");
+        sentence.printTranformedWords(WordUtil::reverse);
+
+
+        System.out.println("==============================");
+        System.out.println("==============================");
+
+        //method ref on instance
+        WordStuff wordStuff = new WordStuff();
+        sentence.printTranformedWords(wordStuff::secondLetterToUpperCase);
+
+        sentence.printTranformedWords(String::toLowerCase);
     }
 
     /*private static void printValidWord(String sentence, WordFilter wordFilter) {
