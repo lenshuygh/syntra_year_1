@@ -1,12 +1,14 @@
 package playground.codewars;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NextBiggerNumber {
 
     public static void main(String[] args) {
-        System.out.println(nextBiggerNumber(513));
+        System.out.println(nextBiggerNumber(553));
         //531
     }
 
@@ -58,11 +60,23 @@ public class NextBiggerNumber {
         method that takes a list/array and returns an array with the remaining digits while building the strings
          */
         String number = ""+n;
-        ArrayList<String> stringList = new ArrayList<>();
+        List<String> stringList = new ArrayList<>();
+        stringList = performPermutations(number);
+        //strip doubles
+        Set<String> stringSet = new HashSet<>();
+        for (String s : stringList) {
+            stringSet.add(s);
+        }
 
         for (String performPermutation : performPermutations(number)) {
             System.out.println(performPermutation);
         }
+        System.out.println("-----------------------");
+        for (String s : stringSet) {
+            System.out.println(s);
+        }
+
+
 
         return -1;
     }
