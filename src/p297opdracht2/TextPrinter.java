@@ -16,7 +16,12 @@ public class TextPrinter {
 
     public void printNumberValues(NumberParser parser){
         for (String s : sentence.split(" ")) {
-            System.out.println(parser.parse(s));
+            try {
+                System.out.println(parser.parse(s));
+            }catch (NumberFormatException n){
+                continue;
+            }
+
         }
     }
 
