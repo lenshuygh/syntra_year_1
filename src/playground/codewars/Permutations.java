@@ -1,53 +1,51 @@
 package playground.codewars;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Permutations {
     public static void main(String[] args) {
-        singlePermutations("ab");
+        String s ="abc";
+        char[] arr = s.toCharArray();
+        List<String> list = getPermutations(arr);
+        for (String s1 : list) {
+            System.out.println(s1);
+        }
     }
 
-    public static List<String> singlePermutations(String s) {
-        // Your code here!
-        /*char[] arr = s.toCharArray();
-        String[][] stringMap = new String[arr.length][arr.length];
-        ArrayList<String> out = new ArrayList<>();
-        int outCount = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
-                String str = "";
-                if(i == 0){
-                    out.add(outCount,""+arr[j]);
-                }else{
-                    str = out.get(outCount);
-                    str = str.concat(""+arr[j]);
-                    out.add(outCount,str);
-                }
-                outCount++;
+    public static char[] getRestArray(char[] arr, char element) {
+        char[] out = new char[arr.length - 1];
+        int count = 0;
+        boolean match = false;
+        for (char c : arr) {
+            if (!match && (c == element)) {
+                match = true;
+            } else {
+                out[count++] = c;
             }
         }
-        out.forEach(t -> System.out.println(s));
-
-        return out;*/
-        char[] chars = s.toCharArray();
-        List<String> out = new LinkedList<>();
-        int count = 0;
-        for (int i = 0; i < chars.length; i++) {
-            out.add(""+chars[i]);
-        }
-        for (int i = chars.length - 1; i >= 0; i--) {
-            out.add(out.get(i)+chars[i]);
-        }
-        for (String s1 : out) {
-            System.out.println(s1);
-
-        }
-
         return out;
     }
+
+    public static List<String> getPermutations(char[] arr) {
+        List<String> list = new ArrayList<>();
+        if (arr.length == 0) {
+            list.add("");
+            return list;
+        } else {
+            for (int i = 0; i < arr.length; i++) {
+                List<String> rest = getPermutations(getRestArray(arr, arr[i]));
+                for (int i1 = 0; i1 < rest.size(); i1++) {
+                    list.add(arr[i] + rest.get(i1));
+                }
+            }
+            return list;
+        }
+    }
 }
+
 /*
 
 
