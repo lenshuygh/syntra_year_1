@@ -13,7 +13,9 @@ public class NextSmallerNumber {
         //assertEquals(2071, Kata.nextBiggerNumber(2017));
         //long l = 1101087162l;
         //long l = 9876543210L;
-        long l = 21L;
+        //long l = 21L;
+        //long l = 907L;
+        long l = 1027L;
         System.out.println("input =>    " + l);
         //long l = 144;
 
