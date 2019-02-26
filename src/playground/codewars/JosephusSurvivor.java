@@ -21,10 +21,10 @@ public class JosephusSurvivor {
         int removed = 0;
         while (removed < arr.length - 1) {
             for (int i = 0; i < arr.length; i++) {
-                if (j != 0 && j % 3 == 0 && arr[i] != 0) {
+                if (j != 0 && j % k == 0 && arr[i] != 0 && removed < arr.length - 1) {
                     arr[i] = 0;
                     removed++;
-                    j = 0;
+                    j = 1;
                 } else {
                     if (arr[i] != 0) {
                         j++;
