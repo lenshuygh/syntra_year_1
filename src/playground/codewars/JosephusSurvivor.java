@@ -15,17 +15,13 @@ public class JosephusSurvivor {
     public static int josephusSurvivor(final int n, final int k) {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = i+1;
+            arr[i] = i + 1;
         }
         int j = 1;
         int removed = 0;
         while (removed < arr.length - 1) {
             for (int i = 0; i < arr.length; i++) {
-                for (int i1 : arr) {
-                    System.out.printf("%d",i1);
-                }
-                System.out.println();
-                if (j % 3 == 0) {
+                if (j != 0 && j % 3 == 0 && arr[i] != 0) {
                     arr[i] = 0;
                     removed++;
                     j = 0;
@@ -37,13 +33,13 @@ public class JosephusSurvivor {
             }
         }
         for (int i : arr) {
-            if(i != 0){
+            if (i != 0) {
                 return i;
             }
         }
-            return 0;
-        }
+        return 0;
     }
+}
 
 /*
 In this kata you have to correctly return who is the "survivor", ie: the last element of a Josephus permutation.
