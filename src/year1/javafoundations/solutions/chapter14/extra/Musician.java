@@ -1,8 +1,6 @@
 package year1.javafoundations.solutions.chapter14.extra;
 
-//import inclass.nestedclasses.Instrument;
-
-import year1.javafoundations.solutions.chapter14.exercise3.Instrument;
+import inclass.nestedclasses.Instrument;
 
 public class Musician {
     public void play(){
