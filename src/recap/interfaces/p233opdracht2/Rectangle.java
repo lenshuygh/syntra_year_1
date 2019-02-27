@@ -1,4 +1,4 @@
-package year1.javafoundations.solutions.chapter13.exercise2.graphics;
+package recap.interfaces.p233opdracht2;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -108,20 +108,15 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public void scale(int s) {
-        float factor = (float)s / 100;
-        int newHeight = (int)(getHeight() * factor);
-        int newWidth = (int)(getWidth() * factor);
-
-        setHeight(newHeight);
-        setWidth(newWidth);
-    }
-
-
-    @Override
     public void draw(GraphicsContext g) {
 
     }
 
+    @Override
+    public void scale(int s) {
+        float factor = (float)s / 100;
 
+        setHeight((int)(getHeight() * factor));
+        setWidth((int)(getWidth() * factor));
+    }
 }
