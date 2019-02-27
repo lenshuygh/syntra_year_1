@@ -12,12 +12,13 @@ public class Ex04 {
     public static void main(String[] args) {
         Person p1 = new Person("Lens", "Huygh", Geslacht.MAN, 38, 100, 175);
         Person p2 = new Person("Thor", "Katmans", Geslacht.VROUW, 14, 5, 50);
-        Person[] persons = {p1,p2};
+        Person[] persons = {p1, p2};
 
         System.out.println("only female");
         Stream.of(persons).
                 filter(p -> Geslacht.VROUW.equals(p.getGeslacht())).
                 forEach(System.out::println);
+
         System.out.println();
         System.out.println("gewicht between 3 and 50");
         Stream.of(persons)
