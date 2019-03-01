@@ -5,6 +5,7 @@ import p309opdracht3.Geslacht;
 
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
+import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -59,5 +60,64 @@ public class Ex04 {
         System.out.println("maximum age");
         OptionalInt max = Stream.of(persons).mapToInt(Person::getLeeftijd).max();
         System.out.println(max.getAsInt());
+
+        System.out.println();
+        System.out.println("all weights");
+        Stream.of(persons).map(Person::getGewicht).forEach(System.out::println);
+
+        System.out.println();
+        System.out.println("avg weight");
+        System.out.println(Stream.of(persons).mapToDouble(Person::getGewicht).average().getAsDouble());
+
+        System.out.println();
+        System.out.println("min weight");
+        System.out.println(Stream.of(persons).mapToDouble(Person::getGewicht).min().getAsDouble());
+
+        System.out.println();
+        System.out.println("max weight");
+        System.out.println(Stream.of(persons).mapToDouble(Person::getGewicht).max().getAsDouble());
+
+        System.out.println();
+        System.out.println("sum roots of 0-100 with % 5 & 8 ok");
+        System.out.println(
+                IntStream.rangeClosed(0,1000)
+                        .filter(s -> s % 40 == 0)
+                        .limit(20)
+                        .mapToDouble(Double::new)
+                        .reduce(0,(acc,el) -> acc + Math.sqrt(el)));
+        System.out.println();
+        System.out.println(
+                IntStream.rangeClosed(0,1000)
+                        .filter(s -> s % 40 == 0)
+                        .limit(20)
+                        .mapToDouble(Math::sqrt)
+                        .sum());
+        System.out.println();
+        System.out.println(
+                IntStream.rangeClosed(0,1000)
+                        .filter(s -> s % 40 == 0)
+                        .limit(20)
+                        .reduce(0,(acc,el) -> acc + (int) Math.sqrt(el)));
+
+        System.out.println();
+        int[] array = new Random()
+                .ints(0,10000)
+                .distinct()
+                .filter(s -> s % 2 == 0)
+                .limit(500)
+                .sorted()
+                .toArray();
+
+        System.out.println(array.length);
+
+        int[] a = IntStream.range(0, 10000)
+                .mapToObj(Random::new)
+                .mapToInt(Random::nextInt)
+                .distinct()
+                .filter(s -> s % 2 == 0)
+                .limit(500)
+                .toArray();
+
+        System.out.println(a.length );
     }
 }
