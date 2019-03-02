@@ -1,11 +1,15 @@
 package playground.nestedClasses;
 
 public class OuterClassWithLocalInnerClass {
-    final int CONST = 8;
-    int var = 5;
-    String id = "eggg";
+    public Object getInner(){
+        int a = 5;
 
-    class LocalInnerClass{
-
+        class Inner {
+            public String toString(){
+                //a++;
+                return "inner " + a;
+            }
+        }
+        return new Inner();
     }
 }
