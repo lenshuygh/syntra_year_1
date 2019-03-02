@@ -1,4 +1,4 @@
-package playground.nestedClasses;
+package recap.nestedClasses;
 
 public class OuterClassWithLocalInnerClass {
     public Object getInner(){

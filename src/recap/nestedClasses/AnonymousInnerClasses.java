@@ -1,4 +1,4 @@
-package playground.nestedClasses;
+package recap.nestedClasses;
 
 public class AnonymousInnerClasses {
     public void myMethod(){

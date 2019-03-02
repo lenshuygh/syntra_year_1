@@ -1,4 +1,4 @@
-package playground.nestedClasses.p239ex03;
+package recap.nestedClasses.p239ex03;
 
 public class Musician {
     public void play() {
