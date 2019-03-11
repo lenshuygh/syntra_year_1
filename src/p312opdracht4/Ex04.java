@@ -38,6 +38,7 @@ public class Ex04 {
         System.out.println("only ages");
         Stream.of(persons)
                 .map(Person::getLeeftijd)
+                //.mapToInt(Person::getLeeftijd)
                 .forEach(System.out::println);
 
         System.out.println();
