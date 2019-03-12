@@ -71,11 +71,11 @@ public class Alphametics {
     }
 
     private void printCypher() {
-        System.out.println("######################");
+        System.out.println("##########startprint############");
         for (Character character : cypher.keySet()) {
             System.out.println(cypher.get(character));
         }
-        System.out.println("######################");
+        System.out.println("##########endprint############");
     }
 
     private void createCypher(char[] letters) {
@@ -107,10 +107,14 @@ public class Alphametics {
     }
 
     private String reasembleWord(String word){
+        printCypher();
         String out = "";
         char[] wordChars = word.toCharArray();
         for (int i = 0; i < wordChars.length; i++) {
-            out += cypher.get(wordChars[i]);
+            System.out.println("word - i - is " + i);
+            String charAdd = Character.toString(cypher.get(wordChars[i]));
+            System.out.println("charGotten is " + charAdd);
+            out += charAdd;
         }
         System.out.println("WOOOOOOOOORd => " + out);
         return out;
