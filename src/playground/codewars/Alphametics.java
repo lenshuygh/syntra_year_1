@@ -3,6 +3,7 @@ package playground.codewars;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Alphametics {
@@ -11,12 +12,13 @@ public class Alphametics {
     Random random = new Random();
     char[] chars = new char[10];
     char[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    String[] firstLetters;
+    //String[] firstLetters;
+    List<String> firstLetters;
 
     public static void main(String[] args) {
-        //new Alphametics("COUPLE + COUPLE = QUARTET");
+        new Alphametics("COUPLE + COUPLE = QUARTET");
         //new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
-        new Alphametics("SEND + MORE = MONEY");
+        //new Alphametics("SEND + MORE = MONEY");
         //new Alphametics("50 + 50 + 50 = 150");
 
         //SEND + MORE = MONEY
@@ -35,7 +37,7 @@ public class Alphametics {
         boolean correct = false;
         while (!correct) {
             String[] words = Stream.of(input.split(" ")).filter(s -> !(s.equals("+"))).filter(s -> !(s.equals("="))).toArray(String[]::new);
-            firstLetters = Stream.of(words).map(String::new).map(s-> s.substring(0,1)).toArray(String[]::new);
+            firstLetters = Stream.of(words).map(String::new).map(s -> s.substring(0,1)).distinct().collect(Collectors.toList());
 
             String all = Arrays.stream(words).reduce("", (acc, ch) -> acc + ch);
             List<Character> cList = new ArrayList<>();
@@ -84,20 +86,16 @@ public class Alphametics {
                 int randIndex = random.nextInt(chars.length);
                 char randChar = chars[randIndex];
                 boolean firstChar = false;
-                for (String firstLetter : firstLetters) {
-                    if(firstLetter.equals(letters[i])){
-                        firstChar = true;
-                        break;
-                    }
+
+                if(firstLetters.contains(Character.toString(letters[i]))){
+                    firstChar = true;
                 }
-                if((randChar == 0)&& firstChar){
+
+                if ((randChar == '0') && firstChar) {
                     addNew = false;
-                }else {
-                    for (Character character : cypher.keySet()) {
-                        if (cypher.get(character) == randChar) {
-                            addNew = false;
-                            break;
-                        }
+                } else {
+                    if (cypher.containsValue(randChar)) {
+                        addNew = false;
                     }
                 }
                 if (addNew) {
