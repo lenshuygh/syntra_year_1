@@ -11,6 +11,7 @@ public class Alphametics {
     Random random = new Random();
     char[] chars = new char[10];
     char[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    String[] firstLetters;
 
     public static void main(String[] args) {
         //new Alphametics("COUPLE + COUPLE = QUARTET");
@@ -34,7 +35,7 @@ public class Alphametics {
         boolean correct = false;
         while (!correct) {
             String[] words = Stream.of(input.split(" ")).filter(s -> !(s.equals("+"))).filter(s -> !(s.equals("="))).toArray(String[]::new);
-            String[] firstLetters = Stream.of(words).map(String::new).map(s-> s.substring(0,1)).toArray(String[]::new);
+            firstLetters = Stream.of(words).map(String::new).map(s-> s.substring(0,1)).toArray(String[]::new);
 
             String all = Arrays.stream(words).reduce("", (acc, ch) -> acc + ch);
             List<Character> cList = new ArrayList<>();
@@ -82,7 +83,14 @@ public class Alphametics {
                 addNew = true;
                 int randIndex = random.nextInt(chars.length);
                 char randChar = chars[randIndex];
-                if((i == 0) && (randChar == 0)){
+                boolean firstChar = false;
+                for (String firstLetter : firstLetters) {
+                    if(firstLetter.equals(letters[i])){
+                        firstChar = true;
+                        break;
+                    }
+                }
+                if((randChar == 0)&& firstChar){
                     addNew = false;
                 }else {
                     for (Character character : cypher.keySet()) {
