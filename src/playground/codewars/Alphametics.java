@@ -1,5 +1,7 @@
 package playground.codewars;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -7,13 +9,17 @@ public class Alphametics {
     String input;
     Map<Character, Character> cypher = new HashMap<>();
     Random random = new Random();
-    char[] chars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char[] chars = new char[10];
+    char[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     public static void main(String[] args) {
-        new Alphametics("COUPLE + COUPLE = QUARTET");
+        //new Alphametics("COUPLE + COUPLE = QUARTET");
         //new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
-        //new Alphametics("SEND + MORE = MONEY");
+        new Alphametics("SEND + MORE = MONEY");
         //new Alphametics("50 + 50 + 50 = 150");
+
+        //SEND + MORE = MONEY
+        //expected:<[9567 + 1085 = 10652]> but was:<[5731 + 0647 = 06378]>
     }
 
     public Alphametics(String s) {
@@ -23,10 +29,12 @@ public class Alphametics {
     }
 
     public String solve() {
+        LocalDateTime start = LocalDateTime.now();
         String output = "";
         boolean correct = false;
         while (!correct) {
             String[] words = Stream.of(input.split(" ")).filter(s -> !(s.equals("+"))).filter(s -> !(s.equals("="))).toArray(String[]::new);
+            String[] firstLetters = Stream.of(words).map(String::new).map(s-> s.substring(0,1)).toArray(String[]::new);
 
             String all = Arrays.stream(words).reduce("", (acc, ch) -> acc + ch);
             List<Character> cList = new ArrayList<>();
@@ -51,36 +59,56 @@ public class Alphametics {
             if (sum == Integer.parseInt(result)) {
                 correct = true;
                 for (int i = 0; i < adders.length; i++) {
-                    output+=adders[i]+" ";
-                    if(i != adders.length -1){
-                        output+="+ ";
+                    output += adders[i] + " ";
+                    if (i != adders.length - 1) {
+                        output += "+ ";
                     }
                 }
-                output+="= " + result;
+                output += "= " + result;
             }
             cypher.clear();
         }
-
+        LocalDateTime end = LocalDateTime.now();
+        System.out.println(Duration.between(start, end).toString());
         return output;
     }
 
     private void createCypher(char[] letters) {
-        for (char letter : letters) {
+        chars = numberChars;
+        //for (char letter : letters) {
+        for (int i = 0; i < letters.length; i++) {
             boolean addNew = true;
             do {
                 addNew = true;
-                int randIndex = random.nextInt(10);
+                int randIndex = random.nextInt(chars.length);
                 char randChar = chars[randIndex];
-                for (Character character : cypher.keySet()) {
-                    if(cypher.get(character) == randChar){
-                        addNew = false;
+                if((i == 0) && (randChar == 0)){
+                    addNew = false;
+                }else {
+                    for (Character character : cypher.keySet()) {
+                        if (cypher.get(character) == randChar) {
+                            addNew = false;
+                            break;
+                        }
                     }
                 }
                 if (addNew) {
-                    cypher.put(letter, randChar);
+                    cypher.put(letters[i], randChar);
+                    removeCharFromChars(randChar);
                 }
             } while (!addNew);
         }
+    }
+
+    private void removeCharFromChars(char randChar) {
+        char[] newCharArray = new char[chars.length - 1];
+        int newCharArrayCounter = 0;
+        for (char aChar : chars) {
+            if (aChar != randChar) {
+                newCharArray[newCharArrayCounter++] = aChar;
+            }
+        }
+        chars = newCharArray;
     }
 
     private String[] reasembleWords(String[] words) {
@@ -90,7 +118,7 @@ public class Alphametics {
         return words;
     }
 
-    private String reasembleWord(String word){
+    private String reasembleWord(String word) {
         String out = "";
         char[] wordChars = word.toCharArray();
         for (int i = 0; i < wordChars.length; i++) {
