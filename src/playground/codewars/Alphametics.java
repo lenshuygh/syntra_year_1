@@ -12,17 +12,13 @@ public class Alphametics {
     Random random = new Random();
     char[] chars = new char[10];
     char[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    //String[] firstLetters;
     List<String> firstLetters;
 
     public static void main(String[] args) {
         new Alphametics("COUPLE + COUPLE = QUARTET");
-        //new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
-        //new Alphametics("SEND + MORE = MONEY");
+        new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
+        new Alphametics("SEND + MORE = MONEY");
         //new Alphametics("50 + 50 + 50 = 150");
-
-        //SEND + MORE = MONEY
-        //expected:<[9567 + 1085 = 10652]> but was:<[5731 + 0647 = 06378]>
     }
 
     public Alphametics(String s) {
@@ -35,10 +31,12 @@ public class Alphametics {
         LocalDateTime start = LocalDateTime.now();
         String output = "";
         boolean correct = false;
+        firstLetters = Stream.of(input)
+                .filter(s -> !(s.equals("+")))
+                .filter(s -> !(s.equals("=")))
+                .collect(Collectors.toList());
         while (!correct) {
             String[] words = Stream.of(input.split(" ")).filter(s -> !(s.equals("+"))).filter(s -> !(s.equals("="))).toArray(String[]::new);
-            firstLetters = Stream.of(words).map(String::new).map(s -> s.substring(0,1)).distinct().collect(Collectors.toList());
-
             String all = Arrays.stream(words).reduce("", (acc, ch) -> acc + ch);
             List<Character> cList = new ArrayList<>();
             char[] singleChars = all.toCharArray();
@@ -87,7 +85,7 @@ public class Alphametics {
                 char randChar = chars[randIndex];
                 boolean firstChar = false;
 
-                if(firstLetters.contains(Character.toString(letters[i]))){
+                if (firstLetters.contains(Character.toString(letters[i]))) {
                     firstChar = true;
                 }
 
