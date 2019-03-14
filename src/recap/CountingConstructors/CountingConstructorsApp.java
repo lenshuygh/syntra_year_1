@@ -9,5 +9,8 @@ public class CountingConstructorsApp {
 
         System.out.println(Shape.getCount());
 
+        ExtendingTheExtendingClass extendingTheExtendingClass = new ExtendingTheExtendingClass();
+
+        System.out.println(Shape.getCount());
     }
 }
