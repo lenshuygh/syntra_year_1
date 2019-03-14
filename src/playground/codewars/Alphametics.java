@@ -12,12 +12,16 @@ public class Alphametics {
     Random random = new Random();
     char[] chars = new char[10];
     char[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    List<String> firstLetters;
+    //List<String> firstLetters;
+    HashSet<String> firstLetters;
 
     public static void main(String[] args) {
-        new Alphametics("COUPLE + COUPLE = QUARTET");
-        new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
-        new Alphametics("SEND + MORE = MONEY");
+        //new Alphametics("COUPLE + COUPLE = QUARTET");
+        //new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
+        //new Alphametics("SEND + MORE = MONEY");
+
+        new Alphametics("ZEROES + ONES = BINARY");
+        new Alphametics("DO + YOU + FEEL = LUCKY");
         //new Alphametics("50 + 50 + 50 = 150");
     }
 
@@ -31,10 +35,13 @@ public class Alphametics {
         LocalDateTime start = LocalDateTime.now();
         String output = "";
         boolean correct = false;
-        firstLetters = Stream.of(input)
+        firstLetters = Stream.of(input.split(" "))
                 .filter(s -> !(s.equals("+")))
                 .filter(s -> !(s.equals("=")))
-                .collect(Collectors.toList());
+                .distinct()
+                .map(s -> s.substring(0,1))
+                .collect(Collectors.toCollection(HashSet::new));
+        firstLetters.forEach(System.out::println);
         while (!correct) {
             String[] words = Stream.of(input.split(" ")).filter(s -> !(s.equals("+"))).filter(s -> !(s.equals("="))).toArray(String[]::new);
             String all = Arrays.stream(words).reduce("", (acc, ch) -> acc + ch);
