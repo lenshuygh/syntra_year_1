@@ -15,7 +15,6 @@ public class Alphametics {
         for (char charDigit : charDigits) {
             digits.add(charDigit);
         }
-        digits.stream().forEach(System.out::print);
         String[] words = s.split(" ");
         words = Arrays.stream(words).filter(w -> !w.equals("=")).filter(w -> !w.equals("+")).distinct().toArray(String[]::new);
 
