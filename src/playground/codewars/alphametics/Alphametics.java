@@ -10,9 +10,12 @@ public class Alphametics {
     }
 
     private String solve(String s) {
-        Set<Integer> digits = new HashSet<>();
-        IntStream.rangeClosed(0,9).forEach(d -> digits.add(d));
-        System.out.println("digits:");
+        Set<Character> digits = new HashSet<>();
+        char[] charDigits = {'0','1','2','3','4','5','6','7','8','9'};
+        for (char charDigit : charDigits) {
+            digits.add(charDigit);
+        }
+        digits.stream().forEach(System.out::print);
         String[] words = s.split(" ");
         words = Arrays.stream(words).filter(w -> !w.equals("=")).filter(w -> !w.equals("+")).distinct().toArray(String[]::new);
 
@@ -28,17 +31,17 @@ public class Alphametics {
         for (char allChar : allChars) {
             allCharSet.add(allChar);
         }
-        cypher = computeCypher(allCharSet,firstChars);
+        cypher = computeCypher(allCharSet,firstChars,digits);
 
         return "";
     }
 
-    private Set<Character> computeCypher(Set<Character> allCharSet, Set<Character> firstChars) {
+    private Set<Character> computeCypher(Set<Character> allCharSet, Set<Character> firstChars,Set<Character> digits) {
         Random random = new Random();
         Set<Character> cypher = new HashSet<>();
         for (Character character : allCharSet) {
             Character digitCharacter = ((char) random.nextInt(10));
-            //if((!firstChars.contains(character)) && (digi)
+            if((!firstChars.contains(character)) && (digits.contains(digitCharacter))
         }
 
         return null;
