@@ -1,6 +1,6 @@
 package recap.streams;
 
-import p309opdracht3.Geslacht;
+import book_exercises.p309opdracht3.Geslacht;
 
 import java.util.Comparator;
 import java.util.stream.Stream;

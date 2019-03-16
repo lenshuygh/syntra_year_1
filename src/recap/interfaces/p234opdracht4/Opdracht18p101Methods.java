@@ -1,7 +1,7 @@
 package recap.interfaces.p234opdracht4;
 
-import p101opdracht18.BmiUtility;
-import p101opdracht18.KeyboardUtility;
+import book_exercises.p101opdracht18.BmiUtility;
+import book_exercises.p101opdracht18.KeyboardUtility;
 
 public interface Opdracht18p101Methods {
     static void main(String[] args) {

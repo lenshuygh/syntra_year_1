@@ -1,6 +1,6 @@
 package recap.streams;
 
-import p309opdracht3.Geslacht;
+import book_exercises.p309opdracht3.Geslacht;
 
 public class Person {
     private String voornaam;

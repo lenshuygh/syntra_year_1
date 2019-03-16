@@ -41,7 +41,8 @@ public class Alphametics {
         Set<Character> cypher = new HashSet<>();
         for (Character character : allCharSet) {
             Character digitCharacter = ((char) random.nextInt(10));
-            if((!firstChars.contains(character)) && (digits.contains(digitCharacter))
+            System.out.println("digitCharacter:" + digitCharacter);
+            //if((!firstChars.contains(character)) && (digits.contains(digitCharacter))
         }
 
         return null;
