@@ -1,5 +1,7 @@
 package recap.sets;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -32,5 +34,17 @@ public class SortedPetsTroughPetObjectApp {
 
         System.out.printf("%npetSortedSet:%n------------%n");
         petSortedSet.forEach(System.out::println);
+
+        Set<Pet> petHashSet = new HashSet<>();
+        petHashSet.add(p1);
+        petHashSet.add(p2);
+        petHashSet.add(p3);
+        petHashSet.add(p4);
+        petHashSet.add(p5);
+        petHashSet.add(p6);
+        petHashSet.add(p7);
+
+        System.out.printf("%npetHashSet:%n----------%n");
+        petHashSet.forEach(System.out::println);
     }
 }
