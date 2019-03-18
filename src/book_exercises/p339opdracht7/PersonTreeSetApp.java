@@ -25,6 +25,7 @@ public class PersonTreeSetApp {
         System.out.printf("%npersonSetAgeSorted:%n------------------%n");
         personSetAgeSorted.forEach(System.out::println);
 
+        // todo: check against teacher solutions, this is 4 sure not complete
         /*SortedSet<Person> personSetWeightSorted = new TreeSet<>(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
@@ -32,6 +33,7 @@ public class PersonTreeSetApp {
             }
         });*/
 
+        // todo: check against teacher solutions, this is 4 sure not complete
         SortedSet<Person> personSetWeightSorted = new TreeSet<>((o1, o2) -> (int) (o1.getWeight() - o2.getWeight()));
 
         personSetWeightSorted.add(p1);
@@ -40,6 +42,8 @@ public class PersonTreeSetApp {
 
         System.out.printf("%npersonSetWeightSorted%n---------------------%n");
         personSetWeightSorted.forEach(System.out::println);
+
+        //SortedSet<Person> personSetFirstNameSorted = new TreeSet<>(Comparator.comparingDouble(Person::getWeight));
 
         SortedSet<Person> personSetFirstNameSorted = new TreeSet<>(Comparator.comparing(Person::getFirstName));
         personSetFirstNameSorted.add(p1);
@@ -52,7 +56,8 @@ public class PersonTreeSetApp {
         SortedSet<Person>  personSetSortedByAgeNameWeight = new TreeSet<>(Comparator
                 .comparingInt(Person::getAge)
                 .thenComparing(Person::getLastName)
-                .thenComparing((o1,o2) -> (int) (o1.getWeight() - o2.getWeight())));
+                //.thenComparing((o1,o2) -> (int) (o1.getWeight() - o2.getWeight())));
+                .thenComparingDouble(Person::getWeight));
 
         Person x1 = new Person("Be","Bee", Person.Gender.MALE,40,20f,1.50f);
         Person x2 = new Person("Cc","Ccc", Person.Gender.MALE,40,20f,1.50f);
