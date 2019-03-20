@@ -2,14 +2,15 @@ package bnb;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Set;
 
 public class Reservation {
     private Person person;
-    private Collection<Room> rooms;
+    private Set<Room> rooms;
     private LocalDate bookedFrom;
     private LocalDate bookedUntil;
 
-    public Reservation(Person person, Collection<Room> rooms, LocalDate bookedFrom, LocalDate bookedUntil) {
+    public Reservation(Person person, Set<Room> rooms, LocalDate bookedFrom, LocalDate bookedUntil) {
         this.person = person;
         this.rooms = rooms;
         this.bookedFrom = bookedFrom;
@@ -24,11 +25,11 @@ public class Reservation {
         this.person = person;
     }
 
-    public Collection<Room> getRooms() {
+    public Set<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Collection<Room> rooms) {
+    public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
     }
 

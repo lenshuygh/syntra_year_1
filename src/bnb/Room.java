@@ -1,6 +1,8 @@
 package bnb;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Room {
     private String name;
@@ -41,17 +43,18 @@ public class Room {
     public String toString() {
         return "Room{" +
                 "name='" + name + '\'' +
-                ", capacity=" + capacity + "Persons" +
-                ", pricePerNight=" + pricePerNight + "Eur" +
+                ", capacity=" + capacity + " persons" +
+                ", pricePerNight=" + pricePerNight + " Eur" +
                 '}';
     }
 
-    public static Collection<Room> createRooms() {
-        Collection<Room> rooms = new Set
-        Room bigRoomOfFunRoom = new Room("Big Room Of Fun", 6, 350);
-        Room ocmwRoom = new Room("OCMW", 8, 120);
-        Room familyRoom = new Room("Family Room", 4, 250);
-        Room theDungeonRoom = new Room("The Dungeon", 2, 220);
-        Room theHoneymoonRoom = new Room("The Honeymoon",2,180);
+    public static Set<Room> createRooms() {
+        Set<Room> rooms = new HashSet<>();
+        rooms.add( new Room("Big Room Of Fun", 6, 350));
+        rooms.add( new Room("OCMW", 8, 120));
+        rooms.add( new Room("Family Room", 4, 250));
+        rooms.add( new Room("The Dungeon", 2, 220));
+        rooms.add( new Room("The Honeymoon",2,180));
+        return rooms;
     }
 }
