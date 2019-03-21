@@ -38,6 +38,8 @@ public class UserEntry {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static LocalDate formattedDate = null;
 
+    private static InputCheckers inputCheckers;
+
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
         display(questionString);
@@ -96,6 +98,7 @@ public class UserEntry {
                 display(LINE_FEED);
                 continue;
             }
+            if(InputCheckers.isDateInFuture(formattedDate)
             dateOk = true;
         }
         return formattedDate;
