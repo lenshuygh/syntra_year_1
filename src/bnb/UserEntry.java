@@ -60,7 +60,7 @@ public class UserEntry {
         DateTimeFormatter myFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Scanner scanner = new Scanner(System.in);
         String date = "";
-        LocalDate formattedDate = LocalDate.of(LocalDate.now());
+        LocalDate formattedDate = LocalDate.now();
         boolean dateOk = false;
 
 
