@@ -1,13 +1,11 @@
 package bnb;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import static bnb.BnbCommands.*;
-import static bnb.BnbCommands.STOP_PROGRAM;
 
 public class UserEntry {
     public static BnbCommands getMenuEntry() {
