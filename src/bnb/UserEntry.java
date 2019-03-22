@@ -25,6 +25,9 @@ public class UserEntry {
     private static final String QUESTION_ENTER_ACTION_NUMBER = "Enter the number of the action u want to perform: ";
     private static final String QUESTION_UNTIL_DATE = "Please provide the ending date of the reservation (DD/MM/YYYY): ";
     private static final String QUESTION_ROOM_TO_RESERVE = "Please enter the number of the room you want to reserve: ";
+    private static final String QUESTION_PERSON_NAME_LAST = "Please enter person's last name: ";
+    private static final String QUESTION_PERSON_NAME_FIRST = "Please enter person's first name: ";
+    private static final String QUESTION_PERSON_BIRTHDAY = "Please enter person's birthday: ";
 
     private static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
@@ -50,13 +53,17 @@ public class UserEntry {
             "---------------------------------------------------------------------%n" +
                     "Please enter the character 'y' for yes or 'n' for no (without quotes)%n" +
                     "---------------------------------------------------------------------%n";
+    private static final String ENTRY_ERR_DATE_NOT_18 =
+            "-------------------------------------------------------%n" +
+            "The booking's person's has to be at least 18 years old.%n" +
+            "-------------------------------------------------------%n";
 
     private static final String QUESTION_PROPOSED_RESERVATION = "Is the proposed reservation ok (y/n)?: ";
     private static final String LINE_PROPOSED_RESERVATION = "Check the proposed reservation below%n";
     private static final String LINE_FEED = "%n";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static LocalDate formattedDate = null;
+    private static LocalDate formattedDate;
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -100,7 +107,7 @@ public class UserEntry {
         }
     }
 
-    public static LocalDate getFromDate() {
+    /*public static LocalDate getFromDate() {
         boolean dateOk = false;
 
         while (!dateOk) {
@@ -116,6 +123,34 @@ public class UserEntry {
                 dateOk = true;
             } else {
                 display(ENTRY_ERR_DATE_IN_PAST);
+                display(LINE_FEED);
+            }
+        }
+        return formattedDate;
+    }*/
+
+    static DateChecker checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
+
+    public static LocalDate getFromDate(){
+        return getDateFromUser(QUESTION_STARTING_DATE,checkIfDateInFuture,ENTRY_ERR_DATE_IN_PAST);
+    }
+
+    private static LocalDate getDateFromUser(String questionToUser,DateChecker dateChecker,String errorMassage){
+        boolean dateOk = false;
+
+        while (!dateOk) {
+            String date = getNextInput(questionToUser);
+            try {
+                formattedDate = LocalDate.parse(date, DATE_TIME_FORMATTER);
+            } catch (DateTimeParseException e) {
+                display(ENTRY_ERR_DATE_FORMAT);
+                display(LINE_FEED);
+                continue;
+            }
+            if(dateChecker.dateIsvalid(formattedDate)) {
+                dateOk = true;
+            }else{
+                display(errorMassage);
                 display(LINE_FEED);
             }
         }
@@ -214,11 +249,43 @@ public class UserEntry {
         return acceptProposal;
     }
 
+
+
     private static long calculatedCost(long daysInBetween, Room roomToBook) {
         return roomToBook.getPricePerNight() * daysInBetween;
     }
 
     private static long getDaysInBetween(LocalDate fromDate, LocalDate untilDate) {
         return ChronoUnit.DAYS.between(fromDate, untilDate);
+    }
+
+    public static Person getBookingPerson() {
+        Person bookingPerson = personEntry();
+        return bookingPerson;
+    }
+
+    private static Person personEntry(){
+        boolean birthDayOK = false;
+        while(!birthDayOK) {
+            String birthday = getNextInput(QUESTION_PERSON_BIRTHDAY);
+            try {
+                formattedDate = LocalDate.parse(birthday, DATE_TIME_FORMATTER);
+            } catch (DateTimeParseException e) {
+                display(ENTRY_ERR_DATE_FORMAT);
+                display(LINE_FEED);
+                continue;
+            }
+            if (checkAge(formattedDate, LocalDate.now())) {
+                birthDayOK = true;
+            } else {
+                display(ENTRY_ERR_DATE_NOT_18);
+                display(LINE_FEED);
+            }
+        }
+        return new Person("Lens","Huygh",LocalDate.parse("23/06/1980",DATE_TIME_FORMATTER));
+    }
+
+    private static boolean checkAge(LocalDate birthDay, LocalDate now) {
+        return ChronoUnit.YEARS.between(birthDay,now) >= 18;
     }
 }

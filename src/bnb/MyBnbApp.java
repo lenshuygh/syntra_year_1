@@ -9,7 +9,6 @@ import java.util.UUID;
 public class MyBnbApp {
     private static List<Room> rooms = Room.createRooms();
     private static Map<String,Reservation> bnbReservationMap = new HashMap<>();
-    private static
 
     public static void main(String[] args) {
         BnbCommands bnbCommand;
@@ -45,19 +44,22 @@ public class MyBnbApp {
     private static void checkAvailability() {
     }
 
+
+    //todo: persons !!! check age of booker, capacity-issues, ...
     private static void bookReservation() {
         boolean continueReservation = false;
         if(!continueReservation) {
+            Person bookingPerson = UserEntry.getBookingPerson();
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
             continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
-            if(continueReservation){
+            /*if(continueReservation){
 
 
 
                 bnbReservationMap.put(UUID.randomUUID().toString(),new Reservation());
-            }
+            }*/
         }
     }
 
