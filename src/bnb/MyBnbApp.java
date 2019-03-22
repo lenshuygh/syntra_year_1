@@ -42,7 +42,9 @@ public class MyBnbApp {
 
     private static void bookReservation() {
         LocalDate fromDate = UserEntry.getFromDate();
+        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
         System.out.println(fromDate);
+        System.out.println(untilDate);
     }
 
     private static void changeReservation() {
