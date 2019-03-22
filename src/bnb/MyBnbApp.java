@@ -39,6 +39,8 @@ public class MyBnbApp {
     }
 
     private static void checkByPerson() {
+        Person searchedPerson = UserEntry.personEntry();
+        UserEntry.displayReservationsMadeByPerson(searchedPerson,bnbReservationMap);
     }
 
     private static void checkAvailability() {

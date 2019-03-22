@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -28,6 +29,12 @@ public class UserEntry {
                     "3.  Room: The Dungeon (cap: 2, price: 220 Eur/night)%n" +
                     "4.  Room: The Honeymoon (cap: 2, price: 180 Eur/night)%n" +
                     "------------------------------------------------------------%n";
+    private static final String OVERVIEW_CHECK_BY_PERSON_CHOICES =
+            "    ----------------------------------------.%n" +
+                    "0.  Check if person was the booking person.%n" +
+                    "1.  Check if person was the attending person.%n" +
+                    "    ----------------------------------------.%n";
+
     private static final String QUESTION_STARTING_DATE = "    Please provide the starting date of the reservation (DD/MM/YYYY): ";
     private static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
     private static final String QUESTION_UNTIL_DATE = "    Please provide the ending date of the reservation (DD/MM/YYYY): ";
@@ -226,10 +233,21 @@ public class UserEntry {
         return bookingPerson;
     }
 
-    private static Person personEntry() {
+    // todo: notnull
+    public static Person personEntry() {
         String lastName = getNextInput(QUESTION_PERSON_NAME_LAST);
         String firstName = getNextInput(QUESTION_PERSON_NAME_FIRST);
         return new Person(firstName, lastName);
+    }
+
+    private static Predicate<Reservation> checkPersonInPersonsFromReservation = r -> r.getPersons().contains(r);
+
+    public static void displayReservationsMadeByPerson(Person searchedPerson, Map<String,Reservation> bnbReservationMap) {
+        bnbReservationMap.values()
+                .stream()
+                .filter(r -> r.getPersons().contains(searchedPerson))
+                //.filter(checkPersonInPersonsFromReservation)
+                .forEach(reservation -> reservation.prettyOutput());
     }
 
 }
