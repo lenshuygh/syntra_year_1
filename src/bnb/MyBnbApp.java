@@ -49,13 +49,13 @@ public class MyBnbApp {
     private static void bookReservation() {
         boolean continueReservation = false;
         if(!continueReservation) {
-            Reservation reservation = new Reservation();
             Person bookingPerson = UserEntry.getBookingPerson();
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
             continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
             if(continueReservation){
+                Reservation reservation = new Reservation();
                 reservation.addPerson(bookingPerson);
                 reservation.addRoom(roomToBook);
                 reservation.setBookedFrom(fromDate);

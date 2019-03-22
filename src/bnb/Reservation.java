@@ -2,6 +2,7 @@ package bnb;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Reservation {
@@ -11,13 +12,6 @@ public class Reservation {
     private LocalDate bookedUntil;
 
     public Reservation() {
-    }
-
-    public Reservation(Set<Person> persons, Set<Room> rooms, LocalDate bookedFrom, LocalDate bookedUntil) {
-        this.persons = persons;
-        this.rooms = rooms;
-        this.bookedFrom = bookedFrom;
-        this.bookedUntil = bookedUntil;
     }
 
     public Set<Person> getPersons() {
@@ -53,10 +47,16 @@ public class Reservation {
     }
 
     public void addPerson(Person person){
+        if(persons == null){
+            persons = new HashSet<>();
+        }
         this.persons.add(person);
     }
 
     public void addRoom(Room room){
+        if(rooms == null){
+            rooms = new HashSet<>();
+        }
         this.rooms.add(room);
     }
 }
