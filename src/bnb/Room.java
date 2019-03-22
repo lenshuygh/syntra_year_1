@@ -1,7 +1,8 @@
 package bnb;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Room {
@@ -41,15 +42,14 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "name='" + name + '\'' +
-                ", capacity=" + capacity + " persons" +
-                ", pricePerNight=" + pricePerNight + " Eur" +
-                '}';
+        return "Room: " +
+                name +
+                " (cap: " + capacity +
+                ", price: " + pricePerNight + " Eur/night)";
     }
 
-    public static Set<Room> createRooms() {
-        Set<Room> rooms = new HashSet<>();
+    public static List<Room> createRooms() {
+        List<Room> rooms = new ArrayList<>();
         rooms.add( new Room("Big Room Of Fun", 6, 350));
         rooms.add( new Room("OCMW", 8, 120));
         rooms.add( new Room("Family Room", 4, 250));

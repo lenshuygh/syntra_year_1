@@ -1,12 +1,17 @@
 package bnb;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class MyBnbApp {
+    private static List<Room> rooms = Room.createRooms();
+    private static Map<String,Reservation> bnbReservationMap = new HashMap<>();
+    private static
 
     public static void main(String[] args) {
-        Set<Room> rooms = Room.createRooms();
         BnbCommands bnbCommand;
         do {
             bnbCommand = UserEntry.getMenuEntry();
@@ -41,10 +46,19 @@ public class MyBnbApp {
     }
 
     private static void bookReservation() {
-        LocalDate fromDate = UserEntry.getFromDate();
-        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
-        System.out.println(fromDate);
-        System.out.println(untilDate);
+        boolean continueReservation = false;
+        if(!continueReservation) {
+            LocalDate fromDate = UserEntry.getFromDate();
+            LocalDate untilDate = UserEntry.getUntilDate(fromDate);
+            Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
+            continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
+            if(continueReservation){
+
+
+
+                bnbReservationMap.put(UUID.randomUUID().toString(),new Reservation());
+            }
+        }
     }
 
     private static void changeReservation() {
