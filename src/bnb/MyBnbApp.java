@@ -49,17 +49,19 @@ public class MyBnbApp {
     private static void bookReservation() {
         boolean continueReservation = false;
         if(!continueReservation) {
+            Reservation reservation = new Reservation();
             Person bookingPerson = UserEntry.getBookingPerson();
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
             continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
-            /*if(continueReservation){
-
-
-
-                bnbReservationMap.put(UUID.randomUUID().toString(),new Reservation());
-            }*/
+            if(continueReservation){
+                reservation.addPerson(bookingPerson);
+                reservation.addRoom(roomToBook);
+                reservation.setBookedFrom(fromDate);
+                reservation.setBookedUntil(untilDate);
+                bnbReservationMap.put(UUID.randomUUID().toString(),reservation);
+            }
         }
     }
 

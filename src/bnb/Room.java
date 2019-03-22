@@ -40,7 +40,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room: " +
+        return "    Room: " +
                 name +
                 " (cap: " + capacity +
                 ", price: " + pricePerNight + " Eur/night)";

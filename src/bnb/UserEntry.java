@@ -12,30 +12,38 @@ import static bnb.BnbCommands.*;
 
 public class UserEntry {
     private static final String OVERVIEW_MAIN_CHOICES =
-            "Please choose one of the following commands by typing the number in front of the action:%n" +
+            "-----------------------------------------------------%n" +
                     "1.  Check room availability for a given period.%n" +
                     "2.  Check reservations by client.%n" +
                     "3.  Book a reservation.%n" +
                     "4.  Change a reservation.%n" +
                     "5.  Print reservation data.%n" +
                     "0.  Quit Program.%n" +
-                    "----------------------------------------------------------------------------------------%n";
-
-    private static final String QUESTION_STARTING_DATE = "Please provide the starting date of the reservation (DD/MM/YYYY): ";
-    private static final String QUESTION_ENTER_ACTION_NUMBER = "Enter the number of the action u want to perform: ";
-    private static final String QUESTION_UNTIL_DATE = "Please provide the ending date of the reservation (DD/MM/YYYY): ";
-    private static final String QUESTION_ROOM_TO_RESERVE = "Please enter the number of the room you want to reserve: ";
-    private static final String QUESTION_PERSON_NAME_LAST = "Please enter person's last name: ";
-    private static final String QUESTION_PERSON_NAME_FIRST = "Please enter person's first name: ";
-    private static final String QUESTION_PERSON_BIRTHDAY = "Please enter person's birthday: ";
+                    "-----------------------------------------------------%n";
+    private static final String OVERVIEW_ROOMS =
+            "------------------------------------------------------------%n" +
+                    "0.  Room: Big Room Of Fun (cap: 6, price: 350 Eur/night)%n" +
+                    "1.  Room: OCMW (cap: 8, price: 120 Eur/night)%n" +
+                    "2.  Room: Family Room (cap: 4, price: 250 Eur/night)%n" +
+                    "3.  Room: The Dungeon (cap: 2, price: 220 Eur/night)%n" +
+                    "4.  Room: The Honeymoon (cap: 2, price: 180 Eur/night)%n" +
+                    "------------------------------------------------------------%n";
+    private static final String QUESTION_STARTING_DATE = "    Please provide the starting date of the reservation (DD/MM/YYYY): ";
+    private static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
+    private static final String QUESTION_UNTIL_DATE = "    Please provide the ending date of the reservation (DD/MM/YYYY): ";
+    private static final String QUESTION_ROOM_TO_RESERVE = "    Please enter the number of the room you want to reserve: ";
+    private static final String QUESTION_PERSON_NAME_LAST = "    Please enter person's last name: ";
+    private static final String QUESTION_PERSON_NAME_FIRST = "    Please enter person's first name: ";
+    private static final String QUESTION_PERSON_BIRTHDAY = "    Please enter person's birthday: ";
+    private static final String QUESTION_PROPOSED_RESERVATION = "    Is the proposed reservation ok (y/n)?: ";
 
     private static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
                     "Please enter a number.%n" +
                     "----------------------%n";
-    private static final String ENTRY_ERR_NUMBER_RANGE_0_5 =
+    private static String ENTRY_ERR_NUMBER_RANGE =
             "----------------------------------%n" +
-                    "Please enter a number from 0 to 5.%n" +
+                    "Please enter a number from %d to %d.%n" +
                     "----------------------------------%n";
     private static final String ENTRY_ERR_DATE_FORMAT =
             "------------------------------------------------%n" +
@@ -55,12 +63,12 @@ public class UserEntry {
                     "---------------------------------------------------------------------%n";
     private static final String ENTRY_ERR_AGE_NOT_18 =
             "---------------------------------------------------------%n" +
-            "The booking's person has to be at least 18 years old.%n" +
-            "Please give the birthday of an adult person in the group.%n" +
-            "---------------------------------------------------------%n";
+                    "The booking's person has to be at least 18 years old.%n" +
+                    "Please give the birthday of an adult person in the group.%n" +
+                    "---------------------------------------------------------%n";
 
-    private static final String QUESTION_PROPOSED_RESERVATION = "Is the proposed reservation ok (y/n)?: ";
-    private static final String LINE_PROPOSED_RESERVATION = "Check the proposed reservation below%n";
+    private static final String LINE_PROPOSED_RESERVATION = "    Check the proposed reservation below%n" +
+            "    ------------------------------------%n";
     private static final String LINE_FEED = "%n";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -69,7 +77,7 @@ public class UserEntry {
 
     private static Predicate<LocalDate> checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
     private static Predicate<LocalDate> checkIfDateIsAfter = d -> d.isAfter(fromDate);
-    private static Predicate<LocalDate> checkIfOver18 = d -> ChronoUnit.YEARS.between(d,LocalDate.now()) >= 18;
+    private static Predicate<LocalDate> checkIfOver18 = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -77,26 +85,29 @@ public class UserEntry {
         return scanner.next();
     }
 
-    public static BnbCommands getMenuEntry() {
-        display(OVERVIEW_MAIN_CHOICES);
-        int commandChoice = -1;
+    public static int getMenuChoice(String menuChoices, String entryQuestion, int lowestMenuChoice, int highestMenuChoice) {
+        display(menuChoices);
+        int choice = -1;
         boolean goodEntry = false;
-
         while (!goodEntry) {
-            String stringInput = getNextInput(QUESTION_ENTER_ACTION_NUMBER);
+            String in = getNextInput(entryQuestion);
             try {
-                commandChoice = Integer.parseInt(stringInput);
+                choice = Integer.parseInt(in);
             } catch (NumberFormatException e) {
                 display(ENTRY_ERR_NUMBER);
                 continue;
             }
-            if (!checkInRange(commandChoice, 0, 5)) {
-                display(ENTRY_ERR_NUMBER_RANGE_0_5);
-                display(OVERVIEW_MAIN_CHOICES);
+            if (!checkInRange(choice, lowestMenuChoice, highestMenuChoice)) {
+                display(String.format(ENTRY_ERR_NUMBER_RANGE, lowestMenuChoice, highestMenuChoice));
             } else {
                 goodEntry = true;
             }
         }
+        return choice;
+    }
+
+    public static BnbCommands getMenuEntry() {
+        int commandChoice = getMenuChoice(OVERVIEW_MAIN_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 5);
         switch (commandChoice) {
             case 1:
                 return CHECK_AVAILABILITY;
@@ -113,20 +124,20 @@ public class UserEntry {
         }
     }
 
-    public static LocalDate getFromDate(){
-        return getDateFromUser(QUESTION_STARTING_DATE,checkIfDateInFuture,ENTRY_ERR_DATE_IN_PAST);
+    public static LocalDate getFromDate() {
+        return getDateFromUser(QUESTION_STARTING_DATE, checkIfDateInFuture, ENTRY_ERR_DATE_IN_PAST);
     }
 
-    public static LocalDate getUntilDate(LocalDate localDate){
+    public static LocalDate getUntilDate(LocalDate localDate) {
         fromDate = localDate;
-        return getDateFromUser(QUESTION_UNTIL_DATE, checkIfDateIsAfter,ENTRY_ERR_DATE_BEFORE_BOOKING_START);
+        return getDateFromUser(QUESTION_UNTIL_DATE, checkIfDateIsAfter, ENTRY_ERR_DATE_BEFORE_BOOKING_START);
     }
 
-    public static LocalDate getBirthDay(){
-        return getDateFromUser(QUESTION_PERSON_BIRTHDAY,checkIfOver18, ENTRY_ERR_AGE_NOT_18);
+    public static LocalDate getBirthDay() {
+        return getDateFromUser(QUESTION_PERSON_BIRTHDAY, checkIfOver18, ENTRY_ERR_AGE_NOT_18);
     }
 
-    private static LocalDate getDateFromUser(String questionToUser,Predicate<LocalDate> dateCheck,String errorMassage){
+    private static LocalDate getDateFromUser(String questionToUser, Predicate<LocalDate> dateCheck, String errorMassage) {
         boolean dateOk = false;
 
         while (!dateOk) {
@@ -138,9 +149,9 @@ public class UserEntry {
                 display(LINE_FEED);
                 continue;
             }
-            if(dateCheck.test(formattedDate)) {
+            if (dateCheck.test(formattedDate)) {
                 dateOk = true;
-            }else{
+            } else {
                 display(errorMassage);
                 display(LINE_FEED);
             }
@@ -153,25 +164,9 @@ public class UserEntry {
     }
 
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
-        boolean roomNumberOk = false;
-        int roomChoice = -1;
-        while (!roomNumberOk) {
-            display(rooms);
-            String roomNumber = getNextInput(QUESTION_ROOM_TO_RESERVE);
-            try {
-                roomChoice = Integer.parseInt(roomNumber);
-            } catch (NumberFormatException e) {
-                display(ENTRY_ERR_NUMBER);
-                continue;
-            }
-            if (checkInRange(roomChoice, 0, 5)) {
-                roomNumberOk = true;
-            } else {
-                display(ENTRY_ERR_NUMBER_RANGE_0_5);
-                display(LINE_FEED);
-            }
-        }
-        return rooms.get(roomChoice);
+        //todo: make overview generated in stead of static
+        int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
+        return rooms.get(choice);
     }
 
     private static void display(String s) {
@@ -191,16 +186,17 @@ public class UserEntry {
 
         while (!acceptEntryOk) {
             long daysInBetween = getDaysInBetween(fromDate, untilDate);
-
+            display(LINE_FEED);
             display(LINE_PROPOSED_RESERVATION);
             display(roomToBook.toString());
             display(LINE_FEED);
-            display("Period: " +
+            display("    Period: " +
                     fromDate.format(DATE_TIME_FORMATTER) +
                     " until " + untilDate.format(DATE_TIME_FORMATTER) +
                     " (" + daysInBetween + " days)");
             display(LINE_FEED);
-            display("TOTAL COST: "+ calculatedCost(daysInBetween,roomToBook) + " Euro");
+            display("    TOTAL COST: " + calculatedCost(daysInBetween, roomToBook) + " Euro%n");
+            display("    --------------------------------------");
             display(LINE_FEED);
             String entry = getNextInput(QUESTION_PROPOSED_RESERVATION);
             if (entry.equals("y") || entry.equals("n")) {
@@ -215,7 +211,6 @@ public class UserEntry {
     }
 
 
-
     private static long calculatedCost(long daysInBetween, Room roomToBook) {
         return roomToBook.getPricePerNight() * daysInBetween;
     }
@@ -225,16 +220,16 @@ public class UserEntry {
     }
 
     public static Person getBookingPerson() {
-        LocalDate birtDay = getBirthDay();
+        LocalDate birthDay = getBirthDay();
         Person bookingPerson = personEntry();
-        bookingPerson.setBirthDay(birtDay);
+        bookingPerson.setBirthDay(birthDay);
         return bookingPerson;
     }
 
-    private static Person personEntry(){
+    private static Person personEntry() {
         String lastName = getNextInput(QUESTION_PERSON_NAME_LAST);
         String firstName = getNextInput(QUESTION_PERSON_NAME_FIRST);
-        return new Person(firstName,lastName);
+        return new Person(firstName, lastName);
     }
 
 }

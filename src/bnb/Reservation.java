@@ -5,24 +5,27 @@ import java.util.Collection;
 import java.util.Set;
 
 public class Reservation {
-    private Person person;
+    private Set<Person> persons;
     private Set<Room> rooms;
     private LocalDate bookedFrom;
     private LocalDate bookedUntil;
 
-    public Reservation(Person person, Set<Room> rooms, LocalDate bookedFrom, LocalDate bookedUntil) {
-        this.person = person;
+    public Reservation() {
+    }
+
+    public Reservation(Set<Person> persons, Set<Room> rooms, LocalDate bookedFrom, LocalDate bookedUntil) {
+        this.persons = persons;
         this.rooms = rooms;
         this.bookedFrom = bookedFrom;
         this.bookedUntil = bookedUntil;
     }
 
-    public Person getPerson() {
-        return person;
+    public Set<Person> getPersons() {
+        return persons;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(Set<Person> persons) {
+        this.persons = persons;
     }
 
     public Set<Room> getRooms() {
@@ -47,5 +50,13 @@ public class Reservation {
 
     public void setBookedUntil(LocalDate bookedUntil) {
         this.bookedUntil = bookedUntil;
+    }
+
+    public void addPerson(Person person){
+        this.persons.add(person);
+    }
+
+    public void addRoom(Room room){
+        this.rooms.add(room);
     }
 }
