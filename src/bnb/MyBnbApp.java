@@ -45,7 +45,7 @@ public class MyBnbApp {
     }
 
 
-    //todo: persons !!! check age of booker, capacity-issues, ...
+    //todo: persons !!! check age of booker, capacity-issues -> persons vs room-capacity, ...
     private static void bookReservation() {
         boolean continueReservation = false;
         if(!continueReservation) {

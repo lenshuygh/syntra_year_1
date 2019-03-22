@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 import static bnb.BnbCommands.*;
 
@@ -53,10 +53,11 @@ public class UserEntry {
             "---------------------------------------------------------------------%n" +
                     "Please enter the character 'y' for yes or 'n' for no (without quotes)%n" +
                     "---------------------------------------------------------------------%n";
-    private static final String ENTRY_ERR_DATE_NOT_18 =
-            "-------------------------------------------------------%n" +
-            "The booking's person's has to be at least 18 years old.%n" +
-            "-------------------------------------------------------%n";
+    private static final String ENTRY_ERR_AGE_NOT_18 =
+            "---------------------------------------------------------%n" +
+            "The booking's person has to be at least 18 years old.%n" +
+            "Please give the birthday of an adult person in the group.%n" +
+            "---------------------------------------------------------%n";
 
     private static final String QUESTION_PROPOSED_RESERVATION = "Is the proposed reservation ok (y/n)?: ";
     private static final String LINE_PROPOSED_RESERVATION = "Check the proposed reservation below%n";
@@ -64,6 +65,11 @@ public class UserEntry {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static LocalDate formattedDate;
+    private static LocalDate fromDate;
+
+    private static Predicate<LocalDate> checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
+    private static Predicate<LocalDate> checkIfDateIsAfter = d -> d.isAfter(fromDate);
+    private static Predicate<LocalDate> checkIfOver18 = d -> ChronoUnit.YEARS.between(d,LocalDate.now()) >= 18;
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -107,35 +113,20 @@ public class UserEntry {
         }
     }
 
-    /*public static LocalDate getFromDate() {
-        boolean dateOk = false;
-
-        while (!dateOk) {
-            String date = getNextInput(QUESTION_STARTING_DATE);
-            try {
-                formattedDate = LocalDate.parse(date, DATE_TIME_FORMATTER);
-            } catch (DateTimeParseException e) {
-                display(ENTRY_ERR_DATE_FORMAT);
-                display(LINE_FEED);
-                continue;
-            }
-            if (checkDateBetween(formattedDate, LocalDate.now())) {
-                dateOk = true;
-            } else {
-                display(ENTRY_ERR_DATE_IN_PAST);
-                display(LINE_FEED);
-            }
-        }
-        return formattedDate;
-    }*/
-
-    static DateChecker checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
-
     public static LocalDate getFromDate(){
         return getDateFromUser(QUESTION_STARTING_DATE,checkIfDateInFuture,ENTRY_ERR_DATE_IN_PAST);
     }
 
-    private static LocalDate getDateFromUser(String questionToUser,DateChecker dateChecker,String errorMassage){
+    public static LocalDate getUntilDate(LocalDate localDate){
+        fromDate = localDate;
+        return getDateFromUser(QUESTION_UNTIL_DATE, checkIfDateIsAfter,ENTRY_ERR_DATE_BEFORE_BOOKING_START);
+    }
+
+    public static LocalDate getBirthDay(){
+        return getDateFromUser(QUESTION_PERSON_BIRTHDAY,checkIfOver18, ENTRY_ERR_AGE_NOT_18);
+    }
+
+    private static LocalDate getDateFromUser(String questionToUser,Predicate<LocalDate> dateCheck,String errorMassage){
         boolean dateOk = false;
 
         while (!dateOk) {
@@ -147,7 +138,7 @@ public class UserEntry {
                 display(LINE_FEED);
                 continue;
             }
-            if(dateChecker.dateIsvalid(formattedDate)) {
+            if(dateCheck.test(formattedDate)) {
                 dateOk = true;
             }else{
                 display(errorMassage);
@@ -155,32 +146,6 @@ public class UserEntry {
             }
         }
         return formattedDate;
-    }
-
-    public static LocalDate getUntilDate(LocalDate fromDate) {
-        boolean dateOk = false;
-
-        while (!dateOk) {
-            String date = getNextInput(QUESTION_UNTIL_DATE);
-            try {
-                formattedDate = LocalDate.parse(date, DATE_TIME_FORMATTER);
-            } catch (DateTimeParseException e) {
-                display(ENTRY_ERR_DATE_FORMAT);
-                display(LINE_FEED);
-                continue;
-            }
-            if (checkDateBetween(formattedDate, fromDate)) {
-                dateOk = true;
-            } else {
-                display(ENTRY_ERR_DATE_BEFORE_BOOKING_START);
-                display(LINE_FEED);
-            }
-        }
-        return formattedDate;
-    }
-
-    private static boolean checkDateBetween(LocalDate formattedDate, LocalDate now) {
-        return formattedDate.isAfter(now);
     }
 
     private static boolean checkInRange(int numberEntered, int lowLimit, int highLimit) {
@@ -260,32 +225,16 @@ public class UserEntry {
     }
 
     public static Person getBookingPerson() {
+        LocalDate birtDay = getBirthDay();
         Person bookingPerson = personEntry();
+        bookingPerson.setBirthDay(birtDay);
         return bookingPerson;
     }
 
     private static Person personEntry(){
-        boolean birthDayOK = false;
-        while(!birthDayOK) {
-            String birthday = getNextInput(QUESTION_PERSON_BIRTHDAY);
-            try {
-                formattedDate = LocalDate.parse(birthday, DATE_TIME_FORMATTER);
-            } catch (DateTimeParseException e) {
-                display(ENTRY_ERR_DATE_FORMAT);
-                display(LINE_FEED);
-                continue;
-            }
-            if (checkAge(formattedDate, LocalDate.now())) {
-                birthDayOK = true;
-            } else {
-                display(ENTRY_ERR_DATE_NOT_18);
-                display(LINE_FEED);
-            }
-        }
-        return new Person("Lens","Huygh",LocalDate.parse("23/06/1980",DATE_TIME_FORMATTER));
+        String lastName = getNextInput(QUESTION_PERSON_NAME_LAST);
+        String firstName = getNextInput(QUESTION_PERSON_NAME_FIRST);
+        return new Person(firstName,lastName);
     }
 
-    private static boolean checkAge(LocalDate birthDay, LocalDate now) {
-        return ChronoUnit.YEARS.between(birthDay,now) >= 18;
-    }
 }
