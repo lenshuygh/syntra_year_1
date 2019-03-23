@@ -7,8 +7,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static bnb.BnbCommands.*;
+import static java.util.stream.Collectors.toCollection;
 
 public class UserEntry {
     private static final String OVERVIEW_MAIN_CHOICES =
@@ -49,7 +51,7 @@ public class UserEntry {
     private static final String QUESTION_ROOM_TO_RESERVE = "    Please enter the number of the room you want to reserve: ";
     private static final String QUESTION_PERSON_NAME_LAST = "    Please enter person's last name: ";
     private static final String QUESTION_PERSON_NAME_FIRST = "    Please enter person's first name: ";
-    private static final String QUESTION_PERSON_BIRTHDAY = "    Please enter person's birthday: ";
+    private static final String QUESTION_PERSON_BIRTHDAY = "    Please enter the booking person's birthday (DD/MM/YYYY): ";
     private static final String QUESTION_PROPOSED_RESERVATION = "    Is the proposed reservation ok (y/n)?: ";
     private static final String QUESTION_ENTER_RESERVATION_NUMBER = "    Please enter the reservation to display's number: ";
 
@@ -92,6 +94,11 @@ public class UserEntry {
     private static final String LINE_PERIOD_RESULTS =
             "Reservations between: %s and %s%n" +
                     "--------------------------------------------------%n";
+    private static final String LINE_PERIOD_RESULTS_FREE_ROOMS =
+            "Free rooms between: %s and %s%n" +
+                    "--------------------------------------------------%n";
+
+
     private static final String LINE_ALL_RESERVATIONS_OVERVIEW =
             "Reservations overview:%n" +
                     "----------------------------------%n";
@@ -306,6 +313,20 @@ public class UserEntry {
                 .forEach(Reservation::prettyOutput2);
     }
 
+    public static void displayRoomAvailability(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap,List<Room> rooms) {
+        display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
+        Set<Room> bookedRoomSet = new HashSet<>();
+        bookedRoomSet = bnbReservationMap.values()
+                .stream()
+                .filter(r -> checkReservationBeforeUntilDatePredicate.test(r))
+                .filter(r -> checkReservationAfterFromDatePredicate.test(r))
+                .map(Reservation::getRooms)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        rooms.removeAll(bookedRoomSet);
+        rooms.forEach(System.out::println);
+    }
+
     public static void displayReservations(Map<String, Reservation> bnbReservationMap) {
         display(LINE_ALL_RESERVATIONS_OVERVIEW);
         bnbReservationMap
@@ -352,7 +373,7 @@ public class UserEntry {
     }
 
     public static int continueReservation() {
-        return getMenuChoice(OVERVIEW_RESERVATION_ENTRY, QUESTION_ENTER_ACTION_NUMBER,0,3 );
+        return getMenuChoice(OVERVIEW_RESERVATION_ENTRY, QUESTION_ENTER_ACTION_NUMBER, 0, 3);
     }
 
     public static void clearScreen() {
