@@ -1,5 +1,6 @@
 package bnb;
 
+import java.text.Format;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -76,16 +77,30 @@ public class UserEntry {
 
     private static final String LINE_PROPOSED_RESERVATION = "    Check the proposed reservation below%n" +
             "    ------------------------------------%n";
+
+    private static final String LINE_PERSON_RESULTS =
+            "Reservations for: '%s'%n" +
+            "---------------------------------------------%n";
+    private static final String LINE_PERIOD_RESULTS =
+            "Reservations between: %s and %s%n" +
+                    "--------------------------------------------------%n";
+
     private static final String LINE_FEED = "%n";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static LocalDate formattedDate;
     private static LocalDate fromDate;
+    private static LocalDate untilDate;
     private static Person searchedPerson;
 
     private static Predicate<LocalDate> checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
     private static Predicate<LocalDate> checkIfDateIsAfter = d -> d.isAfter(fromDate);
+    private static Predicate<LocalDate> checkIfDateIsBefore = d -> d.isBefore(untilDate);
     private static Predicate<LocalDate> checkIfOver18 = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
+
+    private static Predicate<Reservation> checkIfPersonInPersonsFromReservation = r -> r.getPersons().contains(searchedPerson);
+    private static Predicate<Reservation> checkReservationBeforeUntilDate = r -> r.getBookedUntil().isBefore(untilDate);
+    private static Predicate<Reservation> checkReservationAfterFromDate = r -> r.getBookedUntil().isAfter(fromDate);
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -233,22 +248,31 @@ public class UserEntry {
         bookingPerson.setBirthDay(birthDay);
         return bookingPerson;
     }
-
     // todo: notnull
+
     public static Person personEntry() {
         String lastName = getNextInput(QUESTION_PERSON_NAME_LAST);
         String firstName = getNextInput(QUESTION_PERSON_NAME_FIRST);
         return new Person(firstName, lastName);
     }
 
-    private static Predicate<Reservation> checkIfPersonInPersonsFromReservation = r -> r.getPersons().contains((Person)searchedPerson);
-
-    public static void displayReservationsMadeByPerson(Person personToSearch, Map<String,Reservation> bnbReservationMap) {
+    public static void displayReservations(Person personToSearch, Map<String,Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
+        display(String.format(LINE_PERSON_RESULTS,(searchedPerson.getLastName()+", "+searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()
                 .filter(r -> checkIfPersonInPersonsFromReservation.test(r))
                 .forEach(Reservation::prettyOutput2);
     }
 
+    public static void displayReservations(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
+        fromDate = fromCheckDate;
+        untilDate = untilCheckDate;
+        display((String.format(LINE_PERIOD_RESULTS,DATE_TIME_FORMATTER.format(fromCheckDate),DATE_TIME_FORMATTER.format(untilCheckDate))));
+        bnbReservationMap.values()
+                .stream()
+                .filter(r -> checkReservationBeforeUntilDate.test(r))
+                .filter(r -> checkReservationAfterFromDate.test(r))
+                .forEach(Reservation::prettyOutput2);
+    }
 }

@@ -40,10 +40,13 @@ public class MyBnbApp {
 
     private static void checkByPerson() {
         Person searchedPerson = UserEntry.personEntry();
-        UserEntry.displayReservationsMadeByPerson(searchedPerson,bnbReservationMap);
+        UserEntry.displayReservations(searchedPerson,bnbReservationMap);
     }
 
     private static void checkAvailability() {
+        LocalDate fromDate = UserEntry.getFromDate();
+        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
+        UserEntry.displayReservations(fromDate,untilDate,bnbReservationMap);
     }
 
 
