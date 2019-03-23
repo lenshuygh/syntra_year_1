@@ -1,10 +1,7 @@
 package bnb;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MyBnbApp {
     private static List<Room> rooms = Room.createRooms();
@@ -67,22 +64,22 @@ public class MyBnbApp {
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
 
             //check availability
-            if(UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap)){
+            boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
+            if(!reservationConflict){
 
-            }
+                // check if other rooms will be booked
 
-            // check if another rooms will be booked
+                //check if a next person is gonna be entered
 
-            //check if a next person is gonna be entered
-
-            continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
-            if(continueReservation){
-                Reservation reservation = new Reservation();
-                reservation.addPerson(bookingPerson);
-                reservation.addRoom(roomToBook);
-                reservation.setBookedFrom(fromDate);
-                reservation.setBookedUntil(untilDate);
-                bnbReservationMap.put(UUID.randomUUID().toString(),reservation);
+                continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
+                if(continueReservation){
+                    Reservation reservation = new Reservation();
+                    reservation.addPerson(bookingPerson);
+                    reservation.addRoom(roomToBook);
+                    reservation.setBookedFrom(fromDate);
+                    reservation.setBookedUntil(untilDate);
+                    bnbReservationMap.put(UUID.randomUUID().toString(),reservation);
+                }
             }
         }
     }

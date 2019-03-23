@@ -4,10 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -97,6 +94,12 @@ public class UserEntry {
             "Reservations overview:%n" +
                     "----------------------------------%n";
 
+    private static final String LINE_CONFLICTING_RESERVATION =
+            "Conflicting reservation found";
+
+    private static final String LINE_CONFLICTING_RESERVATION_CANCELED =
+            "Current reservation is canceled%n";
+
     private static final String LINE_FEED = "%n";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -120,7 +123,7 @@ public class UserEntry {
 
     private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
 
-    private static Predicate<Reservation> checkIfReservationIsBetweenDatesPredicate(LocalDate from, LocalDate to, Function<Reservation,LocalDate> function){
+    private static Predicate<Reservation> checkIfReservationIsBetweenDatesPredicate(LocalDate from, LocalDate to, Function<Reservation, LocalDate> function) {
         Predicate<Reservation> isReservationIsFromAfterFromPredicate = reservation -> function.apply(reservation).isAfter(from);
         Predicate<Reservation> isReservationIsFromBeforeToPredicate = reservation -> function.apply(reservation).isBefore(to);
         return isReservationIsFromAfterFromPredicate.and(isReservationIsFromBeforeToPredicate);
@@ -315,26 +318,38 @@ public class UserEntry {
     }
 
     public static int getAfterOverviewChoice() {
-        return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES,QUESTION_ENTER_ACTION_NUMBER,0,1);
+        return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 1);
     }
 
     public static int getReservationToDisplayNumber(Map<String, Reservation> bnbReservationMap) {
-        //int choice = getNextInput(QUESTION_ENTER_RESERVATION_NUMBER);
-        int choice = getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER,0,bnbReservationMap.size());
+        int choice = getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER, 0, bnbReservationMap.size());
         return choice;
     }
 
-    public static void displaySingleReservationWithAllDetails(int reservationNumber,Map<String, Reservation> bnbReservationMap) {
+    public static void displaySingleReservationWithAllDetails(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
         chosenIndex = reservationNumber;
         bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationAllDetails);
     }
 
     public static boolean checkAvailability(LocalDate fromDateToCheck, LocalDate untilDateToCheck, Room roomToBookToCheck, Map<String, Reservation> bnbReservationMap) {
         room = roomToBookToCheck;
-        bnbReservationMap.values().stream()
-                .filter(checkIfRoomInReservationPredicate)
-                .filter(r -> untilDateToCheck.isBefore(r.getBookedFrom()) || fromDateToCheck.isAfter(r.getBookedUntil()))
-                .count();
 
+        Optional<Reservation> reservationOptional = bnbReservationMap.values().stream()
+                .filter(checkIfRoomInReservationPredicate)
+                .filter(r -> (
+                        (fromDateToCheck.isAfter(r.getBookedFrom()) && fromDateToCheck.isBefore(r.getBookedUntil())) ||
+                                (untilDateToCheck.isAfter(r.getBookedFrom()) && untilDateToCheck.isBefore(r.getBookedUntil())) ||
+                                (fromDateToCheck.isBefore(r.getBookedFrom()) && untilDateToCheck.isAfter(r.getBookedUntil())) ||
+                                (fromDateToCheck.isEqual(r.getBookedFrom()) || untilDateToCheck.isEqual(r.getBookedUntil())) ||
+                                (fromDateToCheck.isEqual(r.getBookedUntil()) || untilDateToCheck.isEqual(r.getBookedFrom()))
+                )).findFirst();
+        if(reservationOptional.isPresent()){
+            display(LINE_CONFLICTING_RESERVATION);
+            Reservation reservation = reservationOptional.get();
+            display(reservation.prettyOutput());
+            display(LINE_CONFLICTING_RESERVATION_CANCELED);
+            return true;
+        }
+        return false;
     }
 }
