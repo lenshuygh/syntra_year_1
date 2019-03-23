@@ -314,6 +314,8 @@ public class UserEntry {
     }
 
     public static void displayRoomAvailability(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap,List<Room> rooms) {
+        fromDate = fromCheckDate;
+        untilDate = untilCheckDate;
         display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
         Set<Room> bookedRoomSet = new HashSet<>();
         bookedRoomSet = bnbReservationMap.values()
