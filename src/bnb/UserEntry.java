@@ -13,12 +13,12 @@ import static bnb.BnbCommands.*;
 public class UserEntry {
     private static final String OVERVIEW_MAIN_CHOICES =
             "-----------------------------------------------------%n" +
+                    "0.  Quit Program.%n" +
                     "1.  Check room availability for a given period.%n" +
                     "2.  Check reservations by client.%n" +
                     "3.  Book a reservation.%n" +
                     "4.  Change a reservation.%n" +
                     "5.  Print reservation data.%n" +
-                    "0.  Quit Program.%n" +
                     "-----------------------------------------------------%n";
     private static final String OVERVIEW_ROOMS =
             "------------------------------------------------------------%n" +
@@ -28,11 +28,13 @@ public class UserEntry {
                     "3.  Room: The Dungeon (cap: 2, price: 220 Eur/night)%n" +
                     "4.  Room: The Honeymoon (cap: 2, price: 180 Eur/night)%n" +
                     "------------------------------------------------------------%n";
-    private static final String OVERVIEW_CHECK_BY_PERSON_CHOICES =
-            "    ----------------------------------------.%n" +
-                    "0.  Check if person was the booking person.%n" +
-                    "1.  Check if person was the attending person.%n" +
-                    "    ----------------------------------------.%n";
+    private static final String OVERVIEW_RESERVATION_ENTRY =
+            "    -------------------------------------------------------%n" +
+                    "0.  Add attending person.%n" +
+                    "1.  Add another room to your reservation.%n" +
+                    "2.  Complete current reservation.%n" +
+                    "3.  Cancel current reservation and return to the main menu.%n" +
+                    "    -------------------------------------------------------%n";
 
     private static final String OVERVIEW_CHOOSE_RESERVATION_CHOICES =
             "    -------------------------%n" +
@@ -229,6 +231,7 @@ public class UserEntry {
         }
     }
 
+    //todo: check if can be replaced by detail method from Reservation class
     public static boolean proposeRegistration(LocalDate fromDate, LocalDate untilDate, Room roomToBook) {
         boolean acceptProposal = false;
         boolean acceptEntryOk = false;
@@ -305,11 +308,6 @@ public class UserEntry {
 
     public static void displayReservations(Map<String, Reservation> bnbReservationMap) {
         display(LINE_ALL_RESERVATIONS_OVERVIEW);
-
-        /*bnbReservationMap
-                .values()
-                .forEach(Reservation::listSummaryOutput);
-*/
         bnbReservationMap
                 .values()
                 .stream()
@@ -343,7 +341,7 @@ public class UserEntry {
                                 (fromDateToCheck.isEqual(r.getBookedFrom()) || untilDateToCheck.isEqual(r.getBookedUntil())) ||
                                 (fromDateToCheck.isEqual(r.getBookedUntil()) || untilDateToCheck.isEqual(r.getBookedFrom()))
                 )).findFirst();
-        if(reservationOptional.isPresent()){
+        if (reservationOptional.isPresent()) {
             display(LINE_CONFLICTING_RESERVATION);
             Reservation reservation = reservationOptional.get();
             display(reservation.prettyOutput());
@@ -351,5 +349,14 @@ public class UserEntry {
             return true;
         }
         return false;
+    }
+
+    public static int continueReservation() {
+        return getMenuChoice(OVERVIEW_RESERVATION_ENTRY, QUESTION_ENTER_ACTION_NUMBER,0,3 );
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

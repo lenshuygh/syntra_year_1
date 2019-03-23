@@ -135,7 +135,7 @@ public class Reservation {
         System.out.printf("       Rooms:%n");
         roomSet.forEach(r -> System.out.printf("         %s - Capacity: %d - Price/night: %d%n",r.getName(),r.getCapacity(),r.getPricePerNight()));
         System.out.printf("       Persons:%n");
-        personSet.forEach(p -> System.out.printf("         %s, %s, %s%n",p.getLastName(),p.getFirstName(),dateTimeFormatter.format(p.getBirthDay())));
+        personSet.forEach(p -> System.out.printf("         %s, %s%n",p.getLastName(),p.getFirstName()));
         System.out.printf("------------------------------------------%n");
         System.out.printf("       Total price: %d%n",totalPrice);
         System.out.printf("------------------------------------------%n");

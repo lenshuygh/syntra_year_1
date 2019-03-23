@@ -45,7 +45,7 @@ public class MyBnbApp {
         Person searchedPerson = UserEntry.personEntry();
         UserEntry.displayReservations(searchedPerson,bnbReservationMap);
     }
-
+    //todo: reverse this, now it shows the booked rooms instead of the free rooms
     private static void checkAvailability() {
         LocalDate fromDate = UserEntry.getFromDate();
         LocalDate untilDate = UserEntry.getUntilDate(fromDate);
@@ -53,7 +53,7 @@ public class MyBnbApp {
     }
 
 
-    //todo: persons !!! capacity-issues -> persons vs room-capacity, ...
+    //todo: capacity-issues -> persons vs room-capacity, ...
     //todo: check availability during date & room choice
     private static void bookReservation() {
         boolean continueReservation = false;
@@ -62,23 +62,49 @@ public class MyBnbApp {
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
+            Reservation reservation = new Reservation();
+            Set<Person> personSet = new HashSet<>();
+            Set<Room> roomSet = new HashSet<>();
 
-            //check availability
             boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
             if(!reservationConflict){
-
-                // check if other rooms will be booked
-
-                //check if a next person is gonna be entered
-
                 continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
                 if(continueReservation){
-                    Reservation reservation = new Reservation();
-                    reservation.addPerson(bookingPerson);
-                    reservation.addRoom(roomToBook);
-                    reservation.setBookedFrom(fromDate);
-                    reservation.setBookedUntil(untilDate);
-                    bnbReservationMap.put(UUID.randomUUID().toString(),reservation);
+                    boolean finishReservation = false;
+                    boolean cancelReservation = false;
+                    while(!finishReservation) {
+                        int choice = UserEntry.continueReservation();
+                        switch (choice) {
+                            case 0:
+                                Person person = UserEntry.personEntry();
+                                //boolean roomsCapacityReached = UserEntry.checkCapacity()
+                                personSet.add(person);
+                                break;
+                            case 1:
+                                Room room = UserEntry.getRoomWanted(rooms,fromDate,untilDate);
+                                reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
+                                if(!reservationConflict){
+                                    roomSet.add(room);
+                                }
+                                break;
+                            case 2:
+                                finishReservation = true;
+                                personSet.forEach(p ->reservation.addPerson(p));
+                                roomSet.forEach(r -> reservation.addRoom(r));
+                                break;
+                            default:
+                                finishReservation = true;
+                                cancelReservation = true;
+                        }
+
+                    }
+                    if(!cancelReservation) {
+                        reservation.addPerson(bookingPerson);
+                        reservation.addRoom(roomToBook);
+                        reservation.setBookedFrom(fromDate);
+                        reservation.setBookedUntil(untilDate);
+                        bnbReservationMap.put(UUID.randomUUID().toString(), reservation);
+                    }
                 }
             }
         }
