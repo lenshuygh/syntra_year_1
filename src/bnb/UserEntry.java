@@ -36,9 +36,9 @@ public class UserEntry {
                     "1.  Check if person was the attending person.%n" +
                     "    ----------------------------------------.%n";
 
-    private static final String QUESTION_STARTING_DATE = "    Please provide the starting date of the reservation (DD/MM/YYYY): ";
     private static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
-    private static final String QUESTION_UNTIL_DATE = "    Please provide the ending date of the reservation (DD/MM/YYYY): ";
+    private static final String QUESTION_STARTING_DATE = "    Please provide the starting date (DD/MM/YYYY): ";
+    private static final String QUESTION_UNTIL_DATE = "    Please provide the ending date (DD/MM/YYYY): ";
     private static final String QUESTION_ROOM_TO_RESERVE = "    Please enter the number of the room you want to reserve: ";
     private static final String QUESTION_PERSON_NAME_LAST = "    Please enter person's last name: ";
     private static final String QUESTION_PERSON_NAME_FIRST = "    Please enter person's first name: ";
