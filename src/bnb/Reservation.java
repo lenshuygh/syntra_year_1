@@ -2,6 +2,7 @@ package bnb;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -120,5 +121,24 @@ public class Reservation {
         System.out.printf("------------------------------------------%n");
     }
 
+    public void singleReservationAllDetails(){
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Set<Room> roomSet = getRooms();
+        Set<Person> personSet = getPersons();
+        long daysBooked = ChronoUnit.DAYS.between(bookedFrom, bookedUntil);
+        int totalPrice = 0;
+
+        for (Room room : rooms) {
+            totalPrice += room.getPricePerNight() * daysBooked;
+        }
+        System.out.printf("       %s - %s (%d nights)%n",dateTimeFormatter.format(bookedFrom),dateTimeFormatter.format(bookedUntil), daysBooked);
+        System.out.printf("       Rooms:%n");
+        roomSet.forEach(r -> System.out.printf("         %s - Capacity: %d - Price/night: %d%n",r.getName(),r.getCapacity(),r.getPricePerNight()));
+        System.out.printf("       Persons:%n");
+        personSet.forEach(p -> System.out.printf("         %s, %s, %s%n",p.getLastName(),p.getFirstName(),dateTimeFormatter.format(p.getBirthDay())));
+        System.out.printf("------------------------------------------%n");
+        System.out.printf("       Total price: %d%n",totalPrice);
+        System.out.printf("------------------------------------------%n");
+    }
 
 }

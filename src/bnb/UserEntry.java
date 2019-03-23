@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static bnb.BnbCommands.*;
@@ -36,6 +37,13 @@ public class UserEntry {
                     "1.  Check if person was the attending person.%n" +
                     "    ----------------------------------------.%n";
 
+    private static final String OVERVIEW_CHOOSE_RESERVATION_CHOICES =
+            "    -------------------------%n" +
+                    "0.  Choose a reservation.%n" +
+                    "1.  Go back to the main menu.%n" +
+                    "    -------------------------%n";
+
+
     private static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
     private static final String QUESTION_STARTING_DATE = "    Please provide the starting date (DD/MM/YYYY): ";
     private static final String QUESTION_UNTIL_DATE = "    Please provide the ending date (DD/MM/YYYY): ";
@@ -44,6 +52,7 @@ public class UserEntry {
     private static final String QUESTION_PERSON_NAME_FIRST = "    Please enter person's first name: ";
     private static final String QUESTION_PERSON_BIRTHDAY = "    Please enter person's birthday: ";
     private static final String QUESTION_PROPOSED_RESERVATION = "    Is the proposed reservation ok (y/n)?: ";
+    private static final String QUESTION_ENTER_RESERVATION_NUMBER = "    Please enter the reservation to display's number: ";
 
     private static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
@@ -80,7 +89,7 @@ public class UserEntry {
 
     private static final String LINE_PERSON_RESULTS =
             "Reservations for: '%s'%n" +
-            "---------------------------------------------%n";
+                    "---------------------------------------------%n";
     private static final String LINE_PERIOD_RESULTS =
             "Reservations between: %s and %s%n" +
                     "--------------------------------------------------%n";
@@ -95,16 +104,27 @@ public class UserEntry {
     private static LocalDate fromDate;
     private static LocalDate untilDate;
     private static Person searchedPerson;
+    private static int chosenIndex = -1;
+    private static Room room;
 
-    private static Predicate<LocalDate> checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
-    private static Predicate<LocalDate> checkIfDateIsAfter = d -> d.isAfter(fromDate);
-    private static Predicate<LocalDate> checkIfDateIsBefore = d -> d.isBefore(untilDate);
-    private static Predicate<LocalDate> checkIfOver18 = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
+    private static Predicate<LocalDate> checkIfDateInFuturePredicate = d -> d.isAfter(LocalDate.now());
+    private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
+    private static Predicate<LocalDate> checkIfDateIsBeforePredicate = d -> d.isBefore(untilDate);
+    private static Predicate<LocalDate> checkIfOver18Predicate = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
 
-    private static Predicate<Reservation> checkIfPersonInPersonsFromReservation = r -> r.getPersons().contains(searchedPerson);
-    private static Predicate<Reservation> checkReservationBeforeUntilDate = r -> r.getBookedUntil().isBefore(untilDate);
-    private static Predicate<Reservation> checkReservationAfterFromDate = r -> r.getBookedUntil().isAfter(fromDate);
-    private static Comparator<Reservation> sortReservationsByIndex = Comparator.comparingInt(Reservation::getIndex);
+    private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
+    private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(untilDate);
+    private static Predicate<Reservation> checkReservationAfterFromDatePredicate = r -> r.getBookedUntil().isAfter(fromDate);
+    private static Predicate<Reservation> checkReservationForIndexPredicate = r -> r.getIndex() == chosenIndex;
+    private static Predicate<Reservation> checkIfRoomInReservationPredicate = r -> r.getRooms().contains(room);
+
+    private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
+
+    private static Predicate<Reservation> checkIfReservationIsBetweenDatesPredicate(LocalDate from, LocalDate to, Function<Reservation,LocalDate> function){
+        Predicate<Reservation> isReservationIsFromAfterFromPredicate = reservation -> function.apply(reservation).isAfter(from);
+        Predicate<Reservation> isReservationIsFromBeforeToPredicate = reservation -> function.apply(reservation).isBefore(to);
+        return isReservationIsFromAfterFromPredicate.and(isReservationIsFromBeforeToPredicate);
+    }
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -152,16 +172,16 @@ public class UserEntry {
     }
 
     public static LocalDate getFromDate() {
-        return getDateFromUser(QUESTION_STARTING_DATE, checkIfDateInFuture, ENTRY_ERR_DATE_IN_PAST);
+        return getDateFromUser(QUESTION_STARTING_DATE, checkIfDateInFuturePredicate, ENTRY_ERR_DATE_IN_PAST);
     }
 
     public static LocalDate getUntilDate(LocalDate localDate) {
         fromDate = localDate;
-        return getDateFromUser(QUESTION_UNTIL_DATE, checkIfDateIsAfter, ENTRY_ERR_DATE_BEFORE_BOOKING_START);
+        return getDateFromUser(QUESTION_UNTIL_DATE, checkIfDateIsAfterPredicate, ENTRY_ERR_DATE_BEFORE_BOOKING_START);
     }
 
     public static LocalDate getBirthDay() {
-        return getDateFromUser(QUESTION_PERSON_BIRTHDAY, checkIfOver18, ENTRY_ERR_AGE_NOT_18);
+        return getDateFromUser(QUESTION_PERSON_BIRTHDAY, checkIfOver18Predicate, ENTRY_ERR_AGE_NOT_18);
     }
 
     private static LocalDate getDateFromUser(String questionToUser, Predicate<LocalDate> dateCheck, String errorMassage) {
@@ -260,23 +280,23 @@ public class UserEntry {
         return new Person(firstName, lastName);
     }
 
-    public static void displayReservations(Person personToSearch, Map<String,Reservation> bnbReservationMap) {
+    public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
-        display(String.format(LINE_PERSON_RESULTS,(searchedPerson.getLastName()+", "+searchedPerson.getFirstName())));
+        display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()
-                .filter(r -> checkIfPersonInPersonsFromReservation.test(r))
+                .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))
                 .forEach(Reservation::prettyOutput2);
     }
 
     public static void displayReservations(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDate = fromCheckDate;
         untilDate = untilCheckDate;
-        display((String.format(LINE_PERIOD_RESULTS,DATE_TIME_FORMATTER.format(fromCheckDate),DATE_TIME_FORMATTER.format(untilCheckDate))));
+        display((String.format(LINE_PERIOD_RESULTS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
         bnbReservationMap.values()
                 .stream()
-                .filter(r -> checkReservationBeforeUntilDate.test(r))
-                .filter(r -> checkReservationAfterFromDate.test(r))
+                .filter(r -> checkReservationBeforeUntilDatePredicate.test(r))
+                .filter(r -> checkReservationAfterFromDatePredicate.test(r))
                 .forEach(Reservation::prettyOutput2);
     }
 
@@ -290,7 +310,31 @@ public class UserEntry {
         bnbReservationMap
                 .values()
                 .stream()
-                .sorted(sortReservationsByIndex)
+                .sorted(sortReservationsByIndexComparator)
                 .forEach(Reservation::listSummaryOutput);
+    }
+
+    public static int getAfterOverviewChoice() {
+        return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES,QUESTION_ENTER_ACTION_NUMBER,0,1);
+    }
+
+    public static int getReservationToDisplayNumber(Map<String, Reservation> bnbReservationMap) {
+        //int choice = getNextInput(QUESTION_ENTER_RESERVATION_NUMBER);
+        int choice = getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER,0,bnbReservationMap.size());
+        return choice;
+    }
+
+    public static void displaySingleReservationWithAllDetails(int reservationNumber,Map<String, Reservation> bnbReservationMap) {
+        chosenIndex = reservationNumber;
+        bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationAllDetails);
+    }
+
+    public static boolean checkAvailability(LocalDate fromDateToCheck, LocalDate untilDateToCheck, Room roomToBookToCheck, Map<String, Reservation> bnbReservationMap) {
+        room = roomToBookToCheck;
+        bnbReservationMap.values().stream()
+                .filter(checkIfRoomInReservationPredicate)
+                .filter(r -> untilDateToCheck.isBefore(r.getBookedFrom()) || fromDateToCheck.isAfter(r.getBookedUntil()))
+                .count();
+
     }
 }

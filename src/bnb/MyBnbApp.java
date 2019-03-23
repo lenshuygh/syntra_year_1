@@ -37,6 +37,11 @@ public class MyBnbApp {
 
     private static void displayReservation() {
         UserEntry.displayReservations(bnbReservationMap);
+        int choice = UserEntry.getAfterOverviewChoice();
+        if(choice == 0) {
+            int reservationNumber = UserEntry.getReservationToDisplayNumber(bnbReservationMap);
+            UserEntry.displaySingleReservationWithAllDetails(reservationNumber,bnbReservationMap);
+        }
     }
 
     private static void checkByPerson() {
@@ -51,7 +56,8 @@ public class MyBnbApp {
     }
 
 
-    //todo: persons !!! check age of booker, capacity-issues -> persons vs room-capacity, ...
+    //todo: persons !!! capacity-issues -> persons vs room-capacity, ...
+    //todo: check availability during date & room choice
     private static void bookReservation() {
         boolean continueReservation = false;
         if(!continueReservation) {
@@ -59,6 +65,16 @@ public class MyBnbApp {
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
+
+            //check availability
+            if(UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap)){
+
+            }
+
+            // check if another rooms will be booked
+
+            //check if a next person is gonna be entered
+
             continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
             if(continueReservation){
                 Reservation reservation = new Reservation();
