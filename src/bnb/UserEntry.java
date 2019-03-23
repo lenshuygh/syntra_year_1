@@ -81,6 +81,7 @@ public class UserEntry {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static LocalDate formattedDate;
     private static LocalDate fromDate;
+    private static Person searchedPerson;
 
     private static Predicate<LocalDate> checkIfDateInFuture = d -> d.isAfter(LocalDate.now());
     private static Predicate<LocalDate> checkIfDateIsAfter = d -> d.isAfter(fromDate);
@@ -240,14 +241,14 @@ public class UserEntry {
         return new Person(firstName, lastName);
     }
 
-    private static Predicate<Reservation> checkPersonInPersonsFromReservation = r -> r.getPersons().contains(r);
+    private static Predicate<Reservation> checkIfPersonInPersonsFromReservation = r -> r.getPersons().contains((Person)searchedPerson);
 
-    public static void displayReservationsMadeByPerson(Person searchedPerson, Map<String,Reservation> bnbReservationMap) {
+    public static void displayReservationsMadeByPerson(Person personToSearch, Map<String,Reservation> bnbReservationMap) {
+        searchedPerson = personToSearch;
         bnbReservationMap.values()
                 .stream()
-                .filter(r -> r.getPersons().contains(searchedPerson))
-                //.filter(checkPersonInPersonsFromReservation)
-                .forEach(reservation -> reservation.prettyOutput());
+                .filter(r -> checkIfPersonInPersonsFromReservation.test(r))
+                .forEach(Reservation::prettyOutput2);
     }
 
 }

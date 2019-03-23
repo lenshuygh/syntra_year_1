@@ -77,17 +77,31 @@ public class Reservation {
 
     public String prettyOutput() {
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Room[] myRooms = rooms.stream().map(room -> room.getName()).collect(Collectors.toSet(rooms.size()))
-        Person[] myPersons = persons.stream().map(person -> person.getLastName()+", " +person.getFirstName()).toArray(Person[]::new);
+        Set<String> myRooms = rooms.stream().map(room -> room.getName()).collect(Collectors.toCollection(HashSet::new));
+        Set<String> myPersons = persons.stream().map(person -> person.getLastName()+", " +person.getFirstName()).collect(Collectors.toSet());
 
         return "\n" +
                 "    ---------------------------------------------------------\n" +
                 "    Reservation: \n" +
                 "       From: " + dateTimeFormatter.format(bookedFrom) +
-                "  Until " + dateTimeFormatter.format(bookedUntil) + "\n" +
-                "       persons=" + myPersons + "\n" +
-                "       rooms= " + myRooms + "\n" +
+                "  Until: " + dateTimeFormatter.format(bookedUntil) + "\n" +
+                "       rooms: " + myRooms + "\n" +
+                "       persons: " + myPersons + "\n" +
                 "---------------------------------------------------------\n";
+    }
+
+    public void prettyOutput2(){
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("--------------------------------------------------%n");
+        System.out.printf("Reservation:%n");
+        System.out.printf("     From: %s     Until:%s:%n",dateTimeFormatter.format(bookedFrom),dateTimeFormatter.format(bookedUntil));
+        System.out.printf("         Room(s):%n");
+        Set<Room> roomSet = getRooms();
+        roomSet.forEach(s -> System.out.printf("               %s%n",s.getName()));
+        System.out.printf("         People:%n");
+        Set<Person> personSet = getPersons();
+        personSet.forEach(s-> System.out.printf("               %s%n",s.getLastName() + ", " + s.getFirstName()));
+        System.out.printf("--------------------------------------------------%n");
     }
 
 
