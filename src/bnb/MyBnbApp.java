@@ -36,6 +36,7 @@ public class MyBnbApp {
     }
 
     private static void displayReservation() {
+        UserEntry.displayReservations(bnbReservationMap);
     }
 
     private static void checkByPerson() {

@@ -12,8 +12,12 @@ public class Reservation {
     private Set<Room> rooms;
     private LocalDate bookedFrom;
     private LocalDate bookedUntil;
+    private int index;
+    private static int count;
 
     public Reservation() {
+        this.count++;
+        this.index = count;
     }
 
     public Set<Person> getPersons() {
@@ -46,6 +50,10 @@ public class Reservation {
 
     public void setBookedUntil(LocalDate bookedUntil) {
         this.bookedUntil = bookedUntil;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public void addPerson(Person person) {
@@ -102,6 +110,14 @@ public class Reservation {
         Set<Person> personSet = getPersons();
         personSet.forEach(s-> System.out.printf("               %s%n",s.getLastName() + ", " + s.getFirstName()));
         System.out.printf("--------------------------------------------------%n");
+    }
+
+    public void listSummaryOutput(){
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Set<Room> roomSet = getRooms();
+        System.out.printf("%d:       %d persons%n         %s - %s%n",getIndex(),persons.size(),dateTimeFormatter.format(bookedFrom),dateTimeFormatter.format(bookedUntil));
+        roomSet.forEach(r -> System.out.printf("         %s%n",r.getName()));
+        System.out.printf("------------------------------------------%n");
     }
 
 

@@ -1,10 +1,10 @@
 package bnb;
 
-import java.text.Format;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -84,6 +84,9 @@ public class UserEntry {
     private static final String LINE_PERIOD_RESULTS =
             "Reservations between: %s and %s%n" +
                     "--------------------------------------------------%n";
+    private static final String LINE_ALL_RESERVATIONS_OVERVIEW =
+            "Reservations overview:%n" +
+                    "----------------------------------%n";
 
     private static final String LINE_FEED = "%n";
 
@@ -101,6 +104,7 @@ public class UserEntry {
     private static Predicate<Reservation> checkIfPersonInPersonsFromReservation = r -> r.getPersons().contains(searchedPerson);
     private static Predicate<Reservation> checkReservationBeforeUntilDate = r -> r.getBookedUntil().isBefore(untilDate);
     private static Predicate<Reservation> checkReservationAfterFromDate = r -> r.getBookedUntil().isAfter(fromDate);
+    private static Comparator<Reservation> sortReservationsByIndex = Comparator.comparingInt(Reservation::getIndex);
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -274,5 +278,19 @@ public class UserEntry {
                 .filter(r -> checkReservationBeforeUntilDate.test(r))
                 .filter(r -> checkReservationAfterFromDate.test(r))
                 .forEach(Reservation::prettyOutput2);
+    }
+
+    public static void displayReservations(Map<String, Reservation> bnbReservationMap) {
+        display(LINE_ALL_RESERVATIONS_OVERVIEW);
+
+        /*bnbReservationMap
+                .values()
+                .forEach(Reservation::listSummaryOutput);
+*/
+        bnbReservationMap
+                .values()
+                .stream()
+                .sorted(sortReservationsByIndex)
+                .forEach(Reservation::listSummaryOutput);
     }
 }
