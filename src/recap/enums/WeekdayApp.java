@@ -16,7 +16,7 @@ public class WeekdayApp {
                 break;
             case 2:
                 weekday = Weekday.TUESDAY;
-                break
+                break;
             case 3:
                 weekday = Weekday.WEDNESDAY;
                 break;
