@@ -4,12 +4,26 @@ import java.util.Scanner;
 
 public class WeekdayApp {
     public static void main(String[] args) {
-        Scanner keyboard = new Scanner(System.in);
         Weekday weekday;
 
-        System.out.println("enter a number: ");
-        int num = keyboard.nextInt();
+        int num = getNum();
 
+        weekday = getWeekday(num);
+
+        switch (weekday) {
+            case MONDAY:
+                System.out.println("tis maandag");
+                break;
+            case SUNDAY:
+                System.out.println("zondaaaaag");
+                break;
+            default:
+                System.out.println("ANDERE DAG");
+        }
+    }
+
+    private static Weekday getWeekday(int num) {
+        Weekday weekday;
         switch (num) {
             case 1:
                 weekday = Weekday.MONDAY;
@@ -33,16 +47,12 @@ public class WeekdayApp {
                 weekday = Weekday.SUNDAY;
                 break;
         }
+        return weekday;
+    }
 
-        switch (weekday) {
-            case MONDAY:
-                System.out.println("tis maandag");
-                break;
-            case SUNDAY:
-                System.out.println("zondaaaaag");
-                break;
-            default:
-                System.out.println("ANDERE DAG");
-        }
+    private static int getNum() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("enter a number: ");
+        return keyboard.nextInt();
     }
 }
