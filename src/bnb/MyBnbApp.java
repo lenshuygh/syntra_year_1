@@ -85,6 +85,8 @@ public class MyBnbApp {
             }
             if (continueReservation) {
                 bnbReservationMap.put(UUID.randomUUID().toString(), reservation);
+            }else{
+                UserInteraction.cancelWholeReservation();
             }
         }
 

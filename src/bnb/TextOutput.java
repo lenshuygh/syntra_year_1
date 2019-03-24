@@ -115,6 +115,7 @@ public class TextOutput {
             "Conflicting reservation found";
 
     public static final String LINE_CONFLICTING_RESERVATION_CANCELED =
+            "-------------------------------%n"+
             "Current reservation is canceled%n";
 
     public static final String LINE_PLEASE_CHOOSE_OTHER_ROOM =

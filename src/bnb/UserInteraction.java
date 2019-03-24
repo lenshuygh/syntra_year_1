@@ -24,6 +24,7 @@ public class UserInteraction {
     private static Person searchedPerson;
     private static int chosenIndex = -1;
     private static Room room;
+    private static int grandTotal = 0;
 
     private static Predicate<LocalDate> checkIfDateInFuturePredicate = d -> d.isAfter(LocalDate.now());
     private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
@@ -129,8 +130,6 @@ public class UserInteraction {
     }
 
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
-        //todo: make overview generated in stead of static
-
         String roomOverView = TextOutput.createRoomOverview(rooms);
         //int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
         int choice = getMenuChoice(roomOverView,QUESTION_ROOM_TO_RESERVE,0,rooms.size()-1);
@@ -147,7 +146,6 @@ public class UserInteraction {
         }
     }
 
-    //todo: check if can be replaced by detail method from Reservation class
     public static boolean proposeRegistration(LocalDate fromDate, LocalDate untilDate, Room roomToBook) {
         boolean acceptProposal = false;
         boolean acceptEntryOk = false;
@@ -164,8 +162,12 @@ public class UserInteraction {
                     " until " + untilDate.format(DATE_TIME_FORMATTER) +
                     " (" + daysInBetween + " days)");
             display(LINE_FEED);
-            display("    TOTAL COST: " + calculatedCost(daysInBetween, roomToBook) + " Euro%n");
-            display("    --------------------------------------");
+            display("    -----------------------------------------%n");
+            display("    Current room cost          : " + calculatedCost(daysInBetween, roomToBook) + " Euro%n");
+            display("    -----------------------------------------%n");
+            grandTotal += calculatedCost(daysInBetween,roomToBook);
+            display("    Grand Total over all rooms : " + grandTotal + " Euro%n");
+            display("    -----------------------------------------%n");
             display(LINE_FEED);
             String entry = getNextInput(QUESTION_PROPOSED_RESERVATION);
             if (entry.equals("y") || entry.equals("n")) {
@@ -279,5 +281,9 @@ public class UserInteraction {
         UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromDate), DATE_TIME_FORMATTER.format(untilDate))));
         ReservationUtils.getRoomAvailableDuringPeriod(fromDate, untilDate, bnbReservationMap, rooms).forEach(s -> System.out.println(s.toOneLineFormattedString()));
         display(LINE_FEED);
+    }
+
+    public static void cancelWholeReservation(){
+        display(LINE_CONFLICTING_RESERVATION_CANCELED);
     }
 }
