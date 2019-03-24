@@ -57,32 +57,30 @@ public class MyBnbApp {
     //todo: capacity-issues -> persons vs room-capacity, ...
     //todo: check availability during date & room choice
     private static void bookReservation() {
-
-        Reservation reservation = new Reservation();
+/*        Reservation reservation = new Reservation();
         Set<Person> personSet = new HashSet<>();
         Set<Room> roomSet = new HashSet<>();
 
-        reservation.addPerson(UserEntry.getBookingPerson());
-        int numberOfPersons = 0;
-        numberOfPersons = UserEntry.getNumberOfPersons();
-        reservation.setBookedFrom(UserEntry.getFromDate());
-        reservation.setBookedUntil(UserEntry.getUntilDate(reservation.getBookedFrom()));
-        reservation.addRoom(UserEntry.getRoomWanted(rooms,reservation.getBookedFrom(),reservation.getBookedUntil()));
+        Person bookingPerson = UserEntry.getBookingPerson();
+        LocalDate fromDate = UserEntry.getFromDate();
+        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
+        Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
 
-        boolean reservationConflict = ReservationUtils.checkAvailability(reservation,bnbReservationMap);
+        boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);*/
 
-/*
-        int numberOfPersons = 0;
+
+
         boolean continueReservation = false;
         if(!continueReservation) {
             Person bookingPerson = UserEntry.getBookingPerson();
-            numberOfPersons = UserEntry.getNumberOfPersons();
             LocalDate fromDate = UserEntry.getFromDate();
             LocalDate untilDate = UserEntry.getUntilDate(fromDate);
             Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
             Reservation reservation = new Reservation();
             Set<Person> personSet = new HashSet<>();
             Set<Room> roomSet = new HashSet<>();
+
+
             boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
             if(!reservationConflict){
                 continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
@@ -124,7 +122,7 @@ public class MyBnbApp {
                     }
                 }
             }
-        }*/
+        }
     }
 
     private static void changeReservation() {
