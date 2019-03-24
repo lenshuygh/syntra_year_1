@@ -33,7 +33,8 @@ public class TextOutput {
     public static final String OVERVIEW_CHOOSE_RESERVATION_CHOICES =
             "    -------------------------%n" +
                     "0.  Choose a reservation.%n" +
-                    "1.  Go back to the main menu.%n" +
+                    "1.  Specify a period.%n" +
+                    "2.  Go back to the main menu.%n" +
                     "    -------------------------%n";
 
     public static final String OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES =
@@ -114,6 +115,9 @@ public class TextOutput {
 
     public static final String LINE_CONFLICTING_RESERVATION_CANCELED =
             "Current reservation is canceled%n";
+
+    public static final String LINE_PLEASE_CHOOSE_OTHER_ROOM =
+            "Please choose another room for your reservation%n";
 
     public static final String LINE_FEED = "%n";
 

@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static bnb.BnbCommands.*;
 import static bnb.TextOutput.*;
@@ -132,7 +134,7 @@ public class UserInteraction {
         return rooms.get(choice);
     }
 
-    private static void display(String s) {
+    public static void display(String s) {
         System.out.printf(s);
     }
 
@@ -197,57 +199,12 @@ public class UserInteraction {
         return new Person(firstName, lastName);
     }
 
-    public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
-        searchedPerson = personToSearch;
-        display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
-        bnbReservationMap.values()
-                .stream()
-                .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))
-                .forEach(Reservation::prettyOutput2);
-    }
-
-    public static void displayReservations(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
-        fromDate = fromCheckDate;
-        untilDate = untilCheckDate;
-        display((String.format(LINE_PERIOD_RESULTS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        bnbReservationMap.values()
-                .stream()
-                .filter(r -> checkReservationBeforeUntilDatePredicate.test(r))
-                .filter(r -> checkReservationAfterFromDatePredicate.test(r))
-                .forEach(Reservation::prettyOutput2);
-    }
-
-    public static void displayRoomAvailability(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
-        fromDate = fromCheckDate;
-        untilDate = untilCheckDate;
-        display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        Set<Room> bookedRoomSet = new HashSet<>();
-        bookedRoomSet = bnbReservationMap.values()
-                .stream()
-                .filter(r -> checkReservationBeforeUntilDatePredicate.test(r))
-                .filter(r -> checkReservationAfterFromDatePredicate.test(r))
-                .map(Reservation::getRooms)
-                .flatMap(Set::stream)
-                .collect(Collectors.toSet());
-        rooms.removeAll(bookedRoomSet);
-        rooms.forEach(System.out::println);
-    }
-
-    public static void displayReservations(Map<String, Reservation> bnbReservationMap) {
-        display(LINE_ALL_RESERVATIONS_OVERVIEW);
-        bnbReservationMap
-                .values()
-                .stream()
-                .sorted(sortReservationsByIndexComparator)
-                .forEach(Reservation::listSummaryOutput);
-    }
-
     public static int getNumberOfPersons(){
         return getMenuChoice("",QUESTION_ENTER_NUMBER_OF_PERSONS,0,22);
     }
 
     public static int getAfterOverviewChoice() {
-        return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 1);
+        return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 2);
     }
 
     public static int getReservationToDisplayNumber(Map<String, Reservation> bnbReservationMap) {
@@ -258,28 +215,6 @@ public class UserInteraction {
     public static void displaySingleReservationWithAllDetails(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
         chosenIndex = reservationNumber;
         bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationAllDetails);
-    }
-
-    public static boolean checkAvailability(LocalDate fromDateToCheck, LocalDate untilDateToCheck, Room roomToBookToCheck, Map<String, Reservation> bnbReservationMap) {
-        room = roomToBookToCheck;
-
-        Optional<Reservation> reservationOptional = bnbReservationMap.values().stream()
-                .filter(checkIfRoomInReservationPredicate)
-                .filter(r -> (
-                        (fromDateToCheck.isAfter(r.getBookedFrom()) && fromDateToCheck.isBefore(r.getBookedUntil())) ||
-                                (untilDateToCheck.isAfter(r.getBookedFrom()) && untilDateToCheck.isBefore(r.getBookedUntil())) ||
-                                (fromDateToCheck.isBefore(r.getBookedFrom()) && untilDateToCheck.isAfter(r.getBookedUntil())) ||
-                                (fromDateToCheck.isEqual(r.getBookedFrom()) || untilDateToCheck.isEqual(r.getBookedUntil())) ||
-                                (fromDateToCheck.isEqual(r.getBookedUntil()) || untilDateToCheck.isEqual(r.getBookedFrom()))
-                )).findFirst();
-        if (reservationOptional.isPresent()) {
-            display(LINE_CONFLICTING_RESERVATION);
-            Reservation reservation = reservationOptional.get();
-            display(reservation.prettyOutput());
-            display(LINE_CONFLICTING_RESERVATION_CANCELED);
-            return true;
-        }
-        return false;
     }
 
     public static void conflictingReservation(Reservation reservation) {
@@ -303,5 +238,31 @@ public class UserInteraction {
 
     public static int getPropertyToEdit() {
         return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES, QUESTION_ENTER_ACTION_NUMBER,0,4 );
+    }
+
+    public static void conflictAskForOtherRoom() {
+        display(LINE_PLEASE_CHOOSE_OTHER_ROOM);
+    }
+
+    public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
+        searchedPerson = personToSearch;
+        display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
+        ReservationUtils.getReservations(personToSearch,bnbReservationMap);
+    }
+
+    public static void displayReservations(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
+        fromDate = fromCheckDate;
+        untilDate = untilCheckDate;
+        display((String.format(LINE_PERIOD_RESULTS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
+        ReservationUtils.getReservationsDuringPeriod(fromCheckDate,untilCheckDate,bnbReservationMap).forEach(Reservation::prettyOutput2);
+    }
+
+    public static void displayReservationsList(Map<String, Reservation> bnbReservationMap) {
+        display(LINE_ALL_RESERVATIONS_OVERVIEW);
+        bnbReservationMap
+                .values()
+                .stream()
+                .sorted(sortReservationsByIndexComparator)
+                .forEach(Reservation::listSummaryOutput);
     }
 }
