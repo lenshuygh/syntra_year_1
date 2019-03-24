@@ -54,6 +54,7 @@ public class UserEntry {
     private static final String QUESTION_PERSON_BIRTHDAY = "    Please enter the booking person's birthday (DD/MM/YYYY): ";
     private static final String QUESTION_PROPOSED_RESERVATION = "    Is the proposed reservation ok (y/n)?: ";
     private static final String QUESTION_ENTER_RESERVATION_NUMBER = "    Please enter the reservation to display's number: ";
+    private static final String QUESTION_ENTER_NUMBER_OF_PERSONS = "    Please enter the number of persons that you want to book for (excluding the booking person): ";
 
     private static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
@@ -336,6 +337,10 @@ public class UserEntry {
                 .stream()
                 .sorted(sortReservationsByIndexComparator)
                 .forEach(Reservation::listSummaryOutput);
+    }
+
+    public static int getNumberOfPersons(){
+        return getMenuChoice("",QUESTION_ENTER_NUMBER_OF_PERSONS,0,22);
     }
 
     public static int getAfterOverviewChoice() {
