@@ -1,6 +1,7 @@
 package bnb;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class TextOutput {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -119,6 +120,21 @@ public class TextOutput {
     public static final String LINE_PLEASE_CHOOSE_OTHER_ROOM =
             "Please choose another room for your reservation%n";
 
+    public static final String LINE_CAPACITY_NOT_AVAILABLE =
+            "We're sorry but we cannot accommodate that many persons during the given period.%n";
+
     public static final String LINE_FEED = "%n";
 
+    public static String createRoomOverview(List<Room> rooms) {
+        String out = "";
+        out = out.concat("-----------------------------------------------------%n");
+        for (int i = 0; i < rooms.size(); i++) {
+            out = out.concat(String.valueOf(i));
+            out = out.concat(".  ");
+            out = out.concat(rooms.get(i).getName());
+            out = out.concat("%n");
+        }
+        out = out.concat("-----------------------------------------------------%n");
+        return out;
+    }
 }

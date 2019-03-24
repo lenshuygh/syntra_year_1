@@ -55,29 +55,34 @@ public class ReservationUtils {
         return false;
     }
 
-    public static Set<Room> getRoomsBookedDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap){
+    public static Set<Room> getRoomsBookedDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
         Set<Room> bookedRoomSet = new HashSet<>();
-        bookedRoomSet = bnbReservationMap.values()
-                .stream()
-                .filter(checkAskedDatesAgainstReservedDates)
-                .map(Reservation::getRooms)
-                .flatMap(Set::stream)
-                .collect(Collectors.toSet());
+        if (bnbReservationMap.values().stream().findFirst().map(Reservation::getRooms).isPresent()) {
+            bookedRoomSet = bnbReservationMap.values()
+                    .stream()
+                    .filter(checkAskedDatesAgainstReservedDates)
+                    .map(Reservation::getRooms)
+                    .flatMap(Set::stream)
+                    .collect(Collectors.toSet());
+        }
         return bookedRoomSet;
     }
 
-    public static List<Room> displayRoomAvailabilityDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
+    public static List<Room> getRoomAvailableDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
-        UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        rooms.removeAll(getRoomsBookedDuringPeriod(fromCheckDate,untilCheckDate,bnbReservationMap));
+        //UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
+        if (bnbReservationMap.size() > 0) {
+            Set<Room> roomsBookedDuringPeriod = getRoomsBookedDuringPeriod(fromCheckDate, untilCheckDate, bnbReservationMap);
+            rooms.removeAll(roomsBookedDuringPeriod);
+        }
         return rooms;
         //rooms.forEach(System.out::println);
     }
 
-/*    public static void displayRoomAvailabilityDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
+/*    public static void getRoomAvailableDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
         UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
@@ -113,9 +118,20 @@ public class ReservationUtils {
     }
 
 
-    public static boolean checkCapacity(int numberOfPersons, Reservation reservation, Map<String, Reservation> bnbReservationMap,List<Room> rooms) {
-        List<Room> availableRooms = displayRoomAvailabilityDuringPeriod(reservation.getBookedFrom(),reservation.getBookedUntil(),bnbReservationMap,rooms);
+    public static boolean checkCapacity(int numberOfPersons, Reservation reservation, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
+        List<Room> availableRooms = getRoomAvailableDuringPeriod(reservation.getBookedFrom(), reservation.getBookedUntil(), bnbReservationMap, rooms);
         int availableCapacity = availableRooms.stream().mapToInt(Room::getCapacity).sum();
         return (numberOfPersons <= availableCapacity);
+    }
+
+    public static boolean checkIfEnoughRoomsForPersons(Reservation reservation, int numberOfPersons) {
+        int availableCapacity = 0;
+        if (!Objects.isNull(reservation.getRooms())) {
+            availableCapacity = reservation.getRooms().stream().mapToInt(Room::getCapacity).sum();
+        }
+        System.out.println("*************************   avialable=" + availableCapacity + " and numberofpersons = " + numberOfPersons);
+        boolean out = availableCapacity >= numberOfPersons;
+        System.out.println("bool = " + out);
+        return out;
     }
 }

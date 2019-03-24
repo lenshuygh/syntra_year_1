@@ -130,7 +130,10 @@ public class UserInteraction {
 
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
         //todo: make overview generated in stead of static
-        int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
+
+        String roomOverView = TextOutput.createRoomOverview(rooms);
+        //int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
+        int choice = getMenuChoice(roomOverView,QUESTION_ROOM_TO_RESERVE,0,rooms.size()-1);
         return rooms.get(choice);
     }
 
@@ -264,5 +267,17 @@ public class UserInteraction {
                 .stream()
                 .sorted(sortReservationsByIndexComparator)
                 .forEach(Reservation::listSummaryOutput);
+    }
+
+    public static void cancelReservationCapacity() {
+        display(LINE_CAPACITY_NOT_AVAILABLE);
+        display(LINE_CONFLICTING_RESERVATION_CANCELED);
+    }
+
+    public static void getRoomsAvailableDuringPeriod(LocalDate fromDate, LocalDate untilDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
+        display(LINE_FEED);
+        UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromDate), DATE_TIME_FORMATTER.format(untilDate))));
+        ReservationUtils.getRoomAvailableDuringPeriod(fromDate, untilDate, bnbReservationMap, rooms).forEach(s -> System.out.println(s.toOneLineFormattedString()));
+        display(LINE_FEED);
     }
 }

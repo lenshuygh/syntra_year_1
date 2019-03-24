@@ -46,13 +46,19 @@ public class Room {
                 ", price: " + pricePerNight + " Eur/night)";
     }
 
+    public String toOneLineFormattedString() {
+        return "    " + name +
+                " (cap: " + capacity +
+                ", price: " + pricePerNight + " Eur/night)";
+    }
+
     public static List<Room> createRooms() {
         List<Room> rooms = new ArrayList<>();
-        rooms.add( new Room("Big Room Of Fun", 6, 350));
-        rooms.add( new Room("OCMW", 8, 120));
-        rooms.add( new Room("Family Room", 4, 250));
-        rooms.add( new Room("The Dungeon", 2, 220));
-        rooms.add( new Room("The Honeymoon",2,180));
+        rooms.add(new Room("Big Room Of Fun", 6, 350));
+        rooms.add(new Room("OCMW", 8, 120));
+        rooms.add(new Room("Family Room", 4, 250));
+        rooms.add(new Room("The Dungeon", 2, 220));
+        rooms.add(new Room("The Honeymoon", 2, 180));
         return rooms;
     }
 }
