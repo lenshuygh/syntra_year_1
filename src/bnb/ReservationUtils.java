@@ -38,7 +38,7 @@ public class ReservationUtils {
 
         if (reservationOptional.isPresent()) {
             reservation = reservationOptional.get();
-            TextOutput.conflictingReservation(reservation);
+            UserInteraction.conflictingReservation(reservation);
             return true;
         }
         return false;

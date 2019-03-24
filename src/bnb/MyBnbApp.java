@@ -10,7 +10,7 @@ public class MyBnbApp {
     public static void main(String[] args) {
         BnbCommands bnbCommand;
         do {
-            bnbCommand = UserEntry.getMenuEntry();
+            bnbCommand = UserInteraction.getMenuEntry();
             switch (bnbCommand) {
                 case BOOK_RESERVATION:
                     bookReservation();
@@ -33,24 +33,23 @@ public class MyBnbApp {
     }
 
     private static void displayReservation() {
-        UserEntry.displayReservations(bnbReservationMap);
-        int choice = UserEntry.getAfterOverviewChoice();
+        UserInteraction.displayReservations(bnbReservationMap);
+        int choice = UserInteraction.getAfterOverviewChoice();
         if(choice == 0) {
-            int reservationNumber = UserEntry.getReservationToDisplayNumber(bnbReservationMap);
-            UserEntry.displaySingleReservationWithAllDetails(reservationNumber,bnbReservationMap);
+            int reservationNumber = UserInteraction.getReservationToDisplayNumber(bnbReservationMap);
+            UserInteraction.displaySingleReservationWithAllDetails(reservationNumber,bnbReservationMap);
         }
     }
 
     private static void checkByPerson() {
-        Person searchedPerson = UserEntry.personEntry();
-        UserEntry.displayReservations(searchedPerson,bnbReservationMap);
+        Person searchedPerson = UserInteraction.personEntry();
+        UserInteraction.displayReservations(searchedPerson,bnbReservationMap);
     }
     //todo: reverse this, now it shows the booked rooms instead of the free rooms
     private static void checkAvailability() {
-        LocalDate fromDate = UserEntry.getFromDate();
-        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
-        //UserEntry.displayReservations(fromDate,untilDate,bnbReservationMap);
-        UserEntry.displayRoomAvailability(fromDate,untilDate,bnbReservationMap,rooms);
+        LocalDate fromDate = UserInteraction.getFromDate();
+        LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
+        UserInteraction.displayRoomAvailability(fromDate,untilDate,bnbReservationMap,rooms);
     }
 
 
@@ -59,10 +58,10 @@ public class MyBnbApp {
     private static void bookReservation() {
 
         Reservation reservation = new Reservation();
-        reservation.addPerson(UserEntry.getBookingPerson());
-        reservation.setBookedFrom(UserEntry.getFromDate());
-        reservation.setBookedUntil(UserEntry.getUntilDate(reservation.getBookedFrom()));
-        Room roomWanted = UserEntry.getRoomWanted(rooms, reservation.getBookedFrom(), reservation.getBookedUntil());
+        reservation.addPerson(UserInteraction.getBookingPerson());
+        reservation.setBookedFrom(UserInteraction.getFromDate());
+        reservation.setBookedUntil(UserInteraction.getUntilDate(reservation.getBookedFrom()));
+        Room roomWanted = UserInteraction.getRoomWanted(rooms, reservation.getBookedFrom(), reservation.getBookedUntil());
         System.out.println("checking");
         System.out.println(ReservationUtils.checkAvailabilityRoomToPeriod(roomWanted,reservation,bnbReservationMap));
         reservation.addRoom(roomWanted);
@@ -74,43 +73,43 @@ public class MyBnbApp {
         Set<Person> personSet = new HashSet<>();
         Set<Room> roomSet = new HashSet<>();
 
-        Person bookingPerson = UserEntry.getBookingPerson();
-        LocalDate fromDate = UserEntry.getFromDate();
-        LocalDate untilDate = UserEntry.getUntilDate(fromDate);
-        Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
+        Person bookingPerson = UserInteraction.getBookingPerson();
+        LocalDate fromDate = UserInteraction.getFromDate();
+        LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
+        Room roomToBook = UserInteraction.getRoomWanted(rooms, fromDate, untilDate);
 
-        boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);*/
+        boolean reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);*/
 
 
 /*
         boolean continueReservation = false;
         if(!continueReservation) {
-            Person bookingPerson = UserEntry.getBookingPerson();
-            LocalDate fromDate = UserEntry.getFromDate();
-            LocalDate untilDate = UserEntry.getUntilDate(fromDate);
-            Room roomToBook = UserEntry.getRoomWanted(rooms, fromDate, untilDate);
+            Person bookingPerson = UserInteraction.getBookingPerson();
+            LocalDate fromDate = UserInteraction.getFromDate();
+            LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
+            Room roomToBook = UserInteraction.getRoomWanted(rooms, fromDate, untilDate);
             Reservation reservation = new Reservation();
             Set<Person> personSet = new HashSet<>();
             Set<Room> roomSet = new HashSet<>();
 
 
-            boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
+            boolean reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
             if(!reservationConflict){
-                continueReservation = UserEntry.proposeRegistration(fromDate,untilDate,roomToBook);
+                continueReservation = UserInteraction.proposeRegistration(fromDate,untilDate,roomToBook);
                 if(continueReservation){
                     boolean finishReservation = false;
                     boolean cancelReservation = false;
                     while(!finishReservation) {
-                        int choice = UserEntry.continueReservation();
+                        int choice = UserInteraction.continueReservation();
                         switch (choice) {
                             case 0:
-                                Person person = UserEntry.personEntry();
-                                //boolean roomsCapacityReached = UserEntry.checkCapacity()
+                                Person person = UserInteraction.personEntry();
+                                //boolean roomsCapacityReached = UserInteraction.checkCapacity()
                                 personSet.add(person);
                                 break;
                             case 1:
-                                Room room = UserEntry.getRoomWanted(rooms,fromDate,untilDate);
-                                reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
+                                Room room = UserInteraction.getRoomWanted(rooms,fromDate,untilDate);
+                                reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
                                 if(!reservationConflict){
                                     roomSet.add(room);
                                 }
