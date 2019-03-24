@@ -57,6 +57,19 @@ public class MyBnbApp {
     //todo: capacity-issues -> persons vs room-capacity, ...
     //todo: check availability during date & room choice
     private static void bookReservation() {
+
+        Reservation reservation = new Reservation();
+        reservation.addPerson(UserEntry.getBookingPerson());
+        reservation.setBookedFrom(UserEntry.getFromDate());
+        reservation.setBookedUntil(UserEntry.getUntilDate(reservation.getBookedFrom()));
+        Room roomWanted = UserEntry.getRoomWanted(rooms, reservation.getBookedFrom(), reservation.getBookedUntil());
+        System.out.println("checking");
+        System.out.println(ReservationUtils.checkAvailabilityRoomToPeriod(roomWanted,reservation,bnbReservationMap));
+        reservation.addRoom(roomWanted);
+        bnbReservationMap.put(UUID.randomUUID().toString(), reservation);
+
+
+
 /*        Reservation reservation = new Reservation();
         Set<Person> personSet = new HashSet<>();
         Set<Room> roomSet = new HashSet<>();
@@ -69,7 +82,7 @@ public class MyBnbApp {
         boolean reservationConflict = UserEntry.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);*/
 
 
-
+/*
         boolean continueReservation = false;
         if(!continueReservation) {
             Person bookingPerson = UserEntry.getBookingPerson();
@@ -123,6 +136,7 @@ public class MyBnbApp {
                 }
             }
         }
+        */
     }
 
     private static void changeReservation() {
