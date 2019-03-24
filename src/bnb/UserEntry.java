@@ -44,6 +44,19 @@ public class UserEntry {
                     "1.  Go back to the main menu.%n" +
                     "    -------------------------%n";
 
+    private static final String OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES =
+            "    -----------------------------%n" +
+                    "0.  Choose a reservation to edit.%n" +
+                    "1.  Go back to the main menu.%n" +
+                    "    -----------------------------%n";
+    private static final String OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES =
+            "    ---------------------------------%n" +
+                    "0.  Change reservation startdate.%n" +
+                    "1.  Change reservation enddate.%n" +
+                    "2.  Change rooms.%n" +
+                    "3.  Change persons.%n" +
+                    "4.  Cancel change and return to menu.%n" +
+                    "    ---------------------------------%n";
 
     private static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
     private static final String QUESTION_STARTING_DATE = "    Please provide the starting date (DD/MM/YYYY): ";
@@ -313,7 +326,7 @@ public class UserEntry {
                 .forEach(Reservation::prettyOutput2);
     }
 
-    public static void displayRoomAvailability(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap,List<Room> rooms) {
+    public static void displayRoomAvailability(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
         fromDate = fromCheckDate;
         untilDate = untilCheckDate;
         display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
@@ -381,5 +394,13 @@ public class UserEntry {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static int getAfterOverviewEditChoice() {
+        return getMenuChoice(OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 1);
+    }
+
+    public static int getPropertyToEdit() {
+        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES, QUESTION_ENTER_ACTION_NUMBER,0,4 );
     }
 }
