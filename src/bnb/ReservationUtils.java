@@ -108,7 +108,7 @@ public class ReservationUtils {
     }
 
     public static void getReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
-        Person searchedPerson = personToSearch;
+        searchedPerson = personToSearch;
         UserInteraction.display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()

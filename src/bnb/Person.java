@@ -8,12 +8,6 @@ public class Person {
     private String lastName;
     private LocalDate birthDay;
 
-    public Person(String firstName, String lastName, LocalDate birthDay) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-    }
-
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,20 +29,11 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
-    }
-
     @Override
     public String toString() {
         return "Person{" +
                 "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDay=" + birthDay +
+                ", lastName='" + lastName +
                 '}';
     }
 

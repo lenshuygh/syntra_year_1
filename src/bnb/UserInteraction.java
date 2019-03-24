@@ -193,7 +193,7 @@ public class UserInteraction {
     public static Person getBookingPerson() {
         LocalDate birthDay = getBirthDay();
         Person bookingPerson = personEntry();
-        bookingPerson.setBirthDay(birthDay);
+        //bookingPerson.setBirthDay(birthDay);
         return bookingPerson;
     }
     // todo: notnull
