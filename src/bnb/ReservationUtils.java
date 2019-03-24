@@ -82,6 +82,14 @@ public class ReservationUtils {
         //rooms.forEach(System.out::println);
     }
 
+    public static List<Room> getRoomAvailableDuringPeriodAndCurrentReservation(LocalDate bookedFrom, LocalDate bookedUntil, Map<String, Reservation> bnbReservationMap,  List<Room> rooms,Reservation currentReservation) {
+        List<Room> roomList = getRoomAvailableDuringPeriod(bookedFrom, bookedUntil, bnbReservationMap, rooms);
+        if(Objects.nonNull(currentReservation.getRooms())){
+            roomList.removeAll(currentReservation.getRooms());
+        }
+        return roomList;
+    }
+
 /*    public static void getRoomAvailableDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
@@ -129,9 +137,6 @@ public class ReservationUtils {
         if (!Objects.isNull(reservation.getRooms())) {
             availableCapacity = reservation.getRooms().stream().mapToInt(Room::getCapacity).sum();
         }
-        System.out.println("*************************   avialable=" + availableCapacity + " and numberofpersons = " + numberOfPersons);
-        boolean out = availableCapacity >= numberOfPersons;
-        System.out.println("bool = " + out);
-        return out;
+        return availableCapacity >= numberOfPersons;
     }
 }
