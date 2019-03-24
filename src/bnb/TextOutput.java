@@ -133,6 +133,12 @@ public class TextOutput {
             out = out.concat(String.valueOf(i));
             out = out.concat(".  ");
             out = out.concat(rooms.get(i).getName());
+            out = out.concat("          (");
+            out = out.concat(String.valueOf(rooms.get(i).getCapacity()));
+            out = out.concat(" persons -");
+            out = out.concat(" ");
+            out = out.concat(String.valueOf(rooms.get(i).getPricePerNight()));
+            out = out.concat(" Eur/Night).");
             out = out.concat("%n");
         }
         out = out.concat("-----------------------------------------------------%n");
