@@ -129,6 +129,9 @@ public class TextOutput {
     public static final String LINE_CAPACITY_NOT_AVAILABLE =
             "We're sorry but we cannot accommodate that many persons during the given period.%n";
 
+    public static final String LINE_DELETION_SUCCESS =
+            "The chosen reservation was successfuly removed from the system.%n";
+
     public static final String LINE_FEED = "%n";
 
     public static String createRoomOverview(List<Room> rooms) {

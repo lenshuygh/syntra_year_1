@@ -147,8 +147,11 @@ public class ReservationUtils {
         chosenIndex = reservationChosen;
         Optional<Reservation> reservationToDelete = bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).sorted().findFirst();
         if(reservationToDelete.isPresent()){
-            bnbReservationMap.keySet().stream().filter(k -> bnbReservationMap.get(k).equals(reservationToDelete.get())).findFirst();
-            bnbReservationMap.keySet();
+            Optional<String> key = bnbReservationMap.keySet().stream().filter(k -> bnbReservationMap.get(k).equals(reservationToDelete.get())).findFirst();
+            boolean success = bnbReservationMap.remove(key.get(),reservationToDelete.get());
+            if(success){
+                UserInteraction.deletionSuccess();
+            }
         }
     }
 }

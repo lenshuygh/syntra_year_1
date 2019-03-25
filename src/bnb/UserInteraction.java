@@ -307,4 +307,8 @@ public class UserInteraction {
         }
         return acceptDeletion;
     }
+
+    public static void deletionSuccess() {
+        display(LINE_DELETION_SUCCESS);
+    }
 }
