@@ -14,6 +14,7 @@ public class ReservationUtils {
     private static LocalDate fromDateToCheck;
     private static LocalDate untilDateToCheck;
     private static Person searchedPerson;
+    private static int chosenIndex;
 
     private static Predicate<Reservation> checkIfRoomInReservationMapPredicate = r -> r.getRooms().contains(room);
 
@@ -22,6 +23,8 @@ public class ReservationUtils {
     private static Predicate<Reservation> checkIfAskedDatesOverSpanBookedPeriodPredicate = r -> fromDateToCheck.isBefore(r.getBookedFrom()) && untilDateToCheck.isAfter(r.getBookedUntil());
     private static Predicate<Reservation> checkIfAskedFromDateIsSameAsAnyBookedPeriodDatePredicate = r -> fromDateToCheck.isEqual(r.getBookedFrom()) || untilDateToCheck.isEqual(r.getBookedUntil());
     private static Predicate<Reservation> checkIfAskedUntilDateIsSameAsAnyBookedPeriodDatePredicate = r -> fromDateToCheck.isEqual(r.getBookedUntil()) || untilDateToCheck.isEqual(r.getBookedFrom());
+
+    private static Predicate<Reservation> checkReservationForIndexPredicate = r -> r.getIndex() == chosenIndex;
 
     private static Predicate<Reservation> checkAskedDatesAgainstReservedDates =
             checkIfAskedFromDateInsideBookedPeriodPredicate
@@ -138,5 +141,14 @@ public class ReservationUtils {
             availableCapacity = reservation.getRooms().stream().mapToInt(Room::getCapacity).sum();
         }
         return availableCapacity >= numberOfPersons;
+    }
+
+    public static void deleteReservation(int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        chosenIndex = reservationChosen;
+        Optional<Reservation> reservationToDelete = bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).sorted().findFirst();
+        if(reservationToDelete.isPresent()){
+            bnbReservationMap.keySet().stream().filter(k -> bnbReservationMap.get(k).equals(reservationToDelete.get())).findFirst();
+            bnbReservationMap.keySet();
+        }
     }
 }

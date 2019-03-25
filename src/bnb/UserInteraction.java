@@ -241,10 +241,6 @@ public class UserInteraction {
         return getMenuChoice(OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 1);
     }
 
-    public static int getPropertyToEdit() {
-        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES, QUESTION_ENTER_ACTION_NUMBER,0,4 );
-    }
-
     public static void conflictAskForOtherRoom() {
         display(LINE_PLEASE_CHOOSE_OTHER_ROOM);
     }
@@ -285,5 +281,30 @@ public class UserInteraction {
 
     public static void cancelWholeReservation(){
         display(LINE_CONFLICTING_RESERVATION_CANCELED);
+    }
+
+    public static int getChangeChoice() {
+        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES,QUESTION_ENTER_ACTION_NUMBER,0,6);
+    }
+
+    public static int getReservationChoice(int max) {
+        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE,0,max);
+    }
+
+    public static int getReservationChoiceDelete(int max) {
+        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE,0,max);
+    }
+
+    public static boolean okayToDelete() {
+        boolean acceptDeletion = false;
+
+        String entry = getNextInput(QUESTION_DELETE_PROPOSED_RESERVATION);
+        if (entry.equals("y") || entry.equals("n")) {
+            acceptDeletion = entry.equals("y");
+        } else {
+            display(ENTRY_ERR_BOOLEAN);
+            display(LINE_FEED);
+        }
+        return acceptDeletion;
     }
 }

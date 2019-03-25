@@ -85,82 +85,49 @@ public class MyBnbApp {
             }
             if (continueReservation) {
                 bnbReservationMap.put(UUID.randomUUID().toString(), reservation);
-            }else{
+            } else {
                 UserInteraction.cancelWholeReservation();
             }
         }
-
-
-
-/*        Reservation reservation = new Reservation();
-        Set<Person> personSet = new HashSet<>();
-        Set<Room> roomSet = new HashSet<>();
-
-        Person bookingPerson = UserInteraction.getBookingPerson();
-        LocalDate fromDate = UserInteraction.getFromDate();
-        LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
-        Room roomToBook = UserInteraction.getRoomWanted(rooms, fromDate, untilDate);
-
-        boolean reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);*/
-
-
-/*
-        boolean continueReservation = false;
-        if(!continueReservation) {
-            Person bookingPerson = UserInteraction.getBookingPerson();
-            LocalDate fromDate = UserInteraction.getFromDate();
-            LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
-            Room roomToBook = UserInteraction.getRoomWanted(rooms, fromDate, untilDate);
-            Reservation reservation = new Reservation();
-            Set<Person> personSet = new HashSet<>();
-            Set<Room> roomSet = new HashSet<>();
-
-
-            boolean reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
-            if(!reservationConflict){
-                continueReservation = UserInteraction.proposeRegistration(fromDate,untilDate,roomToBook);
-                if(continueReservation){
-                    boolean finishReservation = false;
-                    boolean cancelReservation = false;
-                    while(!finishReservation) {
-                        int choice = UserInteraction.continueReservation();
-                        switch (choice) {
-                            case 0:
-                                Person person = UserInteraction.personEntry();
-                                //boolean roomsCapacityReached = UserInteraction.checkCapacity()
-                                personSet.add(person);
-                                break;
-                            case 1:
-                                Room room = UserInteraction.getRoomWanted(rooms,fromDate,untilDate);
-                                reservationConflict = UserInteraction.checkAvailability(fromDate,untilDate,roomToBook,bnbReservationMap);
-                                if(!reservationConflict){
-                                    roomSet.add(room);
-                                }
-                                break;
-                            case 2:
-                                finishReservation = true;
-                                personSet.forEach(p ->reservation.addPerson(p));
-                                roomSet.forEach(r -> reservation.addRoom(r));
-                                break;
-                            default:
-                                finishReservation = true;
-                                cancelReservation = true;
-                        }
-
-                    }
-                    if(!cancelReservation) {
-                        reservation.addPerson(bookingPerson);
-                        reservation.addRoom(roomToBook);
-                        reservation.setBookedFrom(fromDate);
-                        reservation.setBookedUntil(untilDate);
-                        bnbReservationMap.put(UUID.randomUUID().toString(), reservation);
-                    }
-                }
-            }
-        }
-        */
     }
 
     private static void changeReservation() {
+        int editChoice = UserInteraction.getChangeChoice();
+        if (editChoice != 5) {
+            UserInteraction.displayReservationsList(bnbReservationMap);
+
+
+            switch (editChoice) {
+                case 0:
+                    // "0.  Change reservation startdate.%n" +
+
+                    break;
+                case 1:
+                    // "1.  Change reservation enddate.%n" +
+                    break;
+                case 2:
+                    // "2.  Change rooms.%n" +
+                    break;
+                case 3:
+                    // "3.  Change persons.%n" +
+                    break;
+                case 4:
+                    // "4.  Delete reservation.%n" +
+                    int reservationChosen = UserInteraction.getReservationChoiceDelete(bnbReservationMap.size());
+                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
+                    if(UserInteraction.okayToDelete()){
+                        ReservationUtils.deleteReservation(reservationChosen,bnbReservationMap);
+                    }
+                    break;
+                case 5:
+                    // "5.  Cancel change and return to main menu.%n" +
+                    break;
+                default:
+                    // "6.  Save changes and return to main menu.%n" +
+
+            }
+        }
     }
+
+
 }

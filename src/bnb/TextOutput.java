@@ -49,7 +49,9 @@ public class TextOutput {
                     "1.  Change reservation enddate.%n" +
                     "2.  Change rooms.%n" +
                     "3.  Change persons.%n" +
-                    "4.  Cancel change and return to menu.%n" +
+                    "4.  Delete reservation.%n" +
+                    "5.  Cancel change and return to main menu.%n" +
+                    "6.  Save changes and return to main menu.%n" +
                     "    ---------------------------------%n";
 
     public static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
@@ -61,7 +63,10 @@ public class TextOutput {
     public static final String QUESTION_PERSON_BIRTHDAY = "    Please enter the booking person's birthday (DD/MM/YYYY): ";
     public static final String QUESTION_PROPOSED_RESERVATION = "    Is the proposed reservation ok (y/n)?: ";
     public static final String QUESTION_ENTER_RESERVATION_NUMBER = "    Please enter the reservation to display's number: ";
+    public static final String QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE = "    Please enter the number of the reservation to change: ";
+    public static final String QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE = "    Please enter the number of the reservation to delete: ";
     public static final String QUESTION_ENTER_NUMBER_OF_PERSONS = "    Please enter the number of persons that you want to book for (excluding the booking person): ";
+    public static final String QUESTION_DELETE_PROPOSED_RESERVATION = "    Are you sure you want ot delete the reservation above? (y/n)?: ";
 
     public static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
