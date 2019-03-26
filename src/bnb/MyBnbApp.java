@@ -100,6 +100,8 @@ public class MyBnbApp {
             switch (editChoice) {
                 case 0:
                     // "0.  Change reservation startdate.%n" +
+                        int reservationChosen = UserInteraction.getReservationChoiceChangeDate(bnbReservationMap.size());
+                        UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
 
                     break;
                 case 1:

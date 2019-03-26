@@ -311,4 +311,8 @@ public class UserInteraction {
     public static void deletionSuccess() {
         display(LINE_DELETION_SUCCESS);
     }
+
+    public static int getReservationChoiceChangeDate(int max) {
+        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE,0,max);
+    }
 }
