@@ -134,6 +134,7 @@ public class TextOutput {
 
     public static final String LINE_FEED = "%n";
 
+    //todo: replace with return new StringBuilder().append.......toString();
     public static String createRoomOverview(List<Room> rooms) {
         String out = "";
         out = out.concat("-----------------------------------------------------%n");
