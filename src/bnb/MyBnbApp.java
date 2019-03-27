@@ -115,7 +115,7 @@ public class MyBnbApp {
                     break;
                 case 4:
                     // "4.  Delete reservation.%n" +
-                    int reservationChosen = UserInteraction.getReservationChoiceDelete(bnbReservationMap.size());
+                   reservationChosen = UserInteraction.getReservationChoiceDelete(bnbReservationMap.size());
                     UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
                     if(UserInteraction.okayToDelete()){
                         ReservationUtils.deleteReservation(reservationChosen,bnbReservationMap);
