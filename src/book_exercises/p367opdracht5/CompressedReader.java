@@ -8,15 +8,16 @@ public class CompressedReader {
 
     public static void main(String[] args) {
         final String input = "C:\\data\\folder\\MyFile2.deflated";
-        try(InputStreamReader isr = new InputStreamReader(new InflaterInputStream(new FileInputStream(input)))){
-            int b = 0;
-            while( (b = isr.read()) != -1){
+        //try(InputStreamReader isr = new InputStreamReader(new InflaterInputStream(new FileInputStream(input)))){
+       /* try(BufferedReader isr = new BufferedReader(new InputStreamReader(new InflaterInputStream(new FileInputStream(input)))){
+            String s = null;
+            while()
                 System.out.print((char) b);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -15,7 +15,7 @@ public class CompressedWriter {
         createFileIfNeeded(output);
 
         try (PrintStream ps = new PrintStream(new DeflaterOutputStream(new FileOutputStream(output)))){
-            ps.write("This is a string".getBytes());
+            ps.write("This is a string with Juan".getBytes());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
