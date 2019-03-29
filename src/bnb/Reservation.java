@@ -102,7 +102,7 @@ public class Reservation {
     public void prettyOutput2(){
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.printf("--------------------------------------------------%n");
-        System.out.printf("Reservation:%n");
+        System.out.printf("Reservation:     %d%n",index);
         System.out.printf("     From: %s     Until:%s:%n",dateTimeFormatter.format(bookedFrom),dateTimeFormatter.format(bookedUntil));
         System.out.printf("         Room(s):%n");
         Set<Room> roomSet = getRooms();
@@ -131,6 +131,7 @@ public class Reservation {
         for (Room room : rooms) {
             totalPrice += room.getPricePerNight() * daysBooked;
         }
+        System.out.printf("Reservation #%d%n",index);
         System.out.printf("       %s - %s (%d nights)%n",dateTimeFormatter.format(bookedFrom),dateTimeFormatter.format(bookedUntil), daysBooked);
         System.out.printf("       Rooms:%n");
         roomSet.forEach(r -> System.out.printf("         %s - Capacity: %d - Price/night: %d%n",r.getName(),r.getCapacity(),r.getPricePerNight()));
