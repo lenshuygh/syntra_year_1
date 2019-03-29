@@ -92,16 +92,18 @@ public class MyBnbApp {
     }
 
     private static void changeReservation() {
+        UserInteraction.displayReservationsList(bnbReservationMap);
+        int reservationChosen = UserInteraction.getReservationChoice(bnbReservationMap.size());
+        UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
         int editChoice = UserInteraction.getChangeChoice();
         if (editChoice != 5) {
-            UserInteraction.displayReservationsList(bnbReservationMap);
-
+            UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
 
             switch (editChoice) {
                 case 0:
                     // "0.  Change reservation startdate.%n" +
-                        int reservationChosen = UserInteraction.getReservationChoiceChangeDate(bnbReservationMap.size());
-                        UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
+                    UserInteraction.displayStartDateToChange(reservationChosen, bnbReservationMap);
+                    LocalDate newFromDate = UserInteraction.getChangedFromDate(reservationChosen,bnbReservationMap);
 
                     break;
                 case 1:
@@ -115,10 +117,10 @@ public class MyBnbApp {
                     break;
                 case 4:
                     // "4.  Delete reservation.%n" +
-                   reservationChosen = UserInteraction.getReservationChoiceDelete(bnbReservationMap.size());
-                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
-                    if(UserInteraction.okayToDelete()){
-                        ReservationUtils.deleteReservation(reservationChosen,bnbReservationMap);
+                    //reservationChosen = UserInteraction.getReservationChoiceDelete(bnbReservationMap.size());
+                    //UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
+                    if (UserInteraction.okayToDelete()) {
+                        ReservationUtils.deleteReservation(reservationChosen, bnbReservationMap);
                     }
                     break;
                 case 5:

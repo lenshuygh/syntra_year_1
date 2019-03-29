@@ -154,4 +154,13 @@ public class ReservationUtils {
             }
         }
     }
+
+    public static Reservation getReservationByIndex(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
+        chosenIndex = reservationNumber;
+        Optional<Reservation> reservationOptional = bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).findFirst();
+        if(reservationOptional.isPresent()){
+            return reservationOptional.get();
+        }
+        return null;
+    }
 }

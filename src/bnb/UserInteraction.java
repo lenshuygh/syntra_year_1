@@ -30,6 +30,7 @@ public class UserInteraction {
     private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
     private static Predicate<LocalDate> checkIfDateIsBeforePredicate = d -> d.isBefore(untilDate);
     private static Predicate<LocalDate> checkIfOver18Predicate = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
+    private static Predicate<LocalDate> newDateCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(re)
 
     private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
     private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(untilDate);
@@ -314,5 +315,17 @@ public class UserInteraction {
 
     public static int getReservationChoiceChangeDate(int max) {
         return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE,0,max);
+    }
+
+    public static void displayStartDateToChange(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
+        chosenIndex = reservationNumber;
+        bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationStartDate);
+    }
+
+    public static LocalDate getChangedFromDate(int reservationNumber,Map<String,Reservation> bnbReservationMap) {
+        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationNumber,bnbReservationMap);
+        return getDateFromUser(QUESTION_CHANGED_STARTING_DATE,newDateCheck, errorMassage);
+
+        }
     }
 }

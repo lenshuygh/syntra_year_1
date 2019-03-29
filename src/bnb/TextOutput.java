@@ -53,6 +53,13 @@ public class TextOutput {
                     "5.  Cancel change and return to main menu.%n" +
                     "6.  Save changes and return to main menu.%n" +
                     "    ---------------------------------%n";
+    public static final String CHOICE_CHOOSE_OTHER_TO_EDIT =
+            "    ---------------------------%n" +
+                    "0.  Edit above reservation.%n" +
+                    "1.  Choose another reservation.%n" +
+                    "2.  Go back to the main menu.%n" +
+                    "    ---------------------------%n";
+
 
     public static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
     public static final String QUESTION_STARTING_DATE = "    Please provide the starting date (DD/MM/YYYY): ";
@@ -66,7 +73,8 @@ public class TextOutput {
     public static final String QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE = "    Please enter the number of the reservation to change: ";
     public static final String QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE = "    Please enter the number of the reservation to delete: ";
     public static final String QUESTION_ENTER_NUMBER_OF_PERSONS = "    Please enter the number of persons that you want to book for (excluding the booking person): ";
-    public static final String QUESTION_DELETE_PROPOSED_RESERVATION = "    Are you sure you want ot delete the reservation above? (y/n)?: ";
+    public static final String QUESTION_DELETE_PROPOSED_RESERVATION = "    Are you sure you want to delete the reservation above? (y/n)?: ";
+    public static final String QUESTION_CHANGED_STARTING_DATE = "    Please provide the new starting date (DD/MM/YYYY): ";
 
     public static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
@@ -120,8 +128,8 @@ public class TextOutput {
             "Conflicting reservation found";
 
     public static final String LINE_CONFLICTING_RESERVATION_CANCELED =
-            "-------------------------------%n"+
-            "Current reservation is canceled%n";
+            "-------------------------------%n" +
+                    "Current reservation is canceled%n";
 
     public static final String LINE_PLEASE_CHOOSE_OTHER_ROOM =
             "Please choose another room for your reservation%n";

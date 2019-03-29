@@ -142,4 +142,9 @@ public class Reservation {
         System.out.printf("------------------------------------------%n");
     }
 
+    public static void singleReservationStartDate(Reservation reservation) {
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("Reservation startdate: %s%n",reservation.getBookedFrom());
+        System.out.printf("-----------------------------------------");
+    }
 }
