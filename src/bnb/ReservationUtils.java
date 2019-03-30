@@ -112,7 +112,7 @@ public class ReservationUtils {
 
     public static void getReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
-        UserInteraction.display(String.format(LINE_PERSON_RESULTS.toText(), (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
+        //UserInteraction.display(String.format(LINE_PERSON_RESULTS.toText(), (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()
                 .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))

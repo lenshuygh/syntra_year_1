@@ -29,24 +29,15 @@ public class UserInteraction {
 
     private static Predicate<LocalDate> checkIfDateInFuturePredicate = d -> d.isAfter(LocalDate.now());
     private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
-    private static Predicate<LocalDate> checkIfDateIsBeforePredicate = d -> d.isBefore(untilDate);
     private static Predicate<LocalDate> checkIfOver18Predicate = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
     private static Predicate<LocalDate> newDateFromCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(oldUntilDate);
     private static Predicate<LocalDate> newDateUntilCheck = d -> d.isAfter(LocalDate.now()) && d.isAfter(oldFromDate);
 
-    private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
-    private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(untilDate);
-    private static Predicate<Reservation> checkReservationAfterFromDatePredicate = r -> r.getBookedUntil().isAfter(fromDate);
     private static Predicate<Reservation> checkReservationForIndexPredicate = r -> r.getIndex() == chosenIndex;
-    private static Predicate<Reservation> checkIfRoomInReservationPredicate = r -> r.getRooms().contains(room);
 
     private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
 
-    private static Predicate<Reservation> checkIfReservationIsBetweenDatesPredicate(LocalDate from, LocalDate to, Function<Reservation, LocalDate> function) {
-        Predicate<Reservation> isReservationIsFromAfterFromPredicate = reservation -> function.apply(reservation).isAfter(from);
-        Predicate<Reservation> isReservationIsFromBeforeToPredicate = reservation -> function.apply(reservation).isBefore(to);
-        return isReservationIsFromAfterFromPredicate.and(isReservationIsFromBeforeToPredicate);
-    }
+
 
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
@@ -134,19 +125,12 @@ public class UserInteraction {
 
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
         String roomOverView = TextOutput.createRoomOverview(rooms);
-        //int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
         int choice = getMenuChoice(roomOverView, QUESTION_ROOM_TO_RESERVE.toText(), 0, rooms.size() - 1);
         return rooms.get(choice);
     }
 
     public static void display(String s) {
         System.out.printf(s);
-    }
-
-    private static void display(List<Room> rooms) {
-        for (int i = 0; i < rooms.size(); i++) {
-            display(i + ". " + rooms.get(i) + "%n");
-        }
     }
 
     public static boolean proposeRegistration(LocalDate fromDate, LocalDate untilDate, Room roomToBook) {
@@ -184,7 +168,6 @@ public class UserInteraction {
         return acceptProposal;
     }
 
-
     private static long calculatedCost(long daysInBetween, Room roomToBook) {
         return roomToBook.getPricePerNight() * daysInBetween;
     }
@@ -199,7 +182,6 @@ public class UserInteraction {
         //bookingPerson.setBirthDay(birthDay);
         return bookingPerson;
     }
-    // todo: notnull
 
     public static Person personEntry() {
         String lastName = getNextInput(QUESTION_PERSON_NAME_LAST.toText());
@@ -228,25 +210,7 @@ public class UserInteraction {
     public static void conflictingReservation(Reservation reservation) {
         display(LINE_CONFLICTING_RESERVATION.toText());
         display(reservation.prettyOutput());
-        //display(LINE_CONFLICTING_RESERVATION_CANCELED);
     }
-
-    /*public static int continueReservation() {
-        return getMenuChoice(OVERVIEW_RESERVATION_ENTRY.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 3);
-    }*/
-
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-/*    public static int getAfterOverviewEditChoice() {
-        return getMenuChoice(OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 1);
-    }*/
-
-    /*public static void conflictAskForOtherRoom() {
-        display(LINE_PLEASE_CHOOSE_OTHER_ROOM.toText());
-    }*/
 
     public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
@@ -294,10 +258,6 @@ public class UserInteraction {
         return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), 0, max);
     }
 
-    public static int getReservationChoiceDelete(int max) {
-        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE.toText(), 0, max);
-    }
-
     public static boolean okayToDelete() {
         boolean acceptDeletion = false;
 
@@ -313,10 +273,6 @@ public class UserInteraction {
 
     public static void deletionSuccess() {
         display(LINE_DELETION_SUCCESS.toText());
-    }
-
-    public static int getReservationChoiceChangeDate(int max) {
-        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), 0, max);
     }
 
     public static void displayStartDateToChange(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
@@ -394,26 +350,10 @@ public class UserInteraction {
     }
 
 
-    public static boolean changePerson(Person personEntry, Person personToChange) {
-        personToChange.setLastName(personEntry.getLastName());
-        personToChange.setFirstName(personEntry.getFirstName());
-        return true;
-    }
-
-    public static Person personChangeEntry() {
-        display(LINE_CHANGE_PERSON.toText());
-        return personEntry();
-    }
-
     public static void changeRooms(int reservationChosen, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
         Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationChosen, bnbReservationMap);
-        //List<Room> roomListChange = new ArrayList<>(currentReservation.getRooms());
-        //int roomChosen = getMenuChoice(createRoomOverview(roomListChange), QUESTION_ROOM_TO_CHANGE, 0, roomListChange.size() - 1);
         int choice = getMenuChoice(CHOICE_CHOOSE_ROOM_CHANGE.toText(), QUESTION_TYPE_ROOM_CHANGE.toText(), 0, 2);
         switch (choice) {
-            case 0:
-                //"0.  Go back to the main menu.%n" +
-                break;
             case 1:
                 //"1.  Add a room to the reservation.%n" +
                 List<Room> availableRooms = ReservationUtils.getRoomAvailableDuringPeriodAndCurrentReservation(currentReservation.getBookedFrom(), currentReservation.getBookedUntil(), bnbReservationMap, rooms, currentReservation);
@@ -422,7 +362,7 @@ public class UserInteraction {
                 currentReservation.addRoom(availableRooms.get(roomToAddIndex));
                 changedSuccess(true);
                 break;
-            default:
+            case 2:
                 //"2.  Remove a room from the reservation%n" +
                 List<Room> bookedRooms = new LinkedList<>(currentReservation.getRooms());
                 int neededCapacity = currentReservation.getPersons().size();
@@ -436,6 +376,8 @@ public class UserInteraction {
                 } else {
                     display(ERR_ROOM_REMOVE_NOT_ENOUCH_CAPACITY.toText());
                 }
+                break;
+            default:
         }
     }
 }
