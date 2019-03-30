@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static bnb.TextOutput.*;
+import static bnb.TextMessages.*;
 
 public class ReservationUtils {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -102,7 +102,7 @@ public class ReservationUtils {
     }*/
 
     public static void getReservations(Map<String, Reservation> bnbReservationMap) {
-        UserInteraction.display(LINE_ALL_RESERVATIONS_OVERVIEW);
+        UserInteraction.display(LINE_ALL_RESERVATIONS_OVERVIEW.toText());
         bnbReservationMap
                 .values()
                 .stream()
@@ -112,7 +112,7 @@ public class ReservationUtils {
 
     public static void getReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
-        UserInteraction.display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
+        UserInteraction.display(String.format(LINE_PERSON_RESULTS.toText(), (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()
                 .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))
