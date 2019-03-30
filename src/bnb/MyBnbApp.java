@@ -35,13 +35,17 @@ public class MyBnbApp {
     private static void displayReservation() {
         UserInteraction.displayReservationsList(bnbReservationMap);
         int choice = UserInteraction.getAfterOverviewChoice();
-        if (choice == 0) {
-            int reservationNumber = UserInteraction.getReservationToDisplayNumber(bnbReservationMap);
-            UserInteraction.displaySingleReservationWithAllDetails(reservationNumber, bnbReservationMap);
-        } else if (choice == 1) {
-            LocalDate fromDate = UserInteraction.getFromDate();
-            LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
-            UserInteraction.displayReservations(fromDate, untilDate, bnbReservationMap);
+        switch (choice) {
+            case 1:
+                int reservationNumber = UserInteraction.getReservationToDisplayNumber(bnbReservationMap);
+                UserInteraction.displaySingleReservationWithAllDetails(reservationNumber, bnbReservationMap);
+                break;
+            case 2:
+                LocalDate fromDate = UserInteraction.getFromDate();
+                LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
+                UserInteraction.displayReservations(fromDate, untilDate, bnbReservationMap);
+                break;
+            default:
         }
     }
 

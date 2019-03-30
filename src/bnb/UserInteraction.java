@@ -1,6 +1,5 @@
 package bnb;
 
-import javax.print.attribute.standard.RequestingUserName;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -241,13 +240,13 @@ public class UserInteraction {
         System.out.flush();
     }
 
-    public static int getAfterOverviewEditChoice() {
+/*    public static int getAfterOverviewEditChoice() {
         return getMenuChoice(OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 1);
-    }
+    }*/
 
-    public static void conflictAskForOtherRoom() {
+    /*public static void conflictAskForOtherRoom() {
         display(LINE_PLEASE_CHOOSE_OTHER_ROOM.toText());
-    }
+    }*/
 
     public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
@@ -336,7 +335,7 @@ public class UserInteraction {
         if (changed) {
             display(LINE_CHANGE_SUCCES.toText());
         } else {
-            display(LINE_CHANGE_NO_SUCCES.toText());
+            display(LINE_CHANGE_NO_SUCCESS.toText());
         }
     }
 

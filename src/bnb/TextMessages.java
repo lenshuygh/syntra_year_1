@@ -29,15 +29,15 @@ public enum TextMessages {
                     "    --------------------------------------%n"),
     OVERVIEW_CHOOSE_RESERVATION_CHOICES(
             "    -------------------------%n" +
-                    "0.  Choose a reservation.%n" +
-                    "1.  Specify a period.%n" +
-                    "2.  Go back to the main menu.%n" +
+                    "0.  Return to the main menu.%n" +
+                    "1.  Choose a reservation.%n" +
+                    "2.  Specify a period.%n" +
                     "    -------------------------%n"),
 
     OVERVIEW_CHOOSE_EDIT_RESERVATION_CHOICES(
             "    -----------------------------%n" +
-                    "0.  Choose a reservation to edit.%n" +
-                    "1.  Go back to the main menu.%n" +
+                    "0.  Return to main menu.%n" +
+                    "1.  Choose a reservation to edit.%n" +
                     "    -----------------------------%n"),
 
     OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES(
@@ -51,14 +51,14 @@ public enum TextMessages {
                     "    -----------------------------%n"),
     CHOICE_CHOOSE_OTHER_TO_EDIT(
             "    ---------------------------%n" +
-                    "0.  Edit above reservation.%n" +
-                    "1.  Choose another reservation.%n" +
-                    "2.  Go back to the main menu.%n" +
+                    "0.  Return to the main menu.%n" +
+                    "1.  Edit above reservation.%n" +
+                    "2.  Choose another reservation.%n" +
                     "    ---------------------------%n"),
 
     CHOICE_CHOOSE_ROOM_CHANGE(
             "    ---------------------------%n" +
-                    "0.  Go back to the main menu.%n" +
+                    "0.  Return to the main menu.%n" +
                     "1.  Add a room to the reservation.%n" +
                     "2.  Remove a room from the reservation%n" +
                     "    ---------------------------%n"),
@@ -196,7 +196,7 @@ public enum TextMessages {
                     "Remove a person from the current reservation.%n" +
                     "---------------------------------------------%n"),
 
-    LINE_CHANGE_NO_SUCCES(
+    LINE_CHANGE_NO_SUCCESS(
             "The chosen reservation was not changed due to an error.%n"),
 
     LINE_AVAILABLE_ROOMS(
