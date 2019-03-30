@@ -198,8 +198,7 @@ public class UserInteraction {
     }
 
     public static int getReservationToDisplayNumber(Map<String, Reservation> bnbReservationMap) {
-        int choice = getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER.toText(), 0, bnbReservationMap.size());
-        return choice;
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER.toText(), 0, bnbReservationMap.size());
     }
 
     public static void displaySingleReservationWithAllDetails(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
