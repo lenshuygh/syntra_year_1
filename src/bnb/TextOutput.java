@@ -96,6 +96,10 @@ public class TextOutput {
             "-----------------------------------------------------------------------------------%n" +
                     "Please enter a correct date that is later then the starting date of the reservation%n" +
                     "-----------------------------------------------------------------------------------%n";
+    public static final String ENTRY_ERR_DATE_BEFORE_OLD_BOOKING_END =
+            "-----------------------------------------------------------------------------------%n" +
+                    "Please enter a correct date that is before then the ending date of the reservation%n" +
+                    "-----------------------------------------------------------------------------------%n";
     public static final String ENTRY_ERR_BOOLEAN =
             "---------------------------------------------------------------------%n" +
                     "Please enter the character 'y' for yes or 'n' for no (without quotes)%n" +

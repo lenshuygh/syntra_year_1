@@ -21,6 +21,7 @@ public class UserInteraction {
     private static LocalDate formattedDate;
     private static LocalDate fromDate;
     private static LocalDate untilDate;
+    private static LocalDate oldUntilDate;
     private static Person searchedPerson;
     private static int chosenIndex = -1;
     private static Room room;
@@ -30,7 +31,7 @@ public class UserInteraction {
     private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
     private static Predicate<LocalDate> checkIfDateIsBeforePredicate = d -> d.isBefore(untilDate);
     private static Predicate<LocalDate> checkIfOver18Predicate = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
-    private static Predicate<LocalDate> newDateCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(re)
+    private static Predicate<LocalDate> newDateCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(oldUntilDate);
 
     private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
     private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(untilDate);
@@ -133,7 +134,7 @@ public class UserInteraction {
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
         String roomOverView = TextOutput.createRoomOverview(rooms);
         //int choice = getMenuChoice(OVERVIEW_ROOMS, QUESTION_ROOM_TO_RESERVE, 0, 4);
-        int choice = getMenuChoice(roomOverView,QUESTION_ROOM_TO_RESERVE,0,rooms.size()-1);
+        int choice = getMenuChoice(roomOverView, QUESTION_ROOM_TO_RESERVE, 0, rooms.size() - 1);
         return rooms.get(choice);
     }
 
@@ -166,7 +167,7 @@ public class UserInteraction {
             display("    -----------------------------------------%n");
             display("    Current room cost          : " + calculatedCost(daysInBetween, roomToBook) + " Euro%n");
             display("    -----------------------------------------%n");
-            grandTotal += calculatedCost(daysInBetween,roomToBook);
+            grandTotal += calculatedCost(daysInBetween, roomToBook);
             display("    Grand Total over all rooms : " + grandTotal + " Euro%n");
             display("    -----------------------------------------%n");
             display(LINE_FEED);
@@ -205,8 +206,8 @@ public class UserInteraction {
         return new Person(firstName, lastName);
     }
 
-    public static int getNumberOfPersons(){
-        return getMenuChoice("",QUESTION_ENTER_NUMBER_OF_PERSONS,0,22);
+    public static int getNumberOfPersons() {
+        return getMenuChoice("", QUESTION_ENTER_NUMBER_OF_PERSONS, 0, 22);
     }
 
     public static int getAfterOverviewChoice() {
@@ -249,14 +250,14 @@ public class UserInteraction {
     public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
         display(String.format(LINE_PERSON_RESULTS, (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
-        ReservationUtils.getReservations(personToSearch,bnbReservationMap);
+        ReservationUtils.getReservations(personToSearch, bnbReservationMap);
     }
 
     public static void displayReservations(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDate = fromCheckDate;
         untilDate = untilCheckDate;
         display((String.format(LINE_PERIOD_RESULTS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        ReservationUtils.getReservationsDuringPeriod(fromCheckDate,untilCheckDate,bnbReservationMap).forEach(Reservation::prettyOutput2);
+        ReservationUtils.getReservationsDuringPeriod(fromCheckDate, untilCheckDate, bnbReservationMap).forEach(Reservation::prettyOutput2);
     }
 
     public static void displayReservationsList(Map<String, Reservation> bnbReservationMap) {
@@ -280,20 +281,20 @@ public class UserInteraction {
         display(LINE_FEED);
     }
 
-    public static void cancelWholeReservation(){
+    public static void cancelWholeReservation() {
         display(LINE_CONFLICTING_RESERVATION_CANCELED);
     }
 
     public static int getChangeChoice() {
-        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES,QUESTION_ENTER_ACTION_NUMBER,0,6);
+        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES, QUESTION_ENTER_ACTION_NUMBER, 0, 6);
     }
 
     public static int getReservationChoice(int max) {
-        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE,0,max);
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE, 0, max);
     }
 
     public static int getReservationChoiceDelete(int max) {
-        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE,0,max);
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_DELETE, 0, max);
     }
 
     public static boolean okayToDelete() {
@@ -314,7 +315,7 @@ public class UserInteraction {
     }
 
     public static int getReservationChoiceChangeDate(int max) {
-        return getMenuChoice("",QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE,0,max);
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE, 0, max);
     }
 
     public static void displayStartDateToChange(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
@@ -322,10 +323,9 @@ public class UserInteraction {
         bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationStartDate);
     }
 
-    public static LocalDate getChangedFromDate(int reservationNumber,Map<String,Reservation> bnbReservationMap) {
-        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationNumber,bnbReservationMap);
-        return getDateFromUser(QUESTION_CHANGED_STARTING_DATE,newDateCheck, errorMassage);
-
-        }
+    public static LocalDate getChangedFromDate(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
+        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationNumber, bnbReservationMap);
+        oldUntilDate = currentReservation.getBookedFrom();
+        return getDateFromUser(QUESTION_CHANGED_STARTING_DATE, newDateCheck, ENTRY_ERR_DATE_BEFORE_OLD_BOOKING_END);
     }
 }
