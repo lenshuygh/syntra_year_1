@@ -6,24 +6,23 @@ import java.util.List;
 public class TextOutput {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    //todo: replace with return new StringBuilder().append.......toString();
-    public static String createRoomOverview(List<Room> rooms) {
-        String out = "";
-        out = out.concat("-----------------------------------------------------%n");
+    public static String createRoomOverview(List<Room> rooms){
+        StringBuilder sb =  new StringBuilder();
+        sb.append("-----------------------------------------------------%n");
         for (int i = 0; i < rooms.size(); i++) {
-            out = out.concat(String.valueOf(i));
-            out = out.concat(".  ");
-            out = out.concat(rooms.get(i).getName());
-            out = out.concat("          (");
-            out = out.concat(String.valueOf(rooms.get(i).getCapacity()));
-            out = out.concat(" persons -");
-            out = out.concat(" ");
-            out = out.concat(String.valueOf(rooms.get(i).getPricePerNight()));
-            out = out.concat(" Eur/Night).");
-            out = out.concat("%n");
+            sb.append(i);
+            sb.append(".  ");
+            sb.append(rooms.get(i).getName());
+            sb.append("          (");
+            sb.append(rooms.get(i).getCapacity());
+            sb.append(" persons -");
+            sb.append(" ");
+            sb.append(rooms.get(i).getPricePerNight());
+            sb.append(" Eur/Night).");
+            sb.append("%n");
         }
-        out = out.concat("-----------------------------------------------------%n");
-        return out;
+        sb.append("-----------------------------------------------------%n");
+        return sb.toString();
     }
 
     public static String createPeopleOverview(List<Person> persons) {
