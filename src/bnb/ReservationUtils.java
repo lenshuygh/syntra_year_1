@@ -57,13 +57,11 @@ public class ReservationUtils {
     public static List<Room> getRoomAvailableDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
-        //UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
         if (bnbReservationMap.size() > 0) {
             Set<Room> roomsBookedDuringPeriod = getRoomsBookedDuringPeriod(fromCheckDate, untilCheckDate, bnbReservationMap);
             rooms.removeAll(roomsBookedDuringPeriod);
         }
         return rooms;
-        //rooms.forEach(System.out::println);
     }
 
     public static List<Room> getRoomAvailableDuringPeriodAndCurrentReservation(LocalDate bookedFrom, LocalDate bookedUntil, Map<String, Reservation> bnbReservationMap,  List<Room> rooms,Reservation currentReservation) {
