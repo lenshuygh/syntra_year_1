@@ -71,7 +71,6 @@ public class MyBnbApp {
         reservation.setBookedUntil(UserInteraction.getUntilDate(reservation.getBookedFrom()));
         numberOfPersons += UserInteraction.getNumberOfPersons();
 
-        //check available rooms for period and see if total capacity is ok against numberOfPersons
         boolean capacityOk = ReservationUtils.checkCapacity(numberOfPersons, reservation, bnbReservationMap, rooms);
         if (!capacityOk) {
             UserInteraction.cancelReservationCapacity();
