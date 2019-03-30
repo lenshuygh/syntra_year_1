@@ -39,25 +39,6 @@ public class ReservationUtils {
 
     private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
 
-
-    public static boolean checkAvailabilityRoomToPeriod(Room roomWanted, Reservation reservation, Map<String, Reservation> bnbReservationMap) {
-        room = roomWanted;
-        fromDateToCheck = reservation.getBookedFrom();
-        untilDateToCheck = reservation.getBookedUntil();
-
-        Optional<Reservation> reservationOptional = bnbReservationMap.values().stream()
-                .filter(checkIfRoomInReservationMapPredicate)
-                .filter(checkAskedDatesAgainstReservedDates)
-                .findFirst();
-
-        if (reservationOptional.isPresent()) {
-            reservation = reservationOptional.get();
-            UserInteraction.conflictingReservation(reservation);
-            return true;
-        }
-        return false;
-    }
-
     public static Set<Room> getRoomsBookedDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
         fromDateToCheck = fromCheckDate;
         untilDateToCheck = untilCheckDate;
@@ -93,14 +74,6 @@ public class ReservationUtils {
         return roomList;
     }
 
-/*    public static void getRoomAvailableDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
-        fromDateToCheck = fromCheckDate;
-        untilDateToCheck = untilCheckDate;
-        UserInteraction.display((String.format(LINE_PERIOD_RESULTS_FREE_ROOMS, DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        rooms.removeAll(getRoomsBookedDuringPeriod(fromCheckDate,untilCheckDate,bnbReservationMap));
-        rooms.forEach(System.out::println);
-    }*/
-
     public static void getReservations(Map<String, Reservation> bnbReservationMap) {
         UserInteraction.display(LINE_ALL_RESERVATIONS_OVERVIEW.toText());
         bnbReservationMap
@@ -112,7 +85,6 @@ public class ReservationUtils {
 
     public static void getReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
-        //UserInteraction.display(String.format(LINE_PERSON_RESULTS.toText(), (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
         bnbReservationMap.values()
                 .stream()
                 .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))
