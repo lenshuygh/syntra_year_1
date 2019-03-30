@@ -232,9 +232,9 @@ public class UserInteraction {
         //display(LINE_CONFLICTING_RESERVATION_CANCELED);
     }
 
-    public static int continueReservation() {
+    /*public static int continueReservation() {
         return getMenuChoice(OVERVIEW_RESERVATION_ENTRY.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 3);
-    }
+    }*/
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -288,7 +288,7 @@ public class UserInteraction {
     }
 
     public static int getChangeChoice() {
-        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 6);
+        return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 5);
     }
 
     public static int getReservationChoice(int max) {

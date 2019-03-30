@@ -6,7 +6,6 @@ import java.util.Objects;
 public class Person {
     private String firstName;
     private String lastName;
-    private LocalDate birthDay;
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
@@ -37,10 +36,6 @@ public class Person {
                 '}';
     }
 
-    public String prettyOutput() {
-        return lastName + " " + firstName + "\n";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,7 +50,4 @@ public class Person {
         return Objects.hash(firstName, lastName);
     }
 
-    public static String personPrettyString(Person person){
-        return String.format("%s, %s%n",person.getLastName(),person.getFirstName());
-    }
 }
