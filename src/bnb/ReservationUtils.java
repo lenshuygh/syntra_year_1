@@ -163,4 +163,14 @@ public class ReservationUtils {
         }
         return null;
     }
+
+    public static boolean changeFromDate(LocalDate newFromDate, int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        getReservationByIndex(reservationChosen,bnbReservationMap).setBookedFrom(newFromDate);
+        return true;
+    }
+
+    public static boolean changeUntilDate(LocalDate newToDate, int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        getReservationByIndex(reservationChosen,bnbReservationMap).setBookedUntil(newToDate);
+        return true;
+    }
 }

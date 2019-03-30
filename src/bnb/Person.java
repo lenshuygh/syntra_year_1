@@ -54,4 +54,8 @@ public class Person {
     public int hashCode() {
         return Objects.hash(firstName, lastName);
     }
+
+    public static String personPrettyString(Person person){
+        return String.format("%s, %s%n",person.getLastName(),person.getFirstName());
+    }
 }

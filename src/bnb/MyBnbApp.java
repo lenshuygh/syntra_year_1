@@ -92,6 +92,7 @@ public class MyBnbApp {
     }
 
     private static void changeReservation() {
+        boolean changed = false;
         UserInteraction.displayReservationsList(bnbReservationMap);
         int reservationChosen = UserInteraction.getReservationChoice(bnbReservationMap.size());
         UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
@@ -104,16 +105,27 @@ public class MyBnbApp {
                     // "0.  Change reservation startdate.%n" +
                     UserInteraction.displayStartDateToChange(reservationChosen, bnbReservationMap);
                     LocalDate newFromDate = UserInteraction.getChangedFromDate(reservationChosen,bnbReservationMap);
-
+                    changed = ReservationUtils.changeFromDate(newFromDate,reservationChosen,bnbReservationMap);
+                    UserInteraction.changedSuccess(changed);
                     break;
                 case 1:
                     // "1.  Change reservation enddate.%n" +
+                    UserInteraction.displayEndDateToChange(reservationChosen, bnbReservationMap);
+                    LocalDate newToDate = UserInteraction.getChangedUntilDate(reservationChosen,bnbReservationMap);
+                    changed = ReservationUtils.changeUntilDate(newToDate,reservationChosen,bnbReservationMap);
+                    UserInteraction.changedSuccess(changed);
                     break;
                 case 2:
                     // "2.  Change rooms.%n" +
+                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen,bnbReservationMap);
+                    UserInteraction.changeRooms(reservationChosen, bnbReservationMap,rooms);
                     break;
                 case 3:
                     // "3.  Change persons.%n" +
+                    //Person personToChange =
+                    //UserInteraction.changedSuccess(UserInteraction.changePerson(UserInteraction.personChangeEntry(),personToChange));
+                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen,bnbReservationMap);
+                    UserInteraction.changePerson(reservationChosen,bnbReservationMap);
                     break;
                 case 4:
                     // "4.  Delete reservation.%n" +

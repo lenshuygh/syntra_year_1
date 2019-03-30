@@ -1,13 +1,11 @@
 package bnb;
 
+import javax.print.attribute.standard.RequestingUserName;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -22,6 +20,7 @@ public class UserInteraction {
     private static LocalDate fromDate;
     private static LocalDate untilDate;
     private static LocalDate oldUntilDate;
+    private static LocalDate oldFromDate;
     private static Person searchedPerson;
     private static int chosenIndex = -1;
     private static Room room;
@@ -31,7 +30,8 @@ public class UserInteraction {
     private static Predicate<LocalDate> checkIfDateIsAfterPredicate = d -> d.isAfter(fromDate);
     private static Predicate<LocalDate> checkIfDateIsBeforePredicate = d -> d.isBefore(untilDate);
     private static Predicate<LocalDate> checkIfOver18Predicate = d -> ChronoUnit.YEARS.between(d, LocalDate.now()) >= 18;
-    private static Predicate<LocalDate> newDateCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(oldUntilDate);
+    private static Predicate<LocalDate> newDateFromCheck = d -> d.isAfter(LocalDate.now()) && d.isBefore(oldUntilDate);
+    private static Predicate<LocalDate> newDateUntilCheck = d -> d.isAfter(LocalDate.now()) && d.isAfter(oldFromDate);
 
     private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
     private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(untilDate);
@@ -325,7 +325,116 @@ public class UserInteraction {
 
     public static LocalDate getChangedFromDate(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
         Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationNumber, bnbReservationMap);
-        oldUntilDate = currentReservation.getBookedFrom();
-        return getDateFromUser(QUESTION_CHANGED_STARTING_DATE, newDateCheck, ENTRY_ERR_DATE_BEFORE_OLD_BOOKING_END);
+        oldUntilDate = currentReservation.getBookedUntil();
+        display(LINE_FEED);
+        return getDateFromUser(QUESTION_CHANGED_STARTING_DATE, newDateFromCheck, ENTRY_ERR_DATE_BEFORE_OLD_BOOKING_END);
+    }
+
+    public static void changedSuccess(boolean changed) {
+        if (changed) {
+            display(LINE_CHANGE_SUCCES);
+        } else {
+            display(LINE_CHANGE_NO_SUCCES);
+        }
+    }
+
+    public static void displayEndDateToChange(int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        chosenIndex = reservationChosen;
+        bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationEndDate);
+    }
+
+    public static LocalDate getChangedUntilDate(int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationChosen, bnbReservationMap);
+        oldFromDate = currentReservation.getBookedFrom();
+        display(LINE_FEED);
+        return getDateFromUser(QUESTION_CHANGED_ENDING_DATE, newDateUntilCheck, ENTRY_ERR_DATE_AFTER_OLD_BOOKING_START);
+    }
+
+    public static void changePerson(int reservationChosen, Map<String, Reservation> bnbReservationMap) {
+        int personChosen = 0;
+        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationChosen, bnbReservationMap);
+        List<Person> personListToChange = new ArrayList<>(currentReservation.getPersons());
+        int choice = getMenuChoice(CHOICE_CHOOSE_PERSON_CHANGE, QUESTION_TYPE_PERSON_CHANGE, 0, 3);
+        switch (choice) {
+            case 1:
+                //"1.  Add a person to the reservation.%n" +
+                int neededCapacity = currentReservation.getPersons().size();
+                int reservedCapacity = currentReservation.getRooms().stream().mapToInt(Room::getCapacity).sum();
+
+                if (neededCapacity + 1 <= reservedCapacity) {
+                    display(LINE_ADD_PERSON_TO_RESERVATION);
+                    Person person = personEntry();
+                    currentReservation.addPerson(person);
+                    changedSuccess(true);
+                } else {
+                    display(ERR_PERSON_ADD_NOT_ENOUCH_CAPACITY);
+                }
+                break;
+            case 2:
+                //"2.  Remove a person from the reservation%n" +
+                display(LINE_REMOVE_PERSON_FROM_RESERVATION);
+                personChosen = getMenuChoice(createPeopleOverview(personListToChange), QUESTION_PERSON_TO_REMOVE, 0, personListToChange.size() - 1);
+                currentReservation.removePerson(personListToChange.get(personChosen));
+                changedSuccess(true);
+                break;
+            case 3:
+                //"3.  Change name of a person from the reservation%n" +
+                personChosen = getMenuChoice(createPeopleOverview(personListToChange), QUESTION_PERSON_TO_CHANGE, 0, personListToChange.size() - 1);
+                Person personToChange = personListToChange.get(personChosen);
+                Person newPerson = personEntry();
+                personToChange.setLastName(newPerson.getLastName());
+                personToChange.setFirstName(newPerson.getFirstName());
+                changedSuccess(true);
+                break;
+            default:
+                //"0.  Go back to the main menu.%n" +
+                break;
+        }
+    }
+
+
+    public static boolean changePerson(Person personEntry, Person personToChange) {
+        personToChange.setLastName(personEntry.getLastName());
+        personToChange.setFirstName(personEntry.getFirstName());
+        return true;
+    }
+
+    public static Person personChangeEntry() {
+        display(LINE_CHANGE_PERSON);
+        return personEntry();
+    }
+
+    public static void changeRooms(int reservationChosen, Map<String, Reservation> bnbReservationMap, List<Room> rooms) {
+        Reservation currentReservation = ReservationUtils.getReservationByIndex(reservationChosen, bnbReservationMap);
+        //List<Room> roomListChange = new ArrayList<>(currentReservation.getRooms());
+        //int roomChosen = getMenuChoice(createRoomOverview(roomListChange), QUESTION_ROOM_TO_CHANGE, 0, roomListChange.size() - 1);
+        int choice = getMenuChoice(CHOICE_CHOOSE_ROOM_CHANGE, QUESTION_TYPE_ROOM_CHANGE, 0, 2);
+        switch (choice) {
+            case 0:
+                //"0.  Go back to the main menu.%n" +
+                break;
+            case 1:
+                //"1.  Add a room to the reservation.%n" +
+                List<Room> availableRooms = ReservationUtils.getRoomAvailableDuringPeriodAndCurrentReservation(currentReservation.getBookedFrom(), currentReservation.getBookedUntil(), bnbReservationMap, rooms, currentReservation);
+                display(LINE_AVAILABLE_ROOMS);
+                int roomToAddIndex = getMenuChoice(createRoomOverview(availableRooms), QUESTION_CHANGE_RESERVATION_ADD_ROOM, 0, availableRooms.size() - 1);
+                currentReservation.addRoom(availableRooms.get(roomToAddIndex));
+                changedSuccess(true);
+                break;
+            default:
+                //"2.  Remove a room from the reservation%n" +
+                List<Room> bookedRooms = new LinkedList<>(currentReservation.getRooms());
+                int neededCapacity = currentReservation.getPersons().size();
+                int reservedCapacity = currentReservation.getRooms().stream().mapToInt(Room::getCapacity).sum();
+
+                int roomToDeleteIndex = getMenuChoice(createRoomOverview(bookedRooms), QUESTION_ROOM_TO_REMOVE, 0, bookedRooms.size() - 1);
+                reservedCapacity -= bookedRooms.get(roomToDeleteIndex).getCapacity();
+                if (neededCapacity <= reservedCapacity) {
+                    currentReservation.removeRoom(bookedRooms.get(roomToDeleteIndex));
+                    changedSuccess(true);
+                } else {
+                    display(ERR_ROOM_REMOVE_NOT_ENOUCH_CAPACITY);
+                }
+        }
     }
 }

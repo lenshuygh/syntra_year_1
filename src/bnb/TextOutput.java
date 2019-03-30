@@ -60,6 +60,21 @@ public class TextOutput {
                     "2.  Go back to the main menu.%n" +
                     "    ---------------------------%n";
 
+    public static final String CHOICE_CHOOSE_ROOM_CHANGE =
+            "    ---------------------------%n" +
+                    "0.  Go back to the main menu.%n" +
+                    "1.  Add a room to the reservation.%n" +
+                    "2.  Remove a room from the reservation%n" +
+                    "    ---------------------------%n";
+
+    public static final String CHOICE_CHOOSE_PERSON_CHANGE =
+            "    --------------------------------------------%n" +
+                    "0.  Go back to the main menu.%n" +
+                    "1.  Add a person to the reservation.%n" +
+                    "2.  Remove a person from the reservation%n" +
+                    "3.  Change name of a person from the reservation%n" +
+                    "    --------------------------------------------%n";
+
 
     public static final String QUESTION_ENTER_ACTION_NUMBER = "    Enter the number of the action u want to perform: ";
     public static final String QUESTION_STARTING_DATE = "    Please provide the starting date (DD/MM/YYYY): ";
@@ -75,6 +90,14 @@ public class TextOutput {
     public static final String QUESTION_ENTER_NUMBER_OF_PERSONS = "    Please enter the number of persons that you want to book for (excluding the booking person): ";
     public static final String QUESTION_DELETE_PROPOSED_RESERVATION = "    Are you sure you want to delete the reservation above? (y/n)?: ";
     public static final String QUESTION_CHANGED_STARTING_DATE = "    Please provide the new starting date (DD/MM/YYYY): ";
+    public static final String QUESTION_CHANGED_ENDING_DATE = "    Please provide the new ending date (DD/MM/YYYY): ";
+    public static final String QUESTION_PERSON_TO_CHANGE = "    Please provide number of the person to change: ";
+    public static final String QUESTION_PERSON_TO_REMOVE = "    Please provide number of the person to remove: ";
+    public static final String QUESTION_ROOM_TO_CHANGE = "    Please provide number of the room to change: ";
+    public static final String QUESTION_TYPE_ROOM_CHANGE = "    Please provide number of the type of change: ";
+    public static final String QUESTION_CHANGE_RESERVATION_ADD_ROOM = "    Please provide number of the room to add to the reservation: ";
+    public static final String QUESTION_ROOM_TO_REMOVE = "    Please provide number of the room to remove from the reservation: ";
+    public static final String QUESTION_TYPE_PERSON_CHANGE = "    Please provide number of the type of change: ";
 
     public static final String ENTRY_ERR_NUMBER =
             "----------------------%n" +
@@ -97,9 +120,14 @@ public class TextOutput {
                     "Please enter a correct date that is later then the starting date of the reservation%n" +
                     "-----------------------------------------------------------------------------------%n";
     public static final String ENTRY_ERR_DATE_BEFORE_OLD_BOOKING_END =
-            "-----------------------------------------------------------------------------------%n" +
-                    "Please enter a correct date that is before then the ending date of the reservation%n" +
-                    "-----------------------------------------------------------------------------------%n";
+            "---------------------------------------------------------------------------------------%n" +
+                    "Please enter a correct date that is before the ending date of the reservation to change%n" +
+                    "---------------------------------------------------------------------------------------%n";
+
+    public static final String ENTRY_ERR_DATE_AFTER_OLD_BOOKING_START =
+            "----------------------------------------------------------------------------------------%n" +
+                    "Please enter a correct date that is after the starting date of the reservation to change%n" +
+                    "----------------------------------------------------------------------------------------%n";
     public static final String ENTRY_ERR_BOOLEAN =
             "---------------------------------------------------------------------%n" +
                     "Please enter the character 'y' for yes or 'n' for no (without quotes)%n" +
@@ -109,6 +137,15 @@ public class TextOutput {
                     "The booking's person has to be at least 18 years old.%n" +
                     "Please give the birthday of an adult person in the group.%n" +
                     "---------------------------------------------------------%n";
+    public static final String ERR_ROOM_REMOVE_NOT_ENOUCH_CAPACITY =
+            "--------------------------------------------------------------------%n" +
+                    "Removing this room with not accomodate booked persons, canceling....%n" +
+                    "--------------------------------------------------------------------%n";
+
+    public static final String ERR_PERSON_ADD_NOT_ENOUCH_CAPACITY =
+            "--------------------------------------------------------------------%n" +
+                    "Adding this person will exceed reservation's capacity, canceling....%n" +
+                    "--------------------------------------------------------------------%n";
 
     public static final String LINE_PROPOSED_RESERVATION = "    Check the proposed reservation below%n" +
             "    ------------------------------------%n";
@@ -128,6 +165,10 @@ public class TextOutput {
             "Reservations overview:%n" +
                     "----------------------------------%n";
 
+    public static final String LINE_CHANGE_PERSON =
+            "Enter new person details:%n" +
+                    "----------------------------------%n";
+
     public static final String LINE_CONFLICTING_RESERVATION =
             "Conflicting reservation found";
 
@@ -143,6 +184,27 @@ public class TextOutput {
 
     public static final String LINE_DELETION_SUCCESS =
             "The chosen reservation was successfuly removed from the system.%n";
+
+    public static final String LINE_CHANGE_SUCCES =
+            "------------------------------------------------%n" +
+                    "The chosen reservation was successfully changed.%n" +
+                    "------------------------------------------------%n";
+
+    public static final String LINE_ADD_PERSON_TO_RESERVATION =
+            "----------------------------------------%n" +
+                    "Add a person to the current reservation.%n" +
+                    "----------------------------------------%n";
+
+    public static final String LINE_REMOVE_PERSON_FROM_RESERVATION =
+            "---------------------------------------------%n" +
+                    "Remove a person from the current reservation.%n" +
+                    "---------------------------------------------%n";
+
+    public static final String LINE_CHANGE_NO_SUCCES =
+            "The chosen reservation was not changed due to an error.%n";
+
+    public static final String LINE_AVAILABLE_ROOMS =
+            "The rooms available for this reservation.%n";
 
     public static final String LINE_FEED = "%n";
 
@@ -164,5 +226,17 @@ public class TextOutput {
         }
         out = out.concat("-----------------------------------------------------%n");
         return out;
+    }
+
+    public static String createPeopleOverview(List<Person> persons) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("---------------------------------%n");
+        sb.append("Persons from current reservation:%n");
+        sb.append("---------------------------------%n");
+        for (int i = 0; i < persons.size(); i++) {
+            sb.append(i).append(".  ").append(persons.get(i).getLastName()).append(", ").append(persons.get(i).getFirstName()).append("%n");
+        }
+        sb.append("---------------------------------%n");
+        return sb.toString();
     }
 }
