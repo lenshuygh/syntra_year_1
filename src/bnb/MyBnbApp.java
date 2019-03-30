@@ -100,7 +100,7 @@ public class MyBnbApp {
         int reservationChosen = UserInteraction.getReservationChoice(bnbReservationMap.size());
         UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
         int editChoice = UserInteraction.getChangeChoice();
-        if (editChoice != 5) {
+        if (editChoice != 0) {
             UserInteraction.displaySingleReservationWithAllDetails(reservationChosen, bnbReservationMap);
 
             switch (editChoice) {
