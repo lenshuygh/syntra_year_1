@@ -206,11 +206,6 @@ public class UserInteraction {
         bnbReservationMap.values().stream().filter(checkReservationForIndexPredicate).forEach(Reservation::singleReservationAllDetails);
     }
 
-    public static void conflictingReservation(Reservation reservation) {
-        display(LINE_CONFLICTING_RESERVATION.toText());
-        display(reservation.prettyOutput());
-    }
-
     public static void displayReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
         display(String.format(LINE_PERSON_RESULTS.toText(), (searchedPerson.getLastName() + ", " + searchedPerson.getFirstName())));
