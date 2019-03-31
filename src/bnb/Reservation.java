@@ -103,7 +103,7 @@ public class Reservation {
         Set<Room> roomSet = getRooms();
         System.out.printf("%d:       %d persons%n         %s - %s%n", getIndex(), persons.size(), dateTimeFormatter.format(bookedFrom), dateTimeFormatter.format(bookedUntil));
         roomSet.forEach(r -> System.out.printf("         %s%n", r.getName()));
-        System.out.printf("------------------------------------------%n");
+        System.out.printf("----------------------------------%n");
     }
 
     public void singleReservationAllDetails() {
@@ -116,15 +116,17 @@ public class Reservation {
         for (Room room : rooms) {
             totalPrice += room.getPricePerNight() * daysBooked;
         }
+        System.out.printf("-----------------------------------------------%n");
         System.out.printf("Reservation #%d%n", index);
+        System.out.printf("-----------------------------------------------%n");
         System.out.printf("       %s - %s (%d nights)%n", dateTimeFormatter.format(bookedFrom), dateTimeFormatter.format(bookedUntil), daysBooked);
         System.out.printf("       Rooms:%n");
         roomSet.forEach(r -> System.out.printf("         %s - Capacity: %d - Price/night: %d%n", r.getName(), r.getCapacity(), r.getPricePerNight()));
         System.out.printf("       Persons:%n");
         personSet.forEach(p -> System.out.printf("         %s, %s%n", p.getLastName(), p.getFirstName()));
-        System.out.printf("------------------------------------------%n");
+        System.out.printf("-----------------------------------------------%n");
         System.out.printf("       Total price: %d%n", totalPrice);
-        System.out.printf("------------------------------------------%n");
+        System.out.printf("-----------------------------------------------%n%n");
     }
 
     public static void singleReservationStartDate(Reservation reservation) {

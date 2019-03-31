@@ -78,7 +78,7 @@ public enum TextMessages {
     QUESTION_ROOM_TO_RESERVE("    Please enter the number of the room you want to reserve: "),
     QUESTION_PERSON_NAME_LAST("    Please enter person's last name: "),
     QUESTION_PERSON_NAME_FIRST("    Please enter person's first name: "),
-    QUESTION_PERSON_BIRTHDAY("    Please enter the booking person's birthday (DD/MM/YYYY): "),
+    QUESTION_PERSON_BIRTHDAY("%n    Please enter the booking person's birthday (DD/MM/YYYY): "),
     QUESTION_PROPOSED_RESERVATION("    Is the proposed reservation ok (y/n)?: "),
     QUESTION_ENTER_RESERVATION_NUMBER("    Please enter the reservation to display's number: "),
     QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE("    Please enter the number of the reservation to change: "),

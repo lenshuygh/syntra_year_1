@@ -247,6 +247,7 @@ public class UserInteraction {
     }
 
     public static void displayReservationsList(Map<String, Reservation> bnbReservationMap) {
+        display(LINE_FEED.toText());
         display(LINE_ALL_RESERVATIONS_OVERVIEW.toText());
         bnbReservationMap
                 .values()
@@ -376,8 +377,11 @@ public class UserInteraction {
                 List<Room> availableRooms = ReservationUtils.getRoomAvailableDuringPeriodAndCurrentReservation(currentReservation.getBookedFrom(), currentReservation.getBookedUntil(), bnbReservationMap, rooms, currentReservation);
                 display(LINE_AVAILABLE_ROOMS.toText());
                 int roomToAddIndex = getMenuChoice(createRoomOverview(availableRooms), QUESTION_CHANGE_RESERVATION_ADD_ROOM.toText(), 0, availableRooms.size() - 1);
-                currentReservation.addRoom(availableRooms.get(roomToAddIndex));
-                changedSuccess(true);
+                boolean continueReservation = UserInteraction.proposeRegistration(currentReservation.getBookedFrom(), currentReservation.getBookedUntil(), availableRooms.get(roomToAddIndex));
+                if(continueReservation) {
+                    currentReservation.addRoom(availableRooms.get(roomToAddIndex));
+                    changedSuccess(true);
+                }
                 break;
             case 2:
                 //"2.  Remove a room from the reservation%n" +

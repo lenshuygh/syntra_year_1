@@ -124,12 +124,10 @@ public class MyBnbApp {
                     break;
                 case 3:
                     // Change rooms.%n" +
-                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen,bnbReservationMap);
                     UserInteraction.changeRooms(reservationChosen, bnbReservationMap,rooms);
                     break;
                 case 4:
                     // Change persons.%n" +
-                    UserInteraction.displaySingleReservationWithAllDetails(reservationChosen,bnbReservationMap);
                     UserInteraction.changePerson(reservationChosen,bnbReservationMap);
                     break;
                 case 5:
@@ -142,6 +140,4 @@ public class MyBnbApp {
             }
         }
     }
-
-
 }
