@@ -38,7 +38,6 @@ public class UserInteraction {
     private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
 
 
-
     private static String getNextInput(String questionString) {
         Scanner scanner = new Scanner(System.in);
         display(questionString);
@@ -59,6 +58,28 @@ public class UserInteraction {
             }
             if (!checkInRange(choice, lowestMenuChoice, highestMenuChoice)) {
                 display(String.format(ENTRY_ERR_NUMBER_RANGE.toText(), lowestMenuChoice, highestMenuChoice));
+            } else {
+                goodEntry = true;
+            }
+        }
+        return choice;
+    }
+
+    public static int getMenuChoice(String menuChoices, String entryQuestion, List<Integer> choicesList) {
+        display(menuChoices);
+        int choice = -1;
+        boolean goodEntry = false;
+        while (!goodEntry) {
+            String in = getNextInput(entryQuestion);
+            try {
+                choice = Integer.parseInt(in);
+            } catch (NumberFormatException e) {
+                display(ENTRY_ERR_NUMBER.toText());
+                continue;
+            }
+            if (!checkInRange(choice, choicesList)) {
+                //display(String.format(ENTRY_ERR_NUMBER_RANGE.toText(), lowestMenuChoice, highestMenuChoice));
+                display(ENTRY_ERR_NUMBER_CHOICE.toText());
             } else {
                 goodEntry = true;
             }
@@ -121,6 +142,11 @@ public class UserInteraction {
 
     private static boolean checkInRange(int numberEntered, int lowLimit, int highLimit) {
         return (numberEntered >= lowLimit) && (numberEntered <= highLimit);
+    }
+
+    private static boolean checkInRange(int choice, List<Integer> choicesList) {
+        System.out.println(choice + "**********************************************   IT IS IN RANGE OF THE LIST **********************************************");
+        return choicesList.contains(choice);
     }
 
     public static Room getRoomWanted(List<Room> rooms, LocalDate fromDate, LocalDate untilDate) {
@@ -248,8 +274,10 @@ public class UserInteraction {
         return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 5);
     }
 
-    public static int getReservationChoice(int max) {
-        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), 0, max);
+    public static int getReservationChoice(Map<String, Reservation> bnbReservationMap) {
+//        bnbReservationMap.values().stream().map(Reservation::getIndex).collect()
+        List<Integer> choicesList = ReservationUtils.getAvailableIndexChoices(bnbReservationMap);
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), choicesList);
     }
 
     public static boolean okayToDelete() {

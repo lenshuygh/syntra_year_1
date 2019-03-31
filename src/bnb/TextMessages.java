@@ -103,6 +103,11 @@ public enum TextMessages {
             "----------------------------------%n" +
                     "Please enter a number from %d to %d.%n" +
                     "----------------------------------%n"),
+
+    ENTRY_ERR_NUMBER_CHOICE(
+            "--------------------------------------------------------------------%n" +
+                    "Please enter a number that corresponds with an item in the overview.%n" +
+                    "--------------------------------------------------------------------%n"),
     ENTRY_ERR_DATE_FORMAT(
             "------------------------------------------------%n" +
                     "Please format your date correctly eg: 06/12/2020%n" +

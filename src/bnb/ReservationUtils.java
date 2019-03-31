@@ -143,4 +143,8 @@ public class ReservationUtils {
         getReservationByIndex(reservationChosen,bnbReservationMap).setBookedUntil(newToDate);
         return true;
     }
+
+    public static List<Integer> getAvailableIndexChoices(Map<String,Reservation> bnbReservationMap) {
+        return bnbReservationMap.values().stream().map(Reservation::getIndex).collect(Collectors.toList());
+    }
 }
