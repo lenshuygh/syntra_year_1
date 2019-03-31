@@ -163,6 +163,7 @@ public enum TextMessages {
 
 
     LINE_ALL_RESERVATIONS_OVERVIEW(
+            "----------------------------------%n" +
             "Reservations overview:%n" +
                     "----------------------------------%n"),
 
@@ -206,6 +207,10 @@ public enum TextMessages {
 
     LINE_AVAILABLE_ROOMS(
             "The rooms available for this reservation.%n"),
+
+    LINE_ENTER_PERSON(
+            "%n    Enter the name of the person to add to the reservation.%n"
+    ),
 
     LINE_FEED("%n");
 

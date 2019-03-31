@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 
@@ -78,7 +77,6 @@ public class UserInteraction {
                 continue;
             }
             if (!checkInRange(choice, choicesList)) {
-                //display(String.format(ENTRY_ERR_NUMBER_RANGE.toText(), lowestMenuChoice, highestMenuChoice));
                 display(ENTRY_ERR_NUMBER_CHOICE.toText());
             } else {
                 goodEntry = true;
@@ -204,11 +202,11 @@ public class UserInteraction {
     public static Person getBookingPerson() {
         LocalDate birthDay = getBirthDay();
         Person bookingPerson = personEntry();
-        //bookingPerson.setBirthDay(birthDay);
         return bookingPerson;
     }
 
     public static Person personEntry() {
+        display(LINE_ENTER_PERSON.toText());
         String lastName = getNextInput(QUESTION_PERSON_NAME_LAST.toText());
         String firstName = getNextInput(QUESTION_PERSON_NAME_FIRST.toText());
         return new Person(firstName, lastName);
@@ -245,7 +243,7 @@ public class UserInteraction {
         fromDate = fromCheckDate;
         untilDate = untilCheckDate;
         display((String.format(LINE_PERIOD_RESULTS.toText(), DATE_TIME_FORMATTER.format(fromCheckDate), DATE_TIME_FORMATTER.format(untilCheckDate))));
-        ReservationUtils.getReservationsDuringPeriod(fromCheckDate, untilCheckDate, bnbReservationMap).forEach(Reservation::prettyOutput2);
+        ReservationUtils.getReservationsDuringPeriod(fromCheckDate, untilCheckDate, bnbReservationMap).forEach(Reservation::prettyOutput);
     }
 
     public static void displayReservationsList(Map<String, Reservation> bnbReservationMap) {

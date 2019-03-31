@@ -84,22 +84,7 @@ public class Reservation {
                 "---------------------------------------------------------\n";
     }
 
-    public String prettyOutput() {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Set<String> myRooms = rooms.stream().map(room -> room.getName()).collect(Collectors.toCollection(HashSet::new));
-        Set<String> myPersons = persons.stream().map(person -> person.getLastName() + ", " + person.getFirstName()).collect(Collectors.toSet());
-
-        return "\n" +
-                "    ---------------------------------------------------------\n" +
-                "    Reservation: \n" +
-                "       From: " + dateTimeFormatter.format(bookedFrom) +
-                "  Until: " + dateTimeFormatter.format(bookedUntil) + "\n" +
-                "       rooms: " + myRooms + "\n" +
-                "       persons: " + myPersons + "\n" +
-                "---------------------------------------------------------\n";
-    }
-
-    public void prettyOutput2() {
+    public void prettyOutput() {
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.printf("--------------------------------------------------%n");
         System.out.printf("Reservation:     %d%n", index);

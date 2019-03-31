@@ -1,22 +1,15 @@
 package bnb;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static bnb.TextMessages.*;
-
 public class ReservationUtils {
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static Room room;
     private static LocalDate fromDateToCheck;
     private static LocalDate untilDateToCheck;
     private static Person searchedPerson;
     private static int chosenIndex;
-
-    private static Predicate<Reservation> checkIfRoomInReservationMapPredicate = r -> r.getRooms().contains(room);
 
     private static Predicate<Reservation> checkIfAskedFromDateInsideBookedPeriodPredicate = r -> fromDateToCheck.isAfter(r.getBookedFrom()) && fromDateToCheck.isBefore(r.getBookedUntil());
     private static Predicate<Reservation> checkIfAskedUntilDateInsideBookedPeriodPredicate = r -> untilDateToCheck.isAfter(r.getBookedFrom()) && untilDateToCheck.isBefore(r.getBookedUntil());
@@ -33,8 +26,6 @@ public class ReservationUtils {
                     .or(checkIfAskedFromDateIsSameAsAnyBookedPeriodDatePredicate)
                     .or(checkIfAskedUntilDateIsSameAsAnyBookedPeriodDatePredicate);
 
-    private static Predicate<Reservation> checkReservationBeforeUntilDatePredicate = r -> r.getBookedUntil().isBefore(fromDateToCheck);
-    private static Predicate<Reservation> checkReservationAfterFromDatePredicate = r -> r.getBookedUntil().isAfter(untilDateToCheck);
     private static Predicate<Reservation> checkIfPersonInPersonsFromReservationPredicate = r -> r.getPersons().contains(searchedPerson);
 
     private static Comparator<Reservation> sortReservationsByIndexComparator = Comparator.comparingInt(Reservation::getIndex);
@@ -72,21 +63,12 @@ public class ReservationUtils {
         return roomList;
     }
 
-    public static void getReservations(Map<String, Reservation> bnbReservationMap) {
-        UserInteraction.display(LINE_ALL_RESERVATIONS_OVERVIEW.toText());
-        bnbReservationMap
-                .values()
-                .stream()
-                .sorted(sortReservationsByIndexComparator)
-                .forEach(Reservation::listSummaryOutput);
-    }
-
     public static void getReservations(Person personToSearch, Map<String, Reservation> bnbReservationMap) {
         searchedPerson = personToSearch;
         bnbReservationMap.values()
                 .stream()
                 .filter(r -> checkIfPersonInPersonsFromReservationPredicate.test(r))
-                .forEach(Reservation::prettyOutput2);
+                .forEach(Reservation::prettyOutput);
     }
 
     public static Set<Reservation> getReservationsDuringPeriod(LocalDate fromCheckDate, LocalDate untilCheckDate, Map<String, Reservation> bnbReservationMap) {
