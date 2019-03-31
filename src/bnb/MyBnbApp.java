@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class MyBnbApp {
-    private static List<Room> rooms = Room.createRooms();
+    private static final List<Room> roomsList = Room.createRooms();
     private static Map<String, Reservation> bnbReservationMap = new HashMap<>();
 
     public static void main(String[] args) {
@@ -55,6 +55,7 @@ public class MyBnbApp {
     }
 
     private static void checkAvailability() {
+        List<Room> rooms = new ArrayList<>(roomsList);
         LocalDate fromDate = UserInteraction.getFromDate();
         LocalDate untilDate = UserInteraction.getUntilDate(fromDate);
         UserInteraction.getRoomsAvailableDuringPeriod(fromDate, untilDate, bnbReservationMap, rooms);
@@ -62,6 +63,7 @@ public class MyBnbApp {
 
 
     private static void bookReservation() {
+        List<Room> rooms = new ArrayList<>(roomsList);
         int numberOfPersons = 1;
         boolean continueReservation = true;
 
@@ -70,6 +72,7 @@ public class MyBnbApp {
         reservation.setBookedFrom(UserInteraction.getFromDate());
         reservation.setBookedUntil(UserInteraction.getUntilDate(reservation.getBookedFrom()));
         numberOfPersons += UserInteraction.getNumberOfPersons();
+        UserInteraction.resetGrandTotal();
 
         boolean capacityOk = ReservationUtils.checkCapacity(numberOfPersons, reservation, bnbReservationMap, rooms);
         if (!capacityOk) {
@@ -95,6 +98,7 @@ public class MyBnbApp {
     }
 
     private static void changeReservation() {
+        List<Room> rooms = new ArrayList<>(roomsList);
         boolean changed = false;
         UserInteraction.displayReservationsList(bnbReservationMap);
         int reservationChosen = UserInteraction.getReservationChoice(bnbReservationMap);

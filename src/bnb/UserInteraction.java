@@ -145,7 +145,6 @@ public class UserInteraction {
     }
 
     private static boolean checkInRange(int choice, List<Integer> choicesList) {
-        System.out.println(choice + "**********************************************   IT IS IN RANGE OF THE LIST **********************************************");
         return choicesList.contains(choice);
     }
 
@@ -223,8 +222,12 @@ public class UserInteraction {
         return getMenuChoice(OVERVIEW_CHOOSE_RESERVATION_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 2);
     }
 
+    public static int getReservationChoice(Map<String, Reservation> bnbReservationMap) {
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), ReservationUtils.getAvailableIndexChoices(bnbReservationMap));
+    }
+
     public static int getReservationToDisplayNumber(Map<String, Reservation> bnbReservationMap) {
-        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER.toText(), 0, bnbReservationMap.size());
+        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER.toText(), ReservationUtils.getAvailableIndexChoices(bnbReservationMap));
     }
 
     public static void displaySingleReservationWithAllDetails(int reservationNumber, Map<String, Reservation> bnbReservationMap) {
@@ -272,12 +275,6 @@ public class UserInteraction {
 
     public static int getChangeChoice() {
         return getMenuChoice(OVERVIEW_CHOOSE_PROPERTY_TO_EDIT_CHOICES.toText(), QUESTION_ENTER_ACTION_NUMBER.toText(), 0, 5);
-    }
-
-    public static int getReservationChoice(Map<String, Reservation> bnbReservationMap) {
-//        bnbReservationMap.values().stream().map(Reservation::getIndex).collect()
-        List<Integer> choicesList = ReservationUtils.getAvailableIndexChoices(bnbReservationMap);
-        return getMenuChoice("", QUESTION_ENTER_RESERVATION_NUMBER_TO_CHANGE.toText(), choicesList);
     }
 
     public static boolean okayToDelete() {
@@ -401,5 +398,9 @@ public class UserInteraction {
                 break;
             default:
         }
+    }
+
+    public static void resetGrandTotal() {
+        grandTotal = 0;
     }
 }
