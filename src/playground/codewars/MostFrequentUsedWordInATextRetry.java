@@ -54,7 +54,13 @@ public class MostFrequentUsedWordInATextRetry {
 
         System.out.println("------------------------------------");
 
-        int i = 0;
+        long[] outSize;
+        if(sorted.size()>3){
+            outSize = new long[3];
+        }else{
+            outSize = new long[sorted.size()];
+        }
+
 
         System.out.println(lettersOnly);
         return null;
