@@ -5,16 +5,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toMap;
 
-public class MostFrequentUsedWordInATextRetry {
-    private static Map<String,Integer> occurencesMap = new HashMap<>();
-    private static List<Integer> sorter = new ArrayList<>();
+public class MostFrequentUsedWordInATextRetryChangeSort {
+
     public static void main(String[] args) {
         //String s = "a a a  b  c c  d d d d  e e e e e";
-        String s = "e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e";
+        //String s = "e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e";
         //String s = "  , e   .. ";
-        //String s = "  //wont won't won't ";
+        String s = "  //wont won't won't ";
         System.out.println(top3(s));
     }
 
@@ -22,45 +20,82 @@ public class MostFrequentUsedWordInATextRetry {
         s = s.toLowerCase();
         String lettersOnly = "";
         for (char c : s.toCharArray()) {
-            if ((c >= 'a' && c <= 'z') || (c == ' ')){
+            if ((c >= 'a' && c <= 'z') || (c == ' ') || (c == '\'')){
                 lettersOnly = lettersOnly.concat(Character.toString(c));
             }
         }
 
-        System.out.println(lettersOnly);
+        lettersOnly = lettersOnly.replaceAll(" +"," ");
+        lettersOnly = lettersOnly.trim();
 
-        Map<String, Long> result =
+        Map<String, Long> resultMap =
                 Stream.of(lettersOnly.split(" ")).collect(
                         Collectors.groupingBy(
                                 Function.identity(), Collectors.counting()
                         )
                 );
 
-        result.forEach((k,v) -> System.out.println(k + " - " + v));
+        resultMap.forEach((k,v) -> System.out.println('|'+k+'|' + " - " + v));
 
-        Map<String,Long> sorted =
-            result
-                    .entrySet()
-                    .stream()
-                    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                .collect(
-                        toMap(Map.Entry::getKey,Map.Entry::getValue, (e1,e2) -> e2,LinkedHashMap::new));
+        long[] valuesArray = new long[resultMap.size()];
 
-        String[] outputKeys = new String[sorted.size()];
         int index = 0;
-        for (String s1 : sorted.keySet()) {
-            outputKeys[index++] = s1;
+        for (Long value : resultMap.values()) {
+            valuesArray[index++] = value;
         }
+
+        boolean isSorted = false;
+        long temp = 0;
+        while(!isSorted){
+            boolean changed= false;
+            for (int i = 1; i < valuesArray.length; i++) {
+                long valA = valuesArray[i-1];
+                long valB = valuesArray[i];
+                if(valA < valB){
+                    temp = valA;
+                    valuesArray[i-1] = valB;
+                    valuesArray[i] = temp;
+                    changed = true;
+                }
+            }
+            if(!changed){
+                isSorted = true;
+            }
+        }
+
         String[] outputArray;
-        if(sorted.size()>3){
+        if(resultMap.size()>3){
             outputArray = new String[3];
         }else{
-            outputArray = new String[sorted.size()];
+            outputArray = new String[resultMap.size()];
         }
         for (int i = 0; i < outputArray.length; i++) {
-            outputArray[i] = outputKeys[i];
+            long searchedKeyValue = valuesArray[i];
+            for (String s1 : resultMap.keySet()) {
+                if(resultMap.get(s1)==searchedKeyValue){
+                    outputArray[i] = s1;
+                    break;
+                }
+            }
         }
-        return new ArrayList<>(List.of(outputArray));
+
+        System.out.println("out:");
+        System.out.println("---");
+        for (String s1 : outputArray) {
+            System.out.println(s1);
+        }
+        List<String> out = new ArrayList<>();
+        for (String s1 : outputArray) {
+            out.add(s1);
+        }
+        /*
+        ArrayList<Foo> list = new ArrayList<>(Arrays.asList(sos1.getValue());
+         */
+        //return new ArrayList<>(List.of(outputArray));
+
+        //return Arrays.asList(outputArray);
+
+        return new ArrayList<>(Arrays.asList(outputArray));
     }
 }
 
