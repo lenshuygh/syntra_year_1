@@ -18,7 +18,7 @@ public class Alphametics {
     public static void main(String[] args) {
         //new Alphametics("COUPLE + COUPLE = QUARTET");
         //new Alphametics("ELEVEN + NINE + FIVE + FIVE = THIRTY");
-        //new Alphametics("SEND + MORE = MONEY");
+        new Alphametics("SEND + MORE = MONEY");
 
         new Alphametics("ZEROES + ONES = BINARY");
         new Alphametics("DO + YOU + FEEL = LUCKY");
@@ -58,6 +58,9 @@ public class Alphametics {
             }
             createCypher(letters);
             words = reasembleWords(words);
+            if(checkLeadingZeros(words)){
+                continue;
+            }
             String[] adders = new String[words.length - 1];
             for (int i = 0; i < words.length - 1; i++) {
                 adders[i] = words[i];
@@ -79,6 +82,16 @@ public class Alphametics {
         LocalDateTime end = LocalDateTime.now();
         System.out.println(Duration.between(start, end).toString());
         return output;
+    }
+
+    private boolean checkLeadingZeros(String[] words) {
+        for (String word : words) {
+            //System.out.println("word -> " + word);
+            if(word.substring(0,1).equals("0")){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void createCypher(char[] letters) {
