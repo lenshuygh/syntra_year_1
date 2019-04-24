@@ -28,7 +28,7 @@ public class MostFrequentUsedWordInAText {
         System.out.println("=< " + s);
         System.out.println("=> " + string);
 
-        string = string.strip();
+        //string = string.strip();
 
         Stream.of(string.split(" "))
                 .forEach(st -> evaluate(st));

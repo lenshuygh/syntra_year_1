@@ -60,7 +60,8 @@ public class MostFrequentUsedWordInATextRetry {
         for (int i = 0; i < outputArray.length; i++) {
             outputArray[i] = outputKeys[i];
         }
-        return new ArrayList<>(List.of(outputArray));
+        //return new ArrayList<>(List.of(outputArray));
+        return null;
     }
 }
 
