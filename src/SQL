@@ -1,0 +1,23 @@
+select * from agents where agent_code = 'A007';
+select * from agents where AGENT_NAME like 'A%';
+select * from agents where AGENT_NAME not like '%a%';
+select * from agents where COMMISSION between 0.13 AND 0.15;
+select count(*) AS total_agents from agents where AGENT_NAME like 'A%';
+
+select CUST_NAME from customer;
+select CUST_NAME, AGENT_CODE from customer;
+select C.CUST_NAME,A.AGENT_NAME from customer C,agents A where C.AGENT_CODE = A.AGENT_CODE;
+select CUST_NAME,AGENT_NAME from customer join agents;
+select CUST_NAME,AGENT_NAME from customer join agents on customer.AGENT_CODE = agents.AGENT_CODE;
+
+select CUST_NAME,AGENT_NAME,ORD_NUM
+from customer c
+join agents a on c.AGENT_CODE = a.AGENT_CODE
+join orders o on c.CUST_CODE = o.CUST_CODE
+where c.CUST_CODE = 'C00009';
+
+SELECT c.CUST_NAME,a.AGENT_NAME,o.ORD_NUM
+  FROM customer c
+  JOIN orders o on o.CUST_CODE = c.CUST_CODE
+  LEFT JOIN agents a on o.AGENT_CODE = a.AGENT_CODE
+  where c.CUST_CODE = 'C00009';
