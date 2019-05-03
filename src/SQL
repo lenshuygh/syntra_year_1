@@ -2,6 +2,7 @@ select * from agents where agent_code = 'A007';
 select * from agents where AGENT_NAME like 'A%';
 select * from agents where AGENT_NAME not like '%a%';
 select * from agents where COMMISSION between 0.13 AND 0.15;
+
 select count(*) AS total_agents from agents where AGENT_NAME like 'A%';
 
 select CUST_NAME from customer;
