@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 import java.sql.*;
 
 public class UsingLargeObjects {
-    public static final String USER = "student";
-    public static final String PASSWORD = "student123";
+    public static final String USER = "";
+    public static final String PASSWORD = "";
     public static final String CONNECTION_STRING = "jdbc:mysql://noelvaes.eu/StudentDB";
     public static final String MY_SQL = "update Beers set Image = ? where Name = ?";
 
