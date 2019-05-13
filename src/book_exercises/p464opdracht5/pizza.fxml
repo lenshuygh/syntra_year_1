@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane>
+    <top>
+        <HBox spacing="5">
+            <Label text="Name: "/>
+            <TextField id="name"/>
+            <Label text="E-mail: "/>
+            <TextField id="email"/>
+            <Label text="Delivery date: "/>
+            <DatePicker id="deliveryDate"/>
+            <Button text="Order"/>
+        </HBox>
+    </top>
+    <left>
+
+    </left>
+    <center>
+        <ScrollPane>
+            <ImageView>
+                <Image url="@pizza.jpg"/>
+            </ImageView>
+        </ScrollPane>
+    </center>
+</BorderPane>
