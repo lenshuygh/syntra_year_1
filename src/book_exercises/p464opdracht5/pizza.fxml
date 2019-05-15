@@ -7,9 +7,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<?import book_exercises.p464opdracht5.MultiSelectListView?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
-        <HBox spacing="5">
+        <FlowPane hgap="10">
+            <padding>
+                <Insets left="10" bottom="10" right="10" top="10"/>
+            </padding>
             <Label text="Name: "/>
             <TextField id="name"/>
             <Label text="E-mail: "/>
@@ -17,16 +28,62 @@
             <Label text="Delivery date: "/>
             <DatePicker id="deliveryDate"/>
             <Button text="Order"/>
-        </HBox>
+        </FlowPane>
     </top>
     <left>
-
+        <VBox>
+            <Label text="Ingredients"/>
+            <MultiSelectListView prefWidth="100">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Bacon"/>
+                        <String fx:value="Cheese"/>
+                        <String fx:value="Mushrooms"/>
+                        <String fx:value="Oregano"/>
+                        <String fx:value="Salami"/>
+                        <String fx:value="Tomatoes"/>
+                        <String fx:value="Shrimps"/>
+                        <String fx:value="Onions"/>
+                        <String fx:value="Garlic"/>
+                        <String fx:value="Artichoke"/>
+                    </FXCollections>
+                </items>
+            </MultiSelectListView>
+        </VBox>
     </left>
     <center>
-        <ScrollPane>
-            <ImageView>
-                <Image url="@pizza.jpg"/>
-            </ImageView>
+        <ScrollPane prefWidth="200" prefHeight="200">
+            <content>
+                <ImageView>
+                    <Image url="@pizza.jpg"/>
+                </ImageView>
+            </content>
         </ScrollPane>
     </center>
+    <bottom>
+        <FlowPane>
+            <padding>
+                <Insets left="10" bottom="10" right="10" top="10"/>
+            </padding>
+            <Label text="Bottom: "/>
+            <fx:define>
+                <ToggleGroup fx:id="myToggleGroup"/>
+            </fx:define>
+            <RadioButton text="Traditional" toggleGroup="$myToggleGroup"/>
+            <RadioButton text="Crusty" toggleGroup="$myToggleGroup"/>
+            <CheckBox text="Spicy"/>
+                <Label text="Size:"/>
+                <ChoiceBox>
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Small"/>
+                            <String fx:value="Medium"/>
+                            <String fx:value="Large"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            <Label text="Number:"/>
+            <TextField id="number"/>
+        </FlowPane>
+    </bottom>
 </BorderPane>

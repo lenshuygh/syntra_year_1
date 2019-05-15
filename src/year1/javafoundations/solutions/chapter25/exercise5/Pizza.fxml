@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import year1.javafoundations.solutions.chapter25.exercise5.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <FlowPane hgap="10">
+            <padding>
+                <Insets left="10" bottom="10" right="10" top="10" />
+            </padding>
+            <Label text="Name :" />
+            <TextField promptText="Enter your name" />
+            <Label text="E-mail :" />
+            <TextField promptText="Enter your e-mail" />
+            <Label text="Delivery date :" />
+            <DatePicker prefWidth="100" />
+            <Button text="Order" />
+        </FlowPane>
+    </top>
+    <left>
+        <VBox prefWidth="100">
+            <Label text="Ingredients"/>
+            <MultiSelectListView>
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Bacon" />
+                        <String fx:value="Cheese" />
+                        <String fx:value="Mushrooms" />
+                        <String fx:value="Oregano" />
+                        <String fx:value="Salami" />
+                        <String fx:value="Tomatoes" />
+                        <String fx:value="Shrimps" />
+                        <String fx:value="Onions" />
+                        <String fx:value="Garlic" />
+                        <String fx:value="Artichoke" />
+                    </FXCollections>
+                </items>
+            </MultiSelectListView>
+        </VBox>
+    </left>
+    <bottom>
+        <FlowPane hgap="10">
+            <padding>
+                <Insets left="10" bottom="10" right="10" top="10" />
+            </padding>
+            <Label text="Bottom :" />
+            <fx:define>
+                <ToggleGroup fx:id="bottomToggleGroup" />
+            </fx:define>
+            <RadioButton text="Traditional" toggleGroup="$bottomToggleGroup" />
+            <RadioButton text="Crusty" toggleGroup="$bottomToggleGroup" />
+            <CheckBox text="Spicy" />
+            <Label text="Size :" />
+            <ChoiceBox >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Small" />
+                        <String fx:value="Medium" />
+                        <String fx:value="Large" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+            <Label text="Number :"  />
+            <TextField maxWidth="40" />
+        </FlowPane>
+    </bottom>
+    <center>
+        <ScrollPane prefHeight="200" prefWidth="200">
+            <content>
+                <ImageView>
+                    <Image url="@pizza.jpg" />
+                </ImageView>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
