@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<GridPane styleClass="grid-pane"
+          xmlns:fx="http://javafx.com/javafx"
+          fx:controller="book_exercises.p481opdracht9.LoginController">
+            <stylesheets>
+                <URL value="@Login.css"/>
+            </stylesheets>
+    <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="nameTextField" promptText="Enter Name" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="passwordTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Button text="Register" onAction="#buttonPressed" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+</GridPane>

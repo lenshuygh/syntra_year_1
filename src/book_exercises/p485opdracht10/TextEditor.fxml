@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="book_exercises.p485opdracht10.TextEditorController"
+      prefHeight="400.0" prefWidth="600.0">
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="File" onAction="#menuAction">
+                <items>
+                    <MenuItem fx:id="fileOpenMenu" text="Open"/>
+                    <MenuItem fx:id="fileSaveMenu" text="Save"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem fx:id="fileExitMenu" text="Exit"/>
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem fx:id="fileAboutMenu" text="About"/>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+        <TextArea fx:id="textArea"/>
+</VBox>
