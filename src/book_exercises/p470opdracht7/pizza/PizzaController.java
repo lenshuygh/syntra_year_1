@@ -36,9 +36,9 @@ public class PizzaController {
         ingredientsListView.getSelectionModel().getSelectedItems().forEach(System.out::println);
         System.out.println("Name: " + nameTextField.getText());
         System.out.println("email: " + emailTextField.getText());
-        System.out.println("DeliveryDate: " + deliveryDatePicker);
+        System.out.println("DeliveryDate: " + deliveryDatePicker.getValue());
         System.out.println("Bottom: " + bottomToggleGroup.getSelectedToggle());
-        System.out.println("Spicy?: " + spicyCheckBox.getText());
+        System.out.println("Spicy?: " + spicyCheckBox.isSelected());
         System.out.println("size: " + sizeChoiceBox.getValue());
         System.out.println("#: " + numberTextField.getText());
     }
