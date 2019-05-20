@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="book_exercises.p470opdracht7.EventController">
+    <center>
+        <Canvas width="300" height="200"
+                onMouseMoved="#mouseMoved"
+                onMouseClicked="#mouseClicked"
+                onMouseEntered="#mouseEntered"
+                onMouseExited="#mouseExited"
+        />
+    </center>
+    <top>
+        <Text fx:id="text"/>
+    </top>
+</BorderPane>
