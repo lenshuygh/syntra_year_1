@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="year1.javafoundations.solutions.chapter25.exercise7.CanvasController">
+    <center>
+        <Canvas width="300" height="200"
+                onMouseMoved="#mouseMoved"
+                onMouseClicked="#mouseClicked"
+                onMouseEntered="#mouseEntered"
+                onMouseExited="#mouseExited" />
+    </center>
+    <bottom>
+        <Text fx:id="text" />
+    </bottom>
+</BorderPane>

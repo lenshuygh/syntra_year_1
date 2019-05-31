@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="year1.javafoundations.solutions.chapter25.exercise8.CanvasController">
+<center>
+    <ScrollPane>
+        <Canvas width="500" height="500" fx:id="canvas"  />
+    </ScrollPane>
+</center>
+<bottom>
+    <FlowPane hgap="5">
+        <Button text="Rectangle" onAction="#rectangle" />
+        <Button text="Circle" onAction="#circle" />
+        <Button text="Triangle" onAction="#triangle" />
+        <Button text="Text" onAction="#text" />
+        <Button text="Image" onAction="#image" />
+        <Button text="Clear" onAction="#clear" />
+    </FlowPane>
+</bottom>
+</BorderPane>

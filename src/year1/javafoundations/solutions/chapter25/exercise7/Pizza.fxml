@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import year1.javafoundations.solutions.chapter25.exercise7.MultiSelectListView?>
+<?import java.lang.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="year1.javafoundations.solutions.chapter25.exercise7.PizzaController">
+    <MenuBar>
+        <menus>
+            <Menu text="File">
+                <items>
+                    <MenuItem text="New Order" />
+                    <MenuItem text="Open" />
+                    <MenuItem text="Save" />
+                    <Menu text="Save as ..">
+                        <items>
+                            <MenuItem text="XML" />
+                            <MenuItem text="Text" />
+                        </items>
+                    </Menu>
+                    <SeparatorMenuItem />
+                    <CheckMenuItem text="Exit" />
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem text="About" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+    <BorderPane>
+        <top>
+            <FlowPane hgap="10">
+                <padding>
+                    <Insets left="10" bottom="10" right="10" top="10" />
+                </padding>
+                <Label text="Name :" />
+                <TextField fx:id="name" promptText="Enter your name" />
+                <Label text="E-mail :" />
+                <TextField fx:id="email" promptText="Enter your e-mail" />
+                <Label text="Delivery date :" />
+                <DatePicker fx:id="date" prefWidth="100" />
+                <Button text="Order" onAction="#order" />
+            </FlowPane>
+        </top>
+        <left>
+            <BorderPane prefWidth="100">
+                <top>
+                    <Label text="Ingredients" />
+                </top>
+                <center>
+                    <MultiSelectListView fx:id="ingredients">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Bacon" />
+                                <String fx:value="Cheese" />
+                                <String fx:value="Mushrooms" />
+                                <String fx:value="Oregano" />
+                                <String fx:value="Salami" />
+                                <String fx:value="Tomatoes" />
+                                <String fx:value="Shrimps" />
+                                <String fx:value="Onions" />
+                                <String fx:value="Garlic" />
+                                <String fx:value="Artichoke" />
+                            </FXCollections>
+                        </items>
+                    </MultiSelectListView>
+                </center>
+            </BorderPane>
+        </left>
+        <bottom>
+            <FlowPane hgap="10">
+                <padding>
+                    <Insets left="10" bottom="10" right="10" top="10" />
+                </padding>
+                <Label text="Bottom :" />
+                <fx:define>
+                    <ToggleGroup fx:id="bottom" />
+                </fx:define>
+                <RadioButton text="Traditional" toggleGroup="$bottom" />
+                <RadioButton text="Crusty" toggleGroup="$bottom" />
+                <CheckBox text="Spicy" fx:id="spicy" />
+                <Label text="Size :" />
+                <ChoiceBox fx:id="size">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Small" />
+                            <String fx:value="Medium" />
+                            <String fx:value="Large" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <Label text="Number :" />
+                <TextField maxWidth="40" fx:id="number" />
+            </FlowPane>
+        </bottom>
+        <center>
+            <ScrollPane prefHeight="200" prefWidth="200">
+                <content>
+                    <ImageView>
+                        <Image url="@pizza.jpg" />
+                    </ImageView>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</VBox>

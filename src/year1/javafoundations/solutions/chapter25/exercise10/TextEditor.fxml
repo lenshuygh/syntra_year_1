@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.FileChooser?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="year1.javafoundations.solutions.chapter25.exercise10.TextEditorController"
+      fx:id="pane">
+    <fx:define>
+        <Alert fx:id="aboutAlert"
+               alertType="INFORMATION"
+               title="About the application"
+               headerText="Text Editor V 1.0"
+               contentText="The best sentence editor you'll never use!"
+               />
+        <FileChooser fx:id="fileChooser" title="Select a file"/>
+    </fx:define>
+    <MenuBar>
+        <menus>
+            <Menu text="File">
+                <items>
+                    <MenuItem text="Open" onAction="#fileOpen"/>
+                    <MenuItem text="Save" onAction="#fileSave"/>
+                    <SeparatorMenuItem />
+                    <MenuItem text="Exit" onAction="#exit" />
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem text="About" onAction="#showAbout" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+    <TextArea fx:id="textArea" prefHeight="1000"  />
+</VBox>

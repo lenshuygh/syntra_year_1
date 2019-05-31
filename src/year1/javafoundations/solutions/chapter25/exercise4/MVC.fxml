@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Group xmlns:fx="http://javafx.com/fxml"
+       fx:controller="year1.javafoundations.solutions.chapter25.exercise4.Controller">
+    <Label fx:id="label" layoutX="20" layoutY="20" text="Count: 0"/>
+    <Button text="Press me" layoutX="20" layoutY="60"
+            onAction="#buttonPressed"/>
+    <Button text="Reset" layoutX="120" layoutY="60"
+            onAction="#countReset"/>
+
+
+</Group>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+
+<Group>
+    <Label text="Enter your name:" layoutX="20" layoutY="20" />
+    <TextField layoutX="20" layoutY="60" />
+    <Button text="Login" layoutX="20" layoutY="100" />
+</Group>
